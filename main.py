@@ -15,12 +15,12 @@ Type 3: Gift Route Optimization\n
 """)
 
 choice = input("Select option: ").strip()
-
-if choice == "1":
-    print("\nNPC Information page coming soon.")
-
-elif choice == "2":
-
+                                                                         # # # # # # # # # # # #
+if choice == "1":                                                       #       NPC QUERY       #
+    print("\nNPC Information page coming soon.")                         # # # # # # # # # # # # 
+                                                                         # # # # # # # # # # # #
+elif choice == "2":                                                     #       ITEM-QUERY       #
+                                                                         # # # # # # # # # # # #
     print("""
     Item Information
           
