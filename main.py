@@ -36,7 +36,11 @@ elif choice == "2":
         item = re.sub(r"[^a-z0-9 ]", "", item)
 
         results = search_by_item(item)
-        item_search_gui(results)
+
+        if results is None:
+            print(f"\nCannot find '{item}'. Please try again.\n")
+        else:
+            item_search_gui(results)
 
     elif item_choice == "2":
         print("Enter a letter to display matching items:")
@@ -74,5 +78,12 @@ else:
     STRING THAT SEARCH ISN'T FOUND NOT APPEARING
     ERROR SHOWING IN CONSOLE
 
-    
+
+||| CONSIDER ASCII ART BACKGROUND |||
+
+    SUCH AS BLANK NOTEBOOK WHERE EVERYTHING
+    THAT PRINTS IS SHOW ON THE BLANK NOTEBOOK
+    OR SOME OTHER IMAGE EVEN IF JUST ON HOME SCREEN              
+
+
 """

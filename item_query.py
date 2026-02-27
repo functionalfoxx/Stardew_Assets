@@ -32,7 +32,7 @@ def search_by_item(item):
     all_npcs = cursor.fetchall() 
     
     if not results:
-        return (f"Cannot find '{item}'. \nPlease try again.")
+        return None
     
     item_info = {
         'Wiki URL': results[0]['wiki_url'],
