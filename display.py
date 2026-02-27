@@ -42,7 +42,7 @@ def item_search_gui(results):
 
 def item_directory_gui(results, letter):
     cols = 2
-    col_width = 25
+    col_width = 35
 
     frame_width = cols * col_width
     top_line = "# " * (frame_width // 2)
@@ -63,3 +63,4 @@ def item_directory_gui(results, letter):
             print("".join(name.ljust(col_width) for name in row))
     else:
         print("No results, try again.")
+    print()

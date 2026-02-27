@@ -2,14 +2,6 @@ from item_query import search_by_item, items_directory
 from display import item_search_gui, item_directory_gui
 import re
 
-
-
- # # # # # # # # # # # # # # # # # # 
-#              WELCOME              #
- # # # # # # # # # # # # # # # # # # 
-
-import re
-
 print("""
 This Stardew tool provides information about NPCs who 
 can receive gifts, items that can be gifted, and how to
@@ -23,7 +15,6 @@ Type 3: Gift Route Optimization\n
 """)
 
 choice = input("Select option: ").strip()
-
 
 if choice == "1":
     print("\nNPC Information page coming soon.")
@@ -71,17 +62,17 @@ else:
 
 
 """
- ||| ITEM QUERY SCREEN |||
 
-TYPE 1 : SEARCH BY ITEM NAME
-    TYPE B : GO BACK TO THE PREVIOUS SCREEN
-    TYPE M : RETURN TO THE MAIN SCREEN
-
-TYPE 2 : VIEW ALL GIFTABLE ITEMS
+ ||| ADD DIRECTORY OPTIONS |||
 
     TYPE B : GO BACK TO THE PREVIOUS SCREEN
     TYPE M : RETURN TO THE MAIN SCREEN
 
-TYPE M : RETURN TO THE MAIN SCREEN
+    
+||| FIX ERROR FOR SEARCH BY ITEM |||
 
+    STRING THAT SEARCH ISN'T FOUND NOT APPEARING
+    ERROR SHOWING IN CONSOLE
+
+    
 """
