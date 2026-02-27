@@ -37,7 +37,11 @@ def search_by_item(item):
     item_info = {
         'Wiki URL': results[0]['wiki_url'],
         'Universal Preference': results[0]['universal_pref'],
-        'NPC Preferences': [],
+        'NPCs Who Love Item': [],
+        'NPCs Who Like Item': [],
+        'NPCs Who Are Neutral Toward Item': [],
+        'NPCs Who Dislike Item': [],
+        'NPCs Who Hate Item': [],
     }
 
     for npc in all_npcs:
@@ -48,22 +52,37 @@ def search_by_item(item):
         for row in results:
             if row['npc_name'] == npc_name:
                 pref = row['npc_pref']
+                if pref == "loved":
+                    item_info['NPCs Who Love Item'].append(npc_name)
+                elif pref == "liked":
+                    item_info['NPCs Who Like Item'].append(npc_name)
+                elif pref == "disliked":
+                    item_info['NPCs Who Dislike Item'].append(npc_name)
+                elif pref == "hated":
+                    item_info['NPCs Who Hate Item'].append(npc_name)
                 break
 
         if pref is None:
             if results[0]['universal_pref']:
                 pref = results[0]['universal_pref']
+                if pref == "loved":
+                    item_info['NPCs Who Love Item'].append(npc_name)
+                elif pref == "liked":
+                    item_info['NPCs Who Like Item'].append(npc_name)
+                elif pref == "disliked":
+                    item_info['NPCs Who Dislike Item'].append(npc_name)
+                elif pref == "hated":
+                    item_info['NPCs Who Hate Item'].append(npc_name)
+
             else:
-                pref = 'Neutral'
-        
-        item_info['NPC Preferences'].append({
-            'NPC Name': npc_name,
-            'Preference': pref
-        })
+                item_info['NPCs Who Are Neutral Toward Item'].append(npc_name)
 
     return {results[0]['item_name']: item_info}
 
-#       TESTING BEFORE MAIN
+
+# # # # # # # # # # # # # # # # # #
+#       TESTING BEFORE MAIN       #
+# # # # # # # # # # # # # # # # # #
 
 print("Enter the item to search")
 
@@ -73,13 +92,46 @@ item = re.sub(r"[^a-z0-9 ]", "", item)
 results = search_by_item(item)
 print(results) 
 
+""" DRAFT GUI FORMAT
+
+# # # # # # # # # # # # # # # # # # # # # # # #
+                 ITEM NAME HERE                             ||| is there a way to center this? count characters and adjust # and spacing?
+# # # # # # # # # # # # # # # # # # # # # # # #
+
+Visit Wiki: WIKI URL
+
+* - - - - - NPC WHO LOVE THIS ITEM - - - - - *
+NPC NAME
+NPC NAME
+ETC
+"NONE" IF NONE
+
+* - - - - - NPC WHO LIKE THIS ITEM - - - - - *
+NPC NAME
+NPC NAME
+ETC
+"NONE" IF NONE
+
+* - - NPC WHO ARE NEUTRAL ABOUT THIS ITEM - - *
+NPC NAME
+NPC NAME
+ETC
+"NONE" IF NONE
+
+* - - - -  NPC WHO DISLIKE THIS ITEM  - - - - *
+NPC NAME
+NPC NAME
+ETC
+"NONE" IF NONE
+
+* - - - - -  NPC WHO HATE THIS ITEM  - - - - - *
+NPC NAME
+NPC NAME
+ETC
+"NONE" IF NONE
 
 
-
-
-
-
-
+""" 
 
 
 """
@@ -87,10 +139,7 @@ print(results)
  ||| ITEM QUERY SCREEN |||
 
 TYPE 1 : SEARCH BY ITEM NAME
-    "ENTER THE ITEM NAME (REMOVE SPECIAL CHARACTERS, APOSTROPHES, OR NON-LETTER CHARACTERS)."
-    "EXAMPLE: PIÑA COLADA -> PINA COLADA"
         [RETURNS LIST OF NPCS GROUPED BY LOVES, LIKES, NEUTRAL, DISLIKES, AND HATES THIS ITEM]  ||| GUI-ISH DISPLAY |||
-        [LINK TO ITEM WIKI]
 
     TYPE B : GO BACK TO THE PREVIOUS SCREEN
     TYPE M : RETURN TO THE MAIN SCREEN
