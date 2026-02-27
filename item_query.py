@@ -25,9 +25,12 @@ def search_by_item(item):
             ON items.item_id = universal_preferences.item_id
         WHERE items.normalized_name = ?
     """, (item,))
-    
+
     results = cursor.fetchall()
 
+    cursor.execute("SELECT npc_id, npc_name FROM npcs")
+    all_npcs = cursor.fetchall() 
+    
     if not results:
         return (f"Cannot find '{item}'. \nPlease try again.")
     
@@ -37,12 +40,26 @@ def search_by_item(item):
         'NPC Preferences': [],
     }
 
-    for row in results:
-        if row['npc_name'] and row['npc_pref']:
-            item_info['NPC Preferences'].append({
-                'NPC Name': row['npc_name'],
-                'Preference': row['npc_pref']
-            })
+    for npc in all_npcs:
+        npc_name = npc['npc_name']
+        npc_id = npc['npc_id']
+        pref = None
+
+        for row in results:
+            if row['npc_name'] == npc_name:
+                pref = row['npc_pref']
+                break
+
+        if pref is None:
+            if results[0]['universal_pref']:
+                pref = results[0]['universal_pref']
+            else:
+                pref = 'Neutral'
+        
+        item_info['NPC Preferences'].append({
+            'NPC Name': npc_name,
+            'Preference': pref
+        })
 
     return {results[0]['item_name']: item_info}
 
