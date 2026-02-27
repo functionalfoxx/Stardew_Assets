@@ -7,6 +7,8 @@ conn = sqlite3.connect(DB_PATH)
 conn.row_factory = sqlite3.Row
 cursor = conn.cursor()
 
+
+
 def search_by_item(item):
     cursor.execute("""
         SELECT 
@@ -81,14 +83,42 @@ def search_by_item(item):
 
 
 
+def items_directory(letter):
+    cursor.execute("""
+        SELECT 
+            items.item_name
+        FROM items
+        WHERE item_name LIKE ?
+        ORDER BY item_name
+    """, (f"{letter}%",))
+
+    results = cursor.fetchall()
+
+    return [row['item_name'] for row in results]
+
+
+
+# # # # # # # # # # # # # # # # # # # # # 
+#        TESTING ITEMS_DIRECTORY        #
+# # # # # # # # # # # # # # # # # # # # # 
+
+print("Enter a letter to display matching items")
+letter = input().upper()
+letter = re.sub(r"[^A-Z]", "", letter)
+letter = letter[0] if letter else ""
+
+results = items_directory(letter)
+
+if results:
+    print(results)
+else:
+    print("No results, try again.")
 
 """
 
  ||| ITEM QUERY SCREEN |||
 
 TYPE 1 : SEARCH BY ITEM NAME
-        [RETURNS LIST OF NPCS GROUPED BY LOVES, LIKES, NEUTRAL, DISLIKES, AND HATES THIS ITEM]  ||| GUI-ISH DISPLAY |||
-
     TYPE B : GO BACK TO THE PREVIOUS SCREEN
     TYPE M : RETURN TO THE MAIN SCREEN
 
@@ -101,4 +131,4 @@ TYPE 2 : VIEW ALL GIFTABLE ITEMS
 
 TYPE M : RETURN TO THE MAIN SCREEN
 
-   """
+"""
