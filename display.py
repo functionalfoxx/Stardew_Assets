@@ -39,3 +39,30 @@ def item_search_gui(results):
         else:
             print("NONE")
         print()
+
+
+
+
+def item_directory_gui(results, letter):
+    cols = 2
+    col_width = 25
+
+    frame_width = cols * col_width
+    top_line = "# " * (frame_width // 2)
+
+    header_text = f"RESULTS FOR {letter.upper()}"
+    name_line = f"# {header_text.center(frame_width - 5)} #"
+
+    print(top_line)
+    print()
+    print(name_line)
+    print()
+    print(top_line)
+    print()
+
+    if results:
+        for i in range(0, len(results), cols):
+            row = results[i:i+cols]
+            print("".join(name.ljust(col_width) for name in row))
+    else:
+        print("No results, try again.")

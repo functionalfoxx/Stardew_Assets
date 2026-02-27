@@ -1,5 +1,5 @@
 from item_query import search_by_item, items_directory
-from display import item_search_gui
+from display import item_search_gui, item_directory_gui
 import re
 
 
@@ -27,7 +27,23 @@ letter = input().upper()
 letter = re.sub(r"[^A-Z]", "", letter)
 letter = letter[0] if letter else ""
 results = items_directory(letter)
-if results:
-    print(results)
-else:
-    print("No results, try again.")
+item_directory_gui(results, letter)
+
+
+
+
+"""
+ ||| ITEM QUERY SCREEN |||
+
+TYPE 1 : SEARCH BY ITEM NAME
+    TYPE B : GO BACK TO THE PREVIOUS SCREEN
+    TYPE M : RETURN TO THE MAIN SCREEN
+
+TYPE 2 : VIEW ALL GIFTABLE ITEMS
+
+    TYPE B : GO BACK TO THE PREVIOUS SCREEN
+    TYPE M : RETURN TO THE MAIN SCREEN
+
+TYPE M : RETURN TO THE MAIN SCREEN
+
+"""
