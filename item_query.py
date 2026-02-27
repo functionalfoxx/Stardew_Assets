@@ -7,8 +7,6 @@ conn = sqlite3.connect(DB_PATH)
 conn.row_factory = sqlite3.Row
 cursor = conn.cursor()
 
-
-
 def search_by_item(item):
     cursor.execute("""
         SELECT 
@@ -80,8 +78,6 @@ def search_by_item(item):
                 item_info['NPCs Who Are Neutral Toward Item'].append(npc_name)
 
     return {results[0]['item_name']: item_info}
-
-
 
 def items_directory(letter):
     cursor.execute("""

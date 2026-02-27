@@ -5,29 +5,67 @@ import re
 
 
  # # # # # # # # # # # # # # # # # # 
-#        ITEM QUERY FUNCTION        #
+#              WELCOME              #
  # # # # # # # # # # # # # # # # # # 
 
-print("Enter the item to search")
-item = input().lower()
-item = re.sub(r"[^a-z0-9 ]", "", item)
+import re
 
-results = search_by_item(item)
-item_search_gui(results)
+print("""
+This Stardew tool provides information about NPCs who 
+can receive gifts, items that can be gifted, and how to
+route the two together efficiently.
+""")
+
+print("""
+Type 1: NPC Information
+Type 2: Item Information
+Type 3: Gift Route Optimization\n
+""")
+
+choice = input("Select option: ").strip()
 
 
+if choice == "1":
+    print("\nNPC Information page coming soon.")
 
- # # # # # # # # # # # # # # # # # # 
-#      ITEM DIRECTORY FUNCTION      #
- # # # # # # # # # # # # # # # # # # 
+elif choice == "2":
+
+    print("""
+    Item Information
+          
+    Type 1: Search by item name
+    Type 2: Browse item directory by letter\n
+    """)
+
+    item_choice = input("Select option: ").strip()
+
+    if item_choice == "1":
+        print("Enter the item to search:")
+        item = input().lower()
+        item = re.sub(r"[^a-z0-9 ]", "", item)
+
+        results = search_by_item(item)
+        item_search_gui(results)
+
+    elif item_choice == "2":
+        print("Enter a letter to display matching items:")
+        letter = input().upper()
+        letter = re.sub(r"[^A-Z]", "", letter)
+        letter = letter[0] if letter else ""
+
+        results = items_directory(letter)
+        item_directory_gui(results, letter)
+
+    else:
+        print("Directory not recognized.")
+
+elif choice == "3":
+    print("\nGift Route Optimization page coming soon.")
+
+else:
+    print("Directory not recognized.")
 
 
-print("Enter a letter to display matching items")
-letter = input().upper()
-letter = re.sub(r"[^A-Z]", "", letter)
-letter = letter[0] if letter else ""
-results = items_directory(letter)
-item_directory_gui(results, letter)
 
 
 

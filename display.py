@@ -40,9 +40,6 @@ def item_search_gui(results):
             print("NONE")
         print()
 
-
-
-
 def item_directory_gui(results, letter):
     cols = 2
     col_width = 25
