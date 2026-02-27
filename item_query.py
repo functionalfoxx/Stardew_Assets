@@ -80,14 +80,19 @@ def search_by_item(item):
     return {results[0]['item_name']: item_info}
 
 def items_directory(letter):
-    cursor.execute("""
-        SELECT 
-            items.item_name
-        FROM items
-        WHERE item_name LIKE ?
-        ORDER BY item_name
-    """, (f"{letter}%",))
+    if letter is None:
+        cursor.execute("""
+            SELECT item_name
+            FROM items
+            ORDER BY item_name
+        """)
+    else:
+        cursor.execute("""
+            SELECT item_name
+            FROM items
+            WHERE item_name LIKE ?
+            ORDER BY item_name
+        """, (f"{letter}%",))
 
     results = cursor.fetchall()
-
     return [row['item_name'] for row in results]

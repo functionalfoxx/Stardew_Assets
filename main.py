@@ -43,13 +43,19 @@ elif choice == "2":
             item_search_gui(results)
 
     elif item_choice == "2":
-        print("Enter a letter to display matching items:")
-        letter = input().upper()
-        letter = re.sub(r"[^A-Z]", "", letter)
-        letter = letter[0] if letter else ""
+        print("Enter a letter to display matching items or enter 'all' to display all giftable items:")
+        letter = input().strip().upper()
 
-        results = items_directory(letter)
-        item_directory_gui(results, letter)
+        if letter == "all":
+            results = items_directory(None)
+            item_directory_gui(results, "all")
+
+        elif len(letter) == 1 and letter.isalpha():
+            results = items_directory(letter)
+            item_directory_gui(results, letter)
+
+        else:
+            print("\nInvalid input. Enter a single letter A–Z or type ALL.\n")
 
     else:
         print("Directory not recognized.")
