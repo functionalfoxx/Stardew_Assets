@@ -1,0 +1,10 @@
+# Ignore private SSH key
+my_ssh_key
+
+# Python cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+
+# Optional local environment files
+.env
