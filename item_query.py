@@ -80,58 +80,6 @@ def search_by_item(item):
     return {results[0]['item_name']: item_info}
 
 
-# # # # # # # # # # # # # # # # # #
-#       TESTING BEFORE MAIN       #
-# # # # # # # # # # # # # # # # # #
-
-print("Enter the item to search")
-
-item = input().lower()
-item = re.sub(r"[^a-z0-9 ]", "", item)
-
-results = search_by_item(item)
-print(results) 
-
-""" DRAFT GUI FORMAT
-
-# # # # # # # # # # # # # # # # # # # # # # # #
-                 ITEM NAME HERE                             ||| is there a way to center this? count characters and adjust # and spacing?
-# # # # # # # # # # # # # # # # # # # # # # # #
-
-Visit Wiki: WIKI URL
-
-* - - - - - NPC WHO LOVE THIS ITEM - - - - - *
-NPC NAME
-NPC NAME
-ETC
-"NONE" IF NONE
-
-* - - - - - NPC WHO LIKE THIS ITEM - - - - - *
-NPC NAME
-NPC NAME
-ETC
-"NONE" IF NONE
-
-* - - NPC WHO ARE NEUTRAL ABOUT THIS ITEM - - *
-NPC NAME
-NPC NAME
-ETC
-"NONE" IF NONE
-
-* - - - -  NPC WHO DISLIKE THIS ITEM  - - - - *
-NPC NAME
-NPC NAME
-ETC
-"NONE" IF NONE
-
-* - - - - -  NPC WHO HATE THIS ITEM  - - - - - *
-NPC NAME
-NPC NAME
-ETC
-"NONE" IF NONE
-
-
-""" 
 
 
 """
