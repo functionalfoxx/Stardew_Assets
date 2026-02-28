@@ -1,5 +1,6 @@
 import sqlite3
 import re
+import math
 
 DB_PATH = r"C:\Portfolio_Projects\stardew_assets\sqlite\stardew.db"
 
@@ -66,43 +67,63 @@ def search_by_npc (name):
 
     return combined
 
+def heart_calc(hearts, max_hearts):
+
+    full_heart_points = 250
+    loved = 80
+    liked = 45
+    neutral = 20
+
+    empty_hearts = max_hearts - hearts
+    points_needed = empty_hearts * full_heart_points
+
+    loved_item_qty = math.ceil(points_needed / loved)
+    loved_min_weeks = math.ceil(points_needed / (loved * 2))
+
+    liked_item_qty = math.ceil(points_needed / liked)
+    liked_min_weeks = math.ceil(points_needed / (liked * 2))
+
+    neutral_item_qty = math.ceil(points_needed / neutral)
+    neutral_min_weeks = math.ceil(points_needed / (neutral * 2))
+
+    return {
+        "points_needed": points_needed,
+        "loved_qty": loved_item_qty,
+        "loved_weeks": loved_min_weeks,
+        "liked_qty": liked_item_qty,
+        "liked_weeks": liked_min_weeks,
+        "neutral_qty": neutral_item_qty,
+        "neutral_weeks": neutral_min_weeks
+    }
+    
 
 
 
 
-"""
 
-||| NPC QUERY SCREEN |||
 
-FROM NPC PROFILE
-    TYPE 1: SEE NPC SCHEDULE FOR THE DAY
+#
+#
+#           ||| NPC QUERY SCREEN |||
+#
+#            FROM NPC PROFILE
+#                TYPE 1: SEE NPC SCHEDULE FOR THE DAY
+#
 
-    TYPE 2 : SEE HOW MANY MORE ITEMS ARE NEEDED FOR MAX FRIENDSHIP HEARTS
-        "HOW MANY HEARTS DO YOU CURRENTLY HAVE WITH [NPC NAME]?"
-        "YOU NEED X MORE LOVED ITEMS, X MORE LIKED ITEMS, OR X MORE NEUTRAL ITEMS TO MAX FRIENDSHIP HEARTS"
-        "YOU NEED X MORE LOVED ITEMS, X MORE LIKED ITEMS, OR X MORE NEUTRAL ITEMS TO MAX MARRIAGE HEARTS" 
-            (ONLY IF CAN MARRY NPC)
-        "[FLAVOR TEXT REFLECTING CURRENT FRIENDSHIP STATUS FOR 1-3 HEARTS, 4-6 HEARTS, 7-9 HEARTS, 10+ HEARTS]"
-
-        TYPE B : GO BACK TO THE PREVIOUS SCREEN
-        TYPE M : RETURN TO THE MAIN SCREEN
-
-    TYPE 3 : SEE ALL OF [NPC NAME]'S GIFT PREFERENCES
-        TYPE 1 : SEE LOVED GIFTS               ||| LIST ALL MATCHING GIFTS IN ABC ORDER |||
-        TYPE 2 : SEE LIKED GIFTS               ||| SAME FORMAT FOR EACH PREFERENCE TYPE |||
-        TYPE 3 : SEE NEUTRAL GIFTS             ||| GUI-ISH DISPLAY ACROSS PROJECT |||
-        TYPE 4 : SEE DISLIKED GIFTS
-        TYPE 5 : SEE HATED GIFTS
-
-        TYPE B : GO BACK TO THE PREVIOUS SCREEN
-        TYPE M : RETURN TO THE MAIN SCREEN
-
----------------------------------------------------
-
-TYPE 2 : SEE ALL STARDEW GIFTABLE NPCS
-    [LISTS ALL NPCS IN ABC ORDER"]
-
-    TYPE B : GO BACK TO THE PREVIOUS SCREEN
-    TYPE M : RETURN TO THE MAIN SCREEN
-
-   """
+#                TYPE 3 : SEE ALL OF [NPC NAME]'S GIFT PREFERENCES
+#                    TYPE 1 : SEE LOVED GIFTS               ||| LIST ALL MATCHING GIFTS IN ABC ORDER |||
+#                    TYPE 2 : SEE LIKED GIFTS               ||| SAME FORMAT FOR EACH PREFERENCE TYPE |||
+#                    TYPE 3 : SEE NEUTRAL GIFTS             ||| GUI-ISH DISPLAY ACROSS PROJECT |||
+#                    TYPE 4 : SEE DISLIKED GIFTS
+#                    TYPE 5 : SEE HATED GIFTS
+#
+#            ---------------------------------------------------
+#
+#            TYPE 2 : SEE ALL STARDEW GIFTABLE NPCS
+#                [LISTS ALL NPCS IN ABC ORDER"]
+#
+#                TYPE B : GO BACK TO THE PREVIOUS SCREEN
+#                TYPE M : RETURN TO THE MAIN SCREEN
+#
+#
+#

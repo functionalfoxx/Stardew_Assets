@@ -1,6 +1,6 @@
 from item_query import search_by_item, items_directory
 from display import item_search_gui, item_directory_gui
-from npc_query import search_by_npc
+from npc_query import search_by_npc, heart_calc
 import re
 
 print("""
@@ -16,22 +16,73 @@ Type 3: Gift Route Optimization\n
 """)
 
 choice = input("Select option: ").strip()
-                                                                         # # # # # # # # # # # #
-if choice == "1":                                                       #       NPC QUERY       #
-                                                                         # # # # # # # # # # # # 
-    name = input("Enter the NPC name you want to search: ").strip()       
-    
-    # Add a comment to best view profile, expand your terminal window.
-    
-    name = re.sub(r"[^A-Za-z]", "", name)
-    name = name.capitalize()
 
-    results = search_by_npc(name)
+ # # # # # # # # # # # # # # 
+#       NPC QUERY TOOLS      #
+ # # # # # # # # # # # # # #
+                                                                         
+if choice == "1": 
+    print("""
+    NPC Information
+          
+    Type 1: Find NPC profile by name
+    Type 2: View all giftable NPCs
+    Type 3: View NPC schedule by day
+    Type 4: View all gift preferences by NPC
+    Type 5: Calculate gifts needed to gain max hearts\n
+    """)
 
-    print(results)
-                                                                         # # # # # # # # # # # #
-elif choice == "2":                                                     #       ITEM-QUERY       #
-                                                                         # # # # # # # # # # # #
+    item_choice = input("Select option: ").strip()    
+    
+    if item_choice == "1":                                                                              # Still needs GUI-like formatting
+        name = input("Enter the NPC name you want to search: ").strip()                                 # Add a comment to best view profile, expand your terminal window.
+        name = re.sub(r"[^A-Za-z]", "", name)
+        name = name.capitalize() 
+
+        results = search_by_npc(name)
+        print(results)
+
+    elif item_choice == "2":
+        print("Coming Soon")
+
+    elif item_choice == "3":
+        print("Coming Soon")
+
+    elif item_choice == "4":
+        print("Coming Soon")
+    
+    elif item_choice == "5":                                                                            # Still needs GUI-like formatting
+        hearts = input("Enter how many full hearts you have with the NPC being searched: ").strip()
+        hearts = re.sub(r"[^0-9]", "", hearts)
+
+        if hearts == "":
+            print("Invalid input.")
+        else:
+            hearts = int(hearts)
+
+            friendship_max_hearts = heart_calc(hearts, 10)
+            marriage_max_hearts = heart_calc(hearts, 14)
+
+            print(friendship_max_hearts)
+            print(marriage_max_hearts)
+
+            # stardrop_tea_qty is going to be same as missing hearts
+            # ### mention that a bouquet will need to be given at 8 hearts and is not calculated in item qty needed
+            # to get 14 max hearts -> only show this additional calc if the npc we're under is can_marry
+            # all same as above except empty_hearts = 14 minus input hearts
+            # ### mention that a mermaid pendant will need to be given at 10 hearts and is not calculated in item qty needed
+
+            # calculator includes normal daily gifts only
+            # it does not include gifts given for events, quests, movie theater, talking to them, or any other actions that increase friendship level
+            # it does not include disliked or hated gifts, friendship decay, or any other actions that decrease friendship level
+            # calculations based only on full missing hearts. if player has made any progress between hearts, less items will be needed
+
+       
+ # # # # # # # # # # # # # # #
+#       ITEM-QUERY TOOLS      #
+ # # # # # # # # # # # # # # #      
+
+elif choice == "2":
     print("""
     Item Information
           
@@ -42,7 +93,7 @@ elif choice == "2":                                                     #       
     item_choice = input("Select option: ").strip()
 
     if item_choice == "1":
-        print("Enter the item to search:")
+        item = input("Enter the item to search: ").strip()
         item = input().lower()
         item = re.sub(r"[^a-z0-9 ]", "", item)
 
@@ -54,8 +105,7 @@ elif choice == "2":                                                     #       
             item_search_gui(results)
 
     elif item_choice == "2":
-        print("Enter a letter to display matching items or enter 'all' to display all giftable items:")
-        letter = input().strip()
+        letter = input("Enter a letter to display matching items or enter 'all' to display all giftable items: ").strip()
 
         if letter.lower() == "all":
             results = items_directory(None)
@@ -88,12 +138,6 @@ else:
     TYPE M : RETURN TO THE MAIN SCREEN
 
     
-||| FIX ERROR FOR SEARCH BY ITEM |||
-
-    STRING THAT SEARCH ISN'T FOUND NOT APPEARING
-    ERROR SHOWING IN CONSOLE
-
-
 ||| CONSIDER ASCII ART BACKGROUND |||
 
     SUCH AS BLANK NOTEBOOK WHERE EVERYTHING
