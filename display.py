@@ -1,44 +1,58 @@
 def item_search_gui(results):
     item_name, item_info = list(results.items())[0]
-    frame_width = 50
-    top_line = "# " * int(frame_width/2)
-    name_line = f"# {item_name.upper().center(frame_width - 4)} #"
 
-    print(top_line)
-    print()
-    print(name_line)
-    print()
-    print(top_line)
-    print()
-    print(f"Visit Wiki: {item_info['Wiki URL']}\n")
+    frame_width = 74
+    inner_width = frame_width - 4
+    left_padding = 8
+
+    print("✦ " + "═" * (frame_width - 4) + " ✦")
+    print(f"╞{'':^{inner_width}}╡")
+    print(f"╞{'┳┏┳┓┏┓┳┳┓  ┏┓┏┓┏┓┳┓┏┓┓┏':^{inner_width}}╡")
+    print(f"╞{'┃ ┃ ┣ ┃┃┃  ┗┓┣ ┣┫┣┫┃ ┣┫':^{inner_width}}╡")
+    print(f"╞{'┻ ┻ ┗┛┛ ┗  ┗┛┗┛┛┗┛┗┗┛┛┗':^{inner_width}}╡")
+    print(f"╞{'':<{inner_width}}╡")
+    print("✧ " + "═" * (frame_width - 4) + " ✧")
+
+    print(f"╞{'':^{inner_width}}╡")
+    print(f"╞{item_name.upper():^{inner_width}}╡")
+    print(f"╞{'':^{inner_width}}╡")
+    print(f"╞{item_info['Wiki URL']:^{inner_width}}╡")
+    print(f"╞{'':^{inner_width}}╡")
+    print("✧ " + "─" * (frame_width - 4) + " ✧")
 
     sections = [
-        ("NPCs Who Love Item", "LOVED BY"),
-        ("NPCs Who Like Item", "LIKED BY"),
-        ("NPCs Who Are Neutral Toward Item", "NEUTRAL ITEM"),
-        ("NPCs Who Dislike Item", "DISLIKED BY"),
-        ("NPCs Who Hate Item", "HATED BY"),
+        ("NPCs Who Love Item", "LOVED BY", "♥"),
+        ("NPCs Who Like Item", "LIKED BY", "★"),
+        ("NPCs Who Are Neutral Toward Item", "NEUTRAL ITEM", "✦"),
+        ("NPCs Who Dislike Item", "DISLIKED BY", "⊘"),
+        ("NPCs Who Hate Item", "HATED BY", "✕"),
     ]
 
     cols = 4
-    col_width = 13
+    col_width = (inner_width - left_padding) // cols
 
-    for key, header_text in sections:
-        padding_total = frame_width - len(header_text) - 4
-        padding_left = padding_total // 2
-        padding_right = padding_total - padding_left
+    for index, (key, header_text, symbol) in enumerate(sections):
+        header = f"{symbol}  {header_text}  {symbol}"
+        print(f"╞{header:^{inner_width}}╡")
 
-        header_line = f"* {'-~' * int(padding_left/2)} {header_text} {'~-' * int(padding_right/2)} *"
-        print(header_line)
+        print(f"╞{'':<{inner_width}}╡")
 
         npc_list = item_info[key]
         if npc_list:
             for i in range(0, len(npc_list), cols):
-                row = npc_list[i:i+cols]
-                print("".join(name.ljust(col_width) for name in row))
+                row = npc_list[i:i + cols]
+                formatted_row = " " * left_padding + "".join(name.ljust(col_width) for name in row)
+                print(f"╞{formatted_row:<{inner_width}}╡")
         else:
-            print("NONE")
-        print()
+            formatted_row = " " * left_padding + "None"
+            print(f"╞{formatted_row:<{inner_width}}╡")
+
+        print(f"╞{'':<{inner_width}}╡")
+
+        if index < len(sections) - 1:
+            print("✧ " + "─" * (frame_width - 4) + " ✧")
+        else:
+            print("✦ " + "═" * (frame_width - 4) + " ✦")
 
 def item_directory_gui(results, letter):
     cols = 2

@@ -17,10 +17,12 @@ Type 3: Gift Route Optimization\n
 
 choice = input("Select option: ").strip()
 
+
  # # # # # # # # # # # # # # 
 #       NPC QUERY TOOLS      #
  # # # # # # # # # # # # # #
-                                                                         
+
+
 if choice == "1": 
     print("""
     NPC Information
@@ -70,9 +72,11 @@ if choice == "1":
             # calculations based only on full missing hearts. if player has made any progress between hearts, less items will be needed
 
        
+
  # # # # # # # # # # # # # # #
 #       ITEM-QUERY TOOLS      #
  # # # # # # # # # # # # # # #      
+
 
 elif choice == "2":
     print("""
@@ -85,8 +89,7 @@ elif choice == "2":
     item_choice = input("Select option: ").strip()
 
     if item_choice == "1":
-        item = input("Enter the item to search: ").strip()
-        item = input().lower()
+        item = input("Enter the item to search: ").strip().lower()
         item = re.sub(r"[^a-z0-9 ]", "", item)
         results = search_by_item(item)
 
@@ -96,7 +99,7 @@ elif choice == "2":
         else:
             item_search_gui(results)
 
-    elif item_choice == "2":
+    elif item_choice == "2":                                                                            # UPDATE TO NEW FORMAT
         letter = input("Enter a letter to display matching items or enter 'all' to display all giftable items: ").strip()
 
         if letter.lower() == "all":
