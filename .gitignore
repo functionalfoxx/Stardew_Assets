@@ -4,3 +4,6 @@ __pycache__/
 # Ignore private SSH keys
 my_ssh_key
 my_ssh_key.pub
+
+# Ignore temporary test file
+test_item_gui.py
