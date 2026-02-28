@@ -96,6 +96,13 @@ def heart_calc(hearts, max_hearts):
         "neutral_weeks": neutral_min_weeks
     }
     
+def all_npcs():
+    cursor.execute("""
+        SELECT npc_name
+        FROM npcs
+    """)
+    results = cursor.fetchall()
+    return [row['npc_name'] for row in results]
 
 
 

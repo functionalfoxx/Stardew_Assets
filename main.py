@@ -1,6 +1,6 @@
 from item_query import search_by_item, items_directory
 from display import item_search_gui, item_directory_gui
-from npc_query import search_by_npc, heart_calc
+from npc_query import search_by_npc, all_npcs, heart_calc
 import re
 
 print("""
@@ -42,14 +42,14 @@ if choice == "1":
         results = search_by_npc(name)
         print(results)
 
-    elif item_choice == "2":
-        print("Coming Soon")
+    elif item_choice == "2":                                                                            # Still needs GUI-like formatting
+        print(all_npcs())
 
     elif item_choice == "3":
-        print("Coming Soon")
+        print("View NPC schedule by day coming soon")
 
     elif item_choice == "4":
-        print("Coming Soon")
+        print("View all gift preferences by NPC coming soon")
     
     elif item_choice == "5":                                                                            # Still needs GUI-like formatting
         hearts = input("Enter how many full hearts you have with the NPC being searched: ").strip()
