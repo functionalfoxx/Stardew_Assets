@@ -1,6 +1,6 @@
 from item_query import search_by_item, items_directory
 from display import item_search_gui, item_directory_gui
-from npc_query import search_by_npc, all_npcs, heart_calc
+from npc_query import search_by_npc, all_npcs, preferences_by_npc, heart_calc
 import re
 
 print("""
@@ -25,11 +25,10 @@ if choice == "1":
     print("""
     NPC Information
           
-    Type 1: Find NPC profile by name
+    Type 1: View NPC profile by name
     Type 2: View all giftable NPCs
-    Type 3: View NPC schedule by day
-    Type 4: View all gift preferences by NPC
-    Type 5: Calculate gifts needed to gain max hearts\n
+    Type 3: View all gift preferences by NPC
+    Type 4: Calculate gifts needed to gain max NPC hearts\n
     """)
 
     item_choice = input("Select option: ").strip()    
@@ -38,40 +37,33 @@ if choice == "1":
         name = input("Enter the NPC name you want to search: ").strip()                                 # Add a comment to best view profile, expand your terminal window.
         name = re.sub(r"[^A-Za-z]", "", name)
         name = name.capitalize() 
-
         results = search_by_npc(name)
         print(results)
 
     elif item_choice == "2":                                                                            # Still needs GUI-like formatting
         print(all_npcs())
 
-    elif item_choice == "3":
-        print("View NPC schedule by day coming soon")
-
-    elif item_choice == "4":
-        print("View all gift preferences by NPC coming soon")
+    elif item_choice == "3":                                                                            # Still needs GUI-like formatting
+        name = input("Enter the NPC name you want to search: ").strip()
+        name = re.sub(r"[^A-Za-z]", "", name)
+        name = name.capitalize() 
+        results = preferences_by_npc(name)
+        print(results)
     
-    elif item_choice == "5":                                                                            # Still needs GUI-like formatting
+    elif item_choice == "4":                                                                            # Still needs GUI-like formatting
         hearts = input("Enter how many full hearts you have with the NPC being searched: ").strip()
         hearts = re.sub(r"[^0-9]", "", hearts)
+        hearts = int(hearts)
+        results_friendship = heart_calc(hearts, 10)
+        results_marriage = heart_calc(hearts, 14)
+        print(results_friendship)
+        print(results_marriage)
 
-        if hearts == "":
-            print("Invalid input.")
-        else:
-            hearts = int(hearts)
-
-            friendship_max_hearts = heart_calc(hearts, 10)
-            marriage_max_hearts = heart_calc(hearts, 14)
-
-            print(friendship_max_hearts)
-            print(marriage_max_hearts)
-
+            # notes to add
             # stardrop_tea_qty is going to be same as missing hearts
             # ### mention that a bouquet will need to be given at 8 hearts and is not calculated in item qty needed
-            # to get 14 max hearts -> only show this additional calc if the npc we're under is can_marry
-            # all same as above except empty_hearts = 14 minus input hearts
             # ### mention that a mermaid pendant will need to be given at 10 hearts and is not calculated in item qty needed
-
+            # to get 14 max hearts -> only show this additional calc if the npc we're under is can_marry
             # calculator includes normal daily gifts only
             # it does not include gifts given for events, quests, movie theater, talking to them, or any other actions that increase friendship level
             # it does not include disliked or hated gifts, friendship decay, or any other actions that decrease friendship level
@@ -96,11 +88,11 @@ elif choice == "2":
         item = input("Enter the item to search: ").strip()
         item = input().lower()
         item = re.sub(r"[^a-z0-9 ]", "", item)
-
         results = search_by_item(item)
 
         if results is None:
             print(f"\nCannot find '{item}'. Please try again.\n")
+
         else:
             item_search_gui(results)
 

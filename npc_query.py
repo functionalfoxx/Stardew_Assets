@@ -105,12 +105,68 @@ def all_npcs():
     return [row['npc_name'] for row in results]
 
 
+def preferences_by_npc(name):
+    cursor.execute("""
+            SELECT
+                npcs.npc_name,
+                items.item_name,
+                npc_preferences.preference AS npc_pref,
+                universal_preferences.preference AS universal_pref
+            FROM npcs
+            CROSS JOIN items
+            LEFT JOIN npc_preferences
+                ON npcs.npc_id = npc_preferences.npc_id
+                AND npc_preferences.item_id = items.item_id
+            LEFT JOIN universal_preferences
+                ON items.item_id = universal_preferences.item_id
+            WHERE npcs.npc_name = ?
+        """, (name,))
+
+    preferences = cursor.fetchall()
+
+    preference_info = {
+        'Loved' : [],
+        'Liked' : [],
+        'Neutral' : [],
+        'Disliked' : [],
+        'Hated' : [],
+    }
+
+    for row in preferences:
+        npc_pref = row['npc_pref']
+        item_name = row['item_name']
+
+        if npc_pref == "loved":
+            preference_info['Loved'].append(item_name)
+        elif npc_pref == "liked":
+            preference_info['Liked'].append(item_name)
+        elif npc_pref == "disliked":
+            preference_info['Disliked'].append(item_name)
+        elif npc_pref == "hated":
+            preference_info['Hated'].append(item_name)
+
+    for row in preferences:
+        universal_pref = row['universal_pref']
+        item_name = row['item_name']
+
+        if universal_pref and all(item_name not in lst for lst in preference_info.values()):
+            if universal_pref == "loved":
+                preference_info['Loved'].append(item_name)
+            elif universal_pref == "liked":
+                preference_info['Liked'].append(item_name)
+            elif universal_pref == "disliked":
+                preference_info['Disliked'].append(item_name)
+            elif universal_pref == "hated":
+                preference_info['Hated'].append(item_name)
+
+    for row in preferences:
+            item_name = row['item_name']
+            if all(item_name not in lst for lst in preference_info.values()):
+                preference_info['Neutral'].append(item_name)
+
+    return preference_info
 
 
-
-
-#
-#
 #           ||| NPC QUERY SCREEN |||
 #
 #            FROM NPC PROFILE
@@ -118,19 +174,8 @@ def all_npcs():
 #
 
 #                TYPE 3 : SEE ALL OF [NPC NAME]'S GIFT PREFERENCES
-#                    TYPE 1 : SEE LOVED GIFTS               ||| LIST ALL MATCHING GIFTS IN ABC ORDER |||
-#                    TYPE 2 : SEE LIKED GIFTS               ||| SAME FORMAT FOR EACH PREFERENCE TYPE |||
-#                    TYPE 3 : SEE NEUTRAL GIFTS             ||| GUI-ISH DISPLAY ACROSS PROJECT |||
+#                    TYPE 1 : SEE LOVED GIFTS 
+#                    TYPE 2 : SEE LIKED GIFTS 
+#                    TYPE 3 : SEE NEUTRAL GIFTS 
 #                    TYPE 4 : SEE DISLIKED GIFTS
 #                    TYPE 5 : SEE HATED GIFTS
-#
-#            ---------------------------------------------------
-#
-#            TYPE 2 : SEE ALL STARDEW GIFTABLE NPCS
-#                [LISTS ALL NPCS IN ABC ORDER"]
-#
-#                TYPE B : GO BACK TO THE PREVIOUS SCREEN
-#                TYPE M : RETURN TO THE MAIN SCREEN
-#
-#
-#
