@@ -1,5 +1,6 @@
 from item_query import search_by_item, items_directory
 from display import item_search_gui, item_directory_gui
+from npc_query import search_by_npc
 import re
 
 print("""
@@ -17,7 +18,14 @@ Type 3: Gift Route Optimization\n
 choice = input("Select option: ").strip()
                                                                          # # # # # # # # # # # #
 if choice == "1":                                                       #       NPC QUERY       #
-    print("\nNPC Information page coming soon.")                         # # # # # # # # # # # # 
+                                                                         # # # # # # # # # # # # 
+    name = input("Enter the NPC name you want to search: ").strip()
+    name = re.sub(r"[^A-Za-z]", "", name)
+    name = name.capitalize()
+
+    results = search_by_npc(name)
+
+    print(results)
                                                                          # # # # # # # # # # # #
 elif choice == "2":                                                     #       ITEM-QUERY       #
                                                                          # # # # # # # # # # # #
