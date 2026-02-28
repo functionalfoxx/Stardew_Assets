@@ -80,6 +80,9 @@ def search_by_item(item):
     return {results[0]['item_name']: item_info}
 
 def items_directory(letter):
+    if letter is not None and letter.upper() == "ALL":
+        letter = None
+
     if letter is None:
         cursor.execute("""
             SELECT item_name

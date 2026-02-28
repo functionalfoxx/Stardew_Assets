@@ -19,7 +19,10 @@ choice = input("Select option: ").strip()
                                                                          # # # # # # # # # # # #
 if choice == "1":                                                       #       NPC QUERY       #
                                                                          # # # # # # # # # # # # 
-    name = input("Enter the NPC name you want to search: ").strip()
+    name = input("Enter the NPC name you want to search: ").strip()       
+    
+    # Add a comment to best view profile, expand your terminal window.
+    
     name = re.sub(r"[^A-Za-z]", "", name)
     name = name.capitalize()
 
@@ -52,9 +55,9 @@ elif choice == "2":                                                     #       
 
     elif item_choice == "2":
         print("Enter a letter to display matching items or enter 'all' to display all giftable items:")
-        letter = input().strip().upper()
+        letter = input().strip()
 
-        if letter == "all":
+        if letter.lower() == "all":
             results = items_directory(None)
             item_directory_gui(results, "all")
 
@@ -73,8 +76,6 @@ elif choice == "3":
 
 else:
     print("Directory not recognized.")
-
-
 
 
 
