@@ -1,5 +1,4 @@
 import sqlite3
-import re
 import math
 
 DB_PATH = r"C:\Portfolio_Projects\stardew_assets\sqlite\stardew.db"
