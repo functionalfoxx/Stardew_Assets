@@ -71,6 +71,20 @@ for schedule in npc_schedules:
     schedule["Location Column"] = locations[loc_id]["Location Column"]
     schedule["Location Row"] = locations[loc_id]["Location Row"]
 
+start_location_id = 18                                                          # Always start at bus stop map from farm. May adjust later to always a start NPC
+current_column = locations[start_location_id]["Location Column"]
+current_row = locations[start_location_id]["Location Row"]
+
+current_time = time_to_minutes("8:00")                                          # Player will easily be able to get items before 8AM. May adjust later to 7AM
+
+route = []
+
+unvisited_npcs = npc_schedules.copy()
+visited_npcs = []
+
+next_npc = unvisited_npcs.pop(0)
+visited_npcs.append(next_npc)
+
 """
 
 QUESTION 1 :    DO YOU HAVE THESE CHARACTERS UNLOCKED?
