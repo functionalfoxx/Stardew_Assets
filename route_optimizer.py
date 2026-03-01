@@ -188,7 +188,7 @@ def check_for_event(season, day):
 
     return None
 
-def get_player_progress(unlocked_input, hearts_input, progress_input, day_input):
+def get_player_progress(unlocked_input, hearts_input, progress_input, day_info):
 
     cursor.execute("""
         SELECT npc_names
@@ -199,7 +199,6 @@ def get_player_progress(unlocked_input, hearts_input, progress_input, day_input)
 
     all_npcs = [row["npc_name"] for row in rows]
 
-    unlocked_npcs = []
     unlocked_npcs = all_npcs.copy()
     
     for npc, status in unlocked_input.items():
@@ -265,6 +264,8 @@ def get_player_progress(unlocked_input, hearts_input, progress_input, day_input)
     for npc_name in npc_schedules_by_npc:
         schedules = npc_schedules_by_npc[npc_name]
 
+        selected_schedule[npc_name] = []
+
         for schedule in schedules:
             if_hearts = True
 
@@ -272,7 +273,6 @@ def get_player_progress(unlocked_input, hearts_input, progress_input, day_input)
                 condition = schedule["heart_condition"]
 
                 npc_conditions = []
-
                 if "and" in condition:
                     for cond in condition.split("and"):
                         npc_conditions.append(cond.strip())
@@ -280,7 +280,6 @@ def get_player_progress(unlocked_input, hearts_input, progress_input, day_input)
                     npc_conditions = [condition.strip()]
 
                 for npc_cond in npc_conditions:
-
                     operator = npc_cond[:2]
                     number_and_npc = npc_cond[2:].strip()
                     number_str, target_npc_name = number_and_npc.split(" ", 1)
@@ -294,69 +293,41 @@ def get_player_progress(unlocked_input, hearts_input, progress_input, day_input)
                         break
                     elif operator == "<=" and npc_hearts > number:
                         if_hearts = False
-                        break            
+                        break
 
             if_progress_flags = True
-
             if schedule["need_comunity_center"] == 1 and progress_input.get("community_center", 0) == 0:
                 if_progress_flags = False
-
             if schedule["need_bus_service"] == 1 and progress_input.get("bus_service", 0) == 0:
                 if_progress_flags = False
-
             if schedule["need_beach_bridge"] == 1 and progress_input.get("beach_bridge", 0) == 0:
                 if_progress_flags = False
 
-            if if_hearts and if_progress_flags:
-                selected_schedule[npc_name] = schedule
-                break
+            day_matches = True
+            if schedule["weekday"] is not None:
+                if schedule["weekday"].upper() != day_info["Weekday"]:
+                    day_matches = False
+            if schedule["season"] is not None:
+                if schedule["season"].upper() != day_info["Season"]:
+                    day_matches = False
+            if schedule["day"] is not None:
+                if str(schedule["day"]) != day_info["Date"]:
+                    day_matches = False
+
+            weather_ok = False
+            day_weather = day_info["Weather"]
+            if schedule["weather"] is None:
+                weather_ok = True
+            elif schedule["weather"] == day_weather:
+                weather_ok = True
+            elif schedule["weather"] == "R" and day_weather == "R" and schedule["alternative_rain_possibility"] == 1:
+                weather_ok = True
+
+            if if_hearts and if_progress_flags and day_matches and weather_ok:
+                selected_schedule[npc_name].append(schedule)
 
     return selected_schedule
-
-    # player progress needs to fully match all the non-null lines per priority. if not 100%, move to next priority (next priority number is a lower # than the one just checked)
-
-        # condition(s) 2: need_comunity_center, need_bus_service, need_beach_bridge all have 0/1 values. match to progress_input
-        # condition 3: weather to match letter in day_info {"Date": day_values[2]}
-                # if condition = R then check if alternative_rain_possibility is 0/1 in table
-                    # if it is a 0, then continue to other conditions
-                    # if it is a 1, there is a second schedule possible for the day. there are only 4 times this is a 1
-        # condition(s) 5: weekday, season, day to match
-        
-
-    
-
-    
-
-"""
-        Progress
-        Bus Service, Beach Bridge Repair, Community Center
-        Example: Y, Y, N
-
-        game_progress = {
-            "Bus Service Restored": progress_values[0],
-            "Beach Bridge Repaired": progress_values[1],
-            "Community Center Completed": progress_values[2]
-        }
-
-        =======================================================================
-
-        Day
-        Weekday, season, day number, and weather
-        For weather, use R for RAIN, G for GREEN RAIN, or N for NO RAIN.
-        Example: Wednesday, Summer, 22, N
-
-        day_info = {
-            "Weekday": day_values[0],
-            "Season": day_values[1],
-            "Date": day_values[2],
-            "Weather": day_values[3]
-        }
-        
-"""
-
-    
-        
-
+     
 
 
 
