@@ -24,7 +24,6 @@ for row in cursor.fetchall():
         "Location Row": row["location_row"]
     }
 
-
 def time_to_minutes(HH_mm):
     hour_str, minute_str = HH_mm.split(":")
     hour = int(hour_str)
@@ -36,6 +35,33 @@ def time_to_minutes(HH_mm):
         total_minutes += 24 * 60
 
     return total_minutes
+
+cursor.execute("""
+    SELECT *
+    FROM npc_schedules
+""")
+
+npc_schedules = []
+
+for row in cursor.fetchall():
+    schedule_id = row["schedule_id"]
+    npc_id = row["npc_id"]
+    location_id = row["location_id"]
+    HH_mm = row["time"]
+    schedule_description = row["schedule_description"]
+    
+    time_as_minutes = time_to_minutes(HH_mm)
+    
+    npc_schedules.append({
+        "Schedule ID": schedule_id,
+        "NPC ID": npc_id,
+        "Location ID": location_id,
+        "Time": HH_mm,
+        "Time As Minutes": time_as_minutes,
+        "Schedule Description": schedule_description
+    })
+
+
 
 
 
