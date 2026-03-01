@@ -1,6 +1,7 @@
 from item_query import search_by_item, items_directory
 from display import item_search_gui, item_directory_gui
 from npc_query import search_by_npc, all_npcs, preferences_by_npc, heart_calc
+from route_optimizer import get_player_progress
 import re
 
 print("""
@@ -180,9 +181,10 @@ elif choice == "2":
 
 
 elif choice == "3":
+
     print("""
-        NPC SCHEDULES CHANGE BASED ON SEVERAL FACTORS. ANSWER 4 QUESTIONS TO OPTIMIZE YOUR GIFT ROUTE CORRECTLY.
-        IF YOU ARE JUST TESTING THIS SIMULATION, YOU MAY COPY & PASTE THE TEXT IN THE PROVIDED EXAMPLE FOR EACH QUESTION
+        NPC schedules change based on several factors. Answer 4 questions to optimize your gift route correctly.
+        If you are just testing this simulation, you can copy and paste the text in the provided example for each question.
     """)
 
     unlocked_input = input("""
@@ -275,7 +277,7 @@ elif choice == "3":
     day_info = {
         "Weekday": day_values[0],
         "Season": day_values[1],
-        "Date": int(day_values[2]),
+        "Date": day_values[2],
         "Weather": day_values[3]
     }
 

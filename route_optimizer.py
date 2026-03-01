@@ -160,6 +160,11 @@ while unvisited_npcs:
     unvisited_npcs.remove(next_npc)
     visited_npcs.append(next_npc)
 
+def get_player_progress(unlocked_input, hearts_input, progress_input, day_input):
+    return
+
+
+
 """
 
 QUESTION 1 :    DO YOU HAVE THESE CHARACTERS UNLOCKED?
