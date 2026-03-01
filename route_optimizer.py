@@ -75,7 +75,7 @@ start_location_id = 18                                                          
 current_column = locations[start_location_id]["Location Column"]
 current_row = locations[start_location_id]["Location Row"]
 
-current_time = time_to_minutes("8:00")                                          # Player will easily be able to get items before 8AM. May adjust later to 7AM
+current_time = time_to_minutes("8:00")                                          # Player will easily be able to get items before 8AM. May adjust earlier to 7AM
 
 route = []
 
@@ -84,6 +84,17 @@ visited_npcs = []
 
 next_npc = unvisited_npcs.pop(0)
 visited_npcs.append(next_npc)
+
+def get_available_npcs(unvisited_npcs, current_time):
+    
+    available_npcs = []
+    
+    for npc in unvisited_npcs:
+
+        if npc["Time As Minutes"] >= current_time:
+            available_npcs.append(npc)
+    
+    return available_npcs
 
 """
 
