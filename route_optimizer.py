@@ -61,11 +61,15 @@ for row in cursor.fetchall():
         "Schedule Description": schedule_description
     })
 
-
-
-
-
-
+for schedule in npc_schedules:
+    loc_id = schedule["Location ID"]
+    
+    schedule["Location Name"] = locations[loc_id]["Location Name"]
+    schedule["Is Building?"] = locations[loc_id]["Is Building?"]
+    schedule["Is Map Connection?"] = locations[loc_id]["Is Map Connection?"]
+    schedule["Is Teleport?"] = locations[loc_id]["Is Teleport?"]
+    schedule["Location Column"] = locations[loc_id]["Location Column"]
+    schedule["Location Row"] = locations[loc_id]["Location Row"]
 
 """
 
