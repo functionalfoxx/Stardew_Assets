@@ -1,7 +1,7 @@
 from item_query import search_by_item, items_directory
 from display import item_search_gui, item_directory_gui
 from npc_query import search_by_npc, all_npcs, preferences_by_npc, heart_calc
-from route_optimizer import get_player_progress
+from route_optimizer import check_for_event
 import re
 
 print("""
@@ -187,8 +187,39 @@ elif choice == "3":
         If you are just testing this simulation, you can copy and paste the text in the provided example for each question.
     """)
 
+    day_input = input("""
+        QUESTION 1: What day is it? Provide the weekday, season, day number, and weather. Your answer must remain in this order.
+        For weather, use R for RAIN, G for GREEN RAIN, or N for NO RAIN.
+        Your answer must be separated by a comma
+        Example: Wednesday, Summer, 22, N
+
+        Enter day info: """)
+        
+    split_day_input = day_input.split(",")
+    day_values = []
+
+    for answer in split_day_input:
+        answer = answer.strip().upper()
+        day_values.append(answer)
+
+    day_info = {
+        "Weekday": day_values[0],
+        "Season": day_values[1],
+        "Date": day_values[2],
+        "Weather": day_values[3]
+    }
+
+    season = day_info["Season"]
+    day = day_info["Date"]
+
+    event_name = check_for_event(day_info["Season"], day_info["Date"])
+
+    if event_name:
+        print(f"Schedule unavailable. {event_name} is taking place and affects NPC schedules.")
+        return 
+
     unlocked_input = input("""
-        QUESTION 1: Do you have these characters unlocked? 
+        QUESTION 2: Do you have these characters unlocked? 
         Wizard, Kent, Mines Dwarf, Sandy, Krobus, Leo. Your answer must remain in this order.
         Your answer must be in the form of Y for YES, N for NO, and separated with a comma. 
         Example: Y, Y, Y, N, Y, N
@@ -213,7 +244,7 @@ elif choice == "3":
     }
 
     hearts_input = input("""
-        QUESTION 2: How many full friendship hearts do you have with each of these characters?
+        QUESTION 3: How many full friendship hearts do you have with each of these characters?
         Abigail, Sebastian, Haley, Alex, Elliott, Leah, Leo, Penny, Sam. Your answer must remain in this order.
         Your answer must be in whole numbers and separated with a comma. 
         Example: 5, 9, 3, 5, 10, 7, 0, 3, 5
@@ -239,7 +270,7 @@ elif choice == "3":
         "Sam": hearts_values[8]
     }
     progress_input = input("""
-        QUESTION 3: Have you completed these game progress points?
+        QUESTION 4: Have you completed these game progress points?
         Bus Service, Beach Bridge Repair, Community Center. Your answer must remain in this order.
         Your answer must be in the form of Y for YES, N for NO, and separated with a comma.
         Example: Y, Y, N
@@ -250,35 +281,17 @@ elif choice == "3":
     progress_values = []
 
     for answer in split_progress_input:
-        answer = answer.strip().upper()
-        progress_values.append(answer)
+        if answer == "Y":
+            progress_values.append(1)
+        elif answer == "N":
+            progress_values.append(0)
+        else:
+            raise ValueError("Answers must be Y or N.")
 
     game_progress = {
         "Bus Service Restored": progress_values[0],
         "Beach Bridge Repaired": progress_values[1],
         "Community Center Completed": progress_values[2]
-    }
-
-    day_input = input("""
-        QUESTION 4: What day is it? Provide the weekday, season, day number, and weather. Your answer must remain in this order.
-        For weather, use R for RAIN, G for GREEN RAIN, or N for NO RAIN.
-        Your answer must be separated by a comma
-        Example: Wednesday, Summer, 22, N
-
-        Enter day info: """)
-        
-    split_day_input = day_input.split(",")
-    day_values = []
-
-    for answer in split_day_input:
-        answer = answer.strip().upper()
-        day_values.append(answer)
-
-    day_info = {
-        "Weekday": day_values[0],
-        "Season": day_values[1],
-        "Date": day_values[2],
-        "Weather": day_values[3]
     }
 
     
