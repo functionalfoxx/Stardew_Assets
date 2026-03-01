@@ -86,15 +86,12 @@ for schedule in npc_schedules:
 current_column = locations[START_LOCATION_ID]["Location Column"]
 current_row = locations[START_LOCATION_ID]["Location Row"]
 
-current_time = time_to_minutes(STARTING_HOUR)                                          
+current_time = time_to_minutes(f"{STARTING_HOUR}:00")                               
 
 route = []
 
 unvisited_npcs = npc_schedules.copy()
 visited_npcs = []
-
-next_npc = unvisited_npcs.pop(0)
-visited_npcs.append(next_npc)
 
 def get_available_npcs(unvisited_npcs, current_time):
     
@@ -142,8 +139,7 @@ while unvisited_npcs:
             next_npc = npc
 
     distance_tiles = next_npc["Distance From Current"]
-    travel_time = (distance_tiles / TILES_PER_10_MIN) * GAME_TIME_INCREMENTS
-    travel_time = math.ceil(travel_time / GAME_TIME_INCREMENTS) * GAME_TIME_INCREMENTS
+    travel_time = math.ceil(distance_tiles / TILES_PER_10_MIN) * GAME_TIME_INCREMENTS
     arrival_time = current_time + travel_time
 
     if arrival_time > next_npc["Time As Minutes"]:
