@@ -1,10 +1,17 @@
 import sqlite3
+import math
 
 DB_PATH = r"C:\Portfolio_Projects\stardew_assets\sqlite\stardew.db"
 
 conn = sqlite3.connect(DB_PATH)
 conn.row_factory = sqlite3.Row
 cursor = conn.cursor()
+
+STARTING_HOUR = 6
+START_LOCATION_ID = 18
+TILES_PER_10_MIN = 35
+GAME_TIME_INCREMENTS = 10
+
 
 cursor.execute("""
     SELECT *
@@ -29,12 +36,17 @@ def time_to_minutes(HH_mm):
     hour = int(hour_str)
     minute = int(minute_str)
 
-    total_minutes = (hour - 6) * 60 + minute 
+    total_minutes = (hour - STARTING_HOUR) * 60 + minute 
 
     if total_minutes < 0:
         total_minutes += 24 * 60
 
     return total_minutes
+
+def minutes_to_time(minutes):
+    hour = STARTING_HOUR + (minutes // 60)
+    minute = minutes % 60
+    return f"{hour:02d}:{minute:02d}"
 
 cursor.execute("""
     SELECT *
@@ -71,11 +83,10 @@ for schedule in npc_schedules:
     schedule["Location Column"] = locations[loc_id]["Location Column"]
     schedule["Location Row"] = locations[loc_id]["Location Row"]
 
-start_location_id = 18                                                          # Always start at bus stop map from farm. May adjust later to always a start NPC
-current_column = locations[start_location_id]["Location Column"]
-current_row = locations[start_location_id]["Location Row"]
+current_column = locations[START_LOCATION_ID]["Location Column"]
+current_row = locations[START_LOCATION_ID]["Location Row"]
 
-current_time = time_to_minutes("8:00")                                          # Player will easily be able to get items before 8AM. May adjust earlier to 7AM
+current_time = time_to_minutes(STARTING_HOUR)                                          
 
 route = []
 
@@ -108,6 +119,50 @@ for npc in available_npcs:
         target_col = npc["Location Column"],
         target_row = npc["Location Row"]
     )
+
+while unvisited_npcs:
+
+    available_npcs = get_available_npcs(unvisited_npcs, current_time)
+
+    if not available_npcs:
+        break
+
+    for npc in available_npcs:
+        npc["Distance From Current"] = distance(
+            current_col = current_column,
+            current_row = current_row,
+            target_col = npc["Location Column"],
+            target_row = npc["Location Row"]
+        )
+
+    next_npc = available_npcs[0]
+
+    for npc in available_npcs:
+        if npc["Distance From Current"] < next_npc["Distance From Current"]:
+            next_npc = npc
+
+    distance_tiles = next_npc["Distance From Current"]
+    travel_time = (distance_tiles / TILES_PER_10_MIN) * GAME_TIME_INCREMENTS
+    travel_time = math.ceil(travel_time / GAME_TIME_INCREMENTS) * GAME_TIME_INCREMENTS
+    arrival_time = current_time + travel_time
+
+    if arrival_time > next_npc["Time As Minutes"]:
+        unvisited_npcs.remove(next_npc)
+        continue
+
+    route.append({
+        "NPC ID": next_npc["NPC ID"],
+        "Location Name": next_npc["Location Name"],
+        "Arrival Time": arrival_time,
+        "Distance From Previous": next_npc["Distance From Current"]
+    })
+
+    current_time = arrival_time
+    current_column = next_npc["Location Column"]
+    current_row = next_npc["Location Row"]
+
+    unvisited_npcs.remove(next_npc)
+    visited_npcs.append(next_npc)
 
 """
 
