@@ -173,7 +173,6 @@ while unvisited_npcs:
     visited_npcs.append(next_npc)
 
 def check_for_event(season, day):
-    # Ensure day is int
     day = int(day)
 
     cursor.execute("""
@@ -207,11 +206,62 @@ def get_player_progress(unlocked_input, hearts_input, progress_input, day_input)
         if status.upper() == "N":
             if npc in unlocked_npcs:
                 unlocked_npcs.remove(npc)
+
+    cursor.execute("""
+        SELECT 
+            npc_schedules.schedule_id,
+            npc_schedules.npc_id,
+            npc_schedules.priority,
+            npc_schedules.hearts_affects,
+            npc_schedules.heart_condition,
+            npc_schedules.need_comunity_center,
+            npc_schedules.need_bus_service,
+            npc_schedules.need_beach_bridge,
+            npc_schedules.weather,
+            npc_schedules.alternative_rain_possibility,
+            npc_schedules.weekday,
+            npc_schedules.season,
+            npc_schedules.day,
+            npc_schedules.time,
+            npc_schedules.location_id,
+            npc_schedules.schedule_description,
+            npcs.npc_name
+        FROM npc_schedules
+        LEFT JOIN npcs ON npc_schedules.npc_id = npcs.npc_id
+    """)
+
+    schedule_rows = cursor.fetchall()
+
+    npc_schedules_by_npc = {}
+
+    for npc_name in unlocked_npcs:
+        npc_schedules_by_npc[npc_name] = []
+
+    for row in schedule_rows:
+        npc_name = row["npc_name"]
+        if npc_name in npc_schedules_by_npc:
+            npc_schedules_by_npc[npc_name].append(row)
+
+    for npc_name in npc_schedules_by_npc:
+        schedules = npc_schedules_by_npc[npc_name]
+
+        sorted_schedules = []
+
+        while len(schedules) > 0:
+
+            highest = schedules[0]
+            for row in schedules:
+                if row["priority"] > highest["priority"]:
+                    highest = row
+
+            sorted_schedules.append(highest)
+            
+            schedules.remove(highest)
+        
+        npc_schedules_by_npc[npc_name] = sorted_schedules
     
     return
 
-    # match progress to npc_schedules table
-    # go through each npc_id one npc at a time and find the highest priority (multiple rows will match that priority for that npc almost every time)
     # player progress needs to fully match all the non-null lines per priority. if not 100%, move to next priority (next priority number is a lower # than the one just checked)
         # condition 1: if table hearts_affects = 1 then heart_condition needs to be looked at
                 # if condition = <6 Abigail and Sebastian then hearts input must be <=5 with Abigail AND <=5 with Sebastian
