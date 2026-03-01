@@ -259,22 +259,45 @@ def get_player_progress(unlocked_input, hearts_input, progress_input, day_input)
             schedules.remove(highest)
         
         npc_schedules_by_npc[npc_name] = sorted_schedules
+
+    for npc_name in npc_schedules_by_npc:
+    schedules = npc_schedules_by_npc[npc_name]
+
+        for schedule in schedules:
+            if_hearts = True
+    
+            if schedule["hearts_affects"] == 1 and schedule["heart_condition"]:
+                condition = schedule["heart_condition"]
+
+                npc_conditions = []
+
+                if "and" in condition:
+                    for cond in condition.split("and"):
+                        npc_conditions.append(cond.strip())
+                else:
+                    npc_conditions = [condition.strip()]
+
+                for npc_cond in npc_conditions:
+
+                    operator = npc_cond[:2]
+                    number_and_npc = npc_cond[2:].strip()
+                    number_str, target_npc_name = number_and_npc.split(" ", 1)
+                    number = int(number_str)
+                    target_npc_name = target_npc_name.strip()
+
+                    npc_hearts = hearts_input.get(target_npc_name, 0)
+
+                    if operator == ">=" and npc_hearts < number:
+                        if_hearts = False
+                        break
+                    elif operator == "<=" and npc_hearts > number:
+                        if_hearts = False
+                        break            
     
     return
 
     # player progress needs to fully match all the non-null lines per priority. if not 100%, move to next priority (next priority number is a lower # than the one just checked)
-        # condition 1: if table hearts_affects = 1 then heart_condition needs to be looked at
-                # if condition = <6 Abigail and Sebastian then hearts input must be <=5 with Abigail AND <=5 with Sebastian
-                # if condition = <6 Haley and Alex then hearts input must be <=5 with Haley AND <=5 with Alex
-                # if condition = >= 14 Alex then hearts input must be >= 14 with Alex
-                # if condition = >= 6 Elliott then hearts input must be >= 6 with Elliott
-                # if condition = <6 Leah then hearts input must be <= 5 with Leah
-                # if condition = >=6 Alex then hearts input must be >= 6 with Alex
-                # if condition = >=6 Leo then hearts input must be >= 6 with Leo
-                # if condition = <6 Penny and Sam then hearts input must be <= 5 with Penny AND <= 5 with Sam
-                # if condition = <6 Sebastian then hearts input must be <= 5 with Sebastian
-                # if condition = >=6 Sebastian then hearts input must be >= 6 with Sebastian
-                    # if player matches whatever line is in question, then the hearts_affects line is a match, if not, move on to next priority
+
         # condition(s) 2: need_comunity_center, need_bus_service, need_beach_bridge all have 0/1 values. match to progress_input
         # condition 3: weather to match letter in day_info {"Date": day_values[2]}
                 # if condition = R then check if alternative_rain_possibility is 0/1 in table
@@ -288,24 +311,6 @@ def get_player_progress(unlocked_input, hearts_input, progress_input, day_input)
     
 
 """
-        Hearts
-        Abigail, Sebastian, Haley, Alex, Elliott, Leah, Leo, Penny, Sam
-        Example: 5, 9, 3, 5, 10, 7, 0, 3, 5
-
-        hearts_dict = {
-            "Abigail": hearts_values[0],
-            "Sebastian": hearts_values[1],
-            "Haley": hearts_values[2],
-            "Alex": hearts_values[3],
-            "Elliott": hearts_values[4],
-            "Leah": hearts_values[5],
-            "Leo": hearts_values[6],
-            "Penny": hearts_values[7],
-            "Sam": hearts_values[8]
-        }
-        
-        ======================================================================
-
         Progress
         Bus Service, Beach Bridge Repair, Community Center
         Example: Y, Y, N
