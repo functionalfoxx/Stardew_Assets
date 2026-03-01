@@ -260,12 +260,14 @@ def get_player_progress(unlocked_input, hearts_input, progress_input, day_input)
         
         npc_schedules_by_npc[npc_name] = sorted_schedules
 
+    selected_schedule = {}
+
     for npc_name in npc_schedules_by_npc:
-    schedules = npc_schedules_by_npc[npc_name]
+        schedules = npc_schedules_by_npc[npc_name]
 
         for schedule in schedules:
             if_hearts = True
-    
+
             if schedule["hearts_affects"] == 1 and schedule["heart_condition"]:
                 condition = schedule["heart_condition"]
 
@@ -293,8 +295,23 @@ def get_player_progress(unlocked_input, hearts_input, progress_input, day_input)
                     elif operator == "<=" and npc_hearts > number:
                         if_hearts = False
                         break            
-    
-    return
+
+            if_progress_flags = True
+
+            if schedule["need_comunity_center"] == 1 and progress_input.get("community_center", 0) == 0:
+                if_progress_flags = False
+
+            if schedule["need_bus_service"] == 1 and progress_input.get("bus_service", 0) == 0:
+                if_progress_flags = False
+
+            if schedule["need_beach_bridge"] == 1 and progress_input.get("beach_bridge", 0) == 0:
+                if_progress_flags = False
+
+            if if_hearts and if_progress_flags:
+                selected_schedule[npc_name] = schedule
+                break
+
+    return selected_schedule
 
     # player progress needs to fully match all the non-null lines per priority. if not 100%, move to next priority (next priority number is a lower # than the one just checked)
 
