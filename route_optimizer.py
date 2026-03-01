@@ -96,6 +96,19 @@ def get_available_npcs(unvisited_npcs, current_time):
     
     return available_npcs
 
+def distance(current_col, current_row, target_col, target_row):
+    return abs(current_col - target_col) + abs(current_row - target_row)
+
+available_npcs = get_available_npcs(unvisited_npcs, current_time)
+
+for npc in available_npcs:
+    npc["Distance From Current"] = distance(
+        current_col = current_column,
+        current_row = current_row,
+        target_col = npc["Location Column"],
+        target_row = npc["Location Row"]
+    )
+
 """
 
 QUESTION 1 :    DO YOU HAVE THESE CHARACTERS UNLOCKED?
