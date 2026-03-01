@@ -215,8 +215,10 @@ elif choice == "3":
     event_name = check_for_event(day_info["Season"], day_info["Date"])
 
     if event_name:
-        print(f"Schedule unavailable. {event_name} is taking place and affects NPC schedules.")
-        return 
+        print(f"""
+            Schedule unavailable. {event_name} is taking place and affects NPC schedules.
+              """)
+        exit()
 
     unlocked_input = input("""
         QUESTION 2: Do you have these characters unlocked? 

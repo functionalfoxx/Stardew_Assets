@@ -15,12 +15,12 @@ TIME_INCREMENTS = 10                # IN MINUTES
 
 cursor.execute("""
     SELECT 
-        location_id
-        location_name
-        building
-        map_connection
-        teleport
-        location_column
+        location_id,
+        location_name,
+        building,
+        map_connection,
+        teleport,
+        location_column,
         location_row
     FROM locations
 """)
@@ -57,10 +57,10 @@ def minutes_to_time(minutes):
 
 cursor.execute("""
     SELECT
-        schedule_id
-        npc_id
-        location_id
-        time
+        schedule_id,
+        npc_id,
+        location_id,
+        time,
         schedule_description
     FROM npc_schedules
 """)
@@ -173,20 +173,20 @@ while unvisited_npcs:
     visited_npcs.append(next_npc)
 
 def check_for_event(season, day):
+    # Ensure day is int
+    day = int(day)
 
     cursor.execute("""
-    SELECT
-        event_name,
-        schedule_available
-    FROM events
-    WHERE season = ? AND day = ?
+        SELECT event_name, schedule_available
+        FROM events
+        WHERE UPPER(season) = ? AND day = ?
     """, (season.upper(), day))
 
     row = cursor.fetchone()
 
     if row and row["schedule_available"] == 0:
         return row["event_name"]
-    
+
     return None
 
 def get_player_progress(unlocked_input, hearts_input, progress_input, day_input):
