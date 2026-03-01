@@ -73,6 +73,7 @@ Type 3: Gift Route Optimization\n
 choice = input("Select option: ").strip()
 
 
+
  # # # # # # # # # # # # # # 
 #       NPC QUERY TOOLS      #
  # # # # # # # # # # # # # #
@@ -171,9 +172,114 @@ elif choice == "2":
     else:
         print("Directory not recognized.")
 
-elif choice == "3":
-    print("\nGift Route Optimization page coming soon.")
 
+
+ # # # # # # # # # # # # # # #
+#       ROUTE-OPTIMIZER       #
+ # # # # # # # # # # # # # # #   
+
+
+elif choice == "3":
+    print("""
+        NPC SCHEDULES CHANGE BASED ON SEVERAL FACTORS. ANSWER 4 QUESTIONS TO OPTIMIZE YOUR GIFT ROUTE CORRECTLY.
+        IF YOU ARE JUST TESTING THIS SIMULATION, YOU MAY COPY & PASTE THE TEXT IN THE PROVIDED EXAMPLE FOR EACH QUESTION
+    """)
+
+    unlocked_input = input("""
+        QUESTION 1: Do you have these characters unlocked? 
+        Wizard, Kent, Mines Dwarf, Sandy, Krobus, Leo. Your answer must remain in this order.
+        Your answer must be in the form of Y for YES, N for NO, and separated with a comma. 
+        Example: Y, Y, Y, N, Y, N
+        
+                           
+        Enter character progress: """)
+
+    split_unlocked_input = unlocked_input.split(",")
+    unlocked_values = []
+
+    for answer in split_unlocked_input:
+        answer = answer.strip().upper()
+        unlocked_values.append(answer)
+    
+    unlocked_npcs = {
+        "Wizard": unlocked_values[0],
+        "Kent": unlocked_values[1],
+        "Mines Dwarf": unlocked_values[2],
+        "Sandy": unlocked_values[3],
+        "Krobus": unlocked_values[4],
+        "Leo": unlocked_values[5]
+    }
+
+    hearts_input = input("""
+        QUESTION 2: How many full friendship hearts do you have with each of these characters?
+        Abigail, Sebastian, Haley, Alex, Elliott, Leah, Leo, Penny, Sam. Your answer must remain in this order.
+        Your answer must be in whole numbers and separated with a comma. 
+        Example: 5, 9, 3, 5, 10, 7, 0, 3, 5
+
+        Enter hearts: """)
+        
+    split_hearts_input = hearts_input.split(",")
+    hearts_values = []
+
+    for answer in split_hearts_input:
+        answer = answer.strip()
+        hearts_values.append(int(answer))
+
+    hearts_dict = {
+        "Abigail": hearts_values[0],
+        "Sebastian": hearts_values[1],
+        "Haley": hearts_values[2],
+        "Alex": hearts_values[3],
+        "Elliott": hearts_values[4],
+        "Leah": hearts_values[5],
+        "Leo": hearts_values[6],
+        "Penny": hearts_values[7],
+        "Sam": hearts_values[8]
+    }
+    progress_input = input("""
+        QUESTION 3: Have you completed these game progress points?
+        Bus Service, Beach Bridge Repair, Community Center. Your answer must remain in this order.
+        Your answer must be in the form of Y for YES, N for NO, and separated with a comma.
+        Example: Y, Y, N
+
+        Enter progress: """)
+        
+    split_progress_input = progress_input.split(",")
+    progress_values = []
+
+    for answer in split_progress_input:
+        answer = answer.strip().upper()
+        progress_values.append(answer)
+
+    game_progress = {
+        "Bus Service Restored": progress_values[0],
+        "Beach Bridge Repaired": progress_values[1],
+        "Community Center Completed": progress_values[2]
+    }
+
+    day_input = input("""
+        QUESTION 4: What day is it? Provide the weekday, season, day number, and weather. Your answer must remain in this order.
+        For weather, use R for RAIN, G for GREEN RAIN, or N for NO RAIN.
+        Your answer must be separated by a comma
+        Example: Wednesday, Summer, 22, N
+
+        Enter day info: """)
+        
+    split_day_input = day_input.split(",")
+    day_values = []
+
+    for answer in split_day_input:
+        answer = answer.strip().upper()
+        day_values.append(answer)
+
+    day_info = {
+        "Weekday": day_values[0],
+        "Season": day_values[1],
+        "Date": int(day_values[2]),
+        "Weather": day_values[3]
+    }
+
+    
 else:
     print("Directory not recognized.")
 

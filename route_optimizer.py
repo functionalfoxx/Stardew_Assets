@@ -149,7 +149,7 @@ while unvisited_npcs:
     route.append({
         "NPC ID": next_npc["NPC ID"],
         "Location Name": next_npc["Location Name"],
-        "Arrival Time": arrival_time,
+        "Arrival Time": minutes_to_time(arrival_time),
         "Distance From Previous": next_npc["Distance From Current"]
     })
 
