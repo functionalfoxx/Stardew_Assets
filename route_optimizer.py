@@ -10,6 +10,7 @@ cursor.execute("""
     SELECT *
     FROM locations
 """)
+
 locations = {}
 
 for row in cursor.fetchall():
@@ -22,6 +23,23 @@ for row in cursor.fetchall():
         "Location Column": row["location_column"],
         "Location Row": row["location_row"]
     }
+
+
+def time_to_minutes(HH_mm):
+    hour_str, minute_str = HH_mm.split(":")
+    hour = int(hour_str)
+    minute = int(minute_str)
+
+    total_minutes = (hour - 6) * 60 + minute 
+
+    if total_minutes < 0:
+        total_minutes += 24 * 60
+
+    return total_minutes
+
+
+
+
 
 """
 
