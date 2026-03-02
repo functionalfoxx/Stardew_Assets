@@ -9,7 +9,7 @@ cursor = conn.cursor()
 
 START_HOUR = 9
 START_LOCATION_ID = 25              # LOCATION ID 25 = Map connection between player farm and Cindersap Forest
-MOVEMENT_SPEED = 20                 # TILES PER TIME_INCREMENTS / Actual speed is about 36 tiles per 10 in game minutes if player runs perfectly without any error
+MOVEMENT_SPEED = 15                 # TILES PER TIME_INCREMENTS / Actual speed is about 36 tiles per 10 in game minutes if player runs perfectly without any error
 TIME_INCREMENTS = 10                # IN GAME MINUTES
 
 
@@ -318,12 +318,11 @@ def get_player_progress(unlocked_input, hearts_input, progress_input, day_info):
 
             weather_ok = False
             day_weather = day_info["Weather"].strip().capitalize()
+            schedule_weather = str(schedule["weather"]).strip().capitalize()
 
-            if schedule["weather"] is None or schedule["weather"] == 0:
+            if schedule_weather == day_weather:
                 weather_ok = True
-            elif str(schedule["weather"]).strip().capitalize() == day_weather:
-                weather_ok = True
-            elif str(schedule["weather"]).strip().capitalize() == "R" and day_weather == "R" and schedule["alternative_rain_possibility"] == 1:
+            elif schedule_weather == "R" and day_weather == "R" and schedule.get("alternative_rain_possibility", 0) == 1:
                 weather_ok = True
 
             if if_hearts and if_progress_flags and day_matches and weather_ok:
