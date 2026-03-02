@@ -191,7 +191,7 @@ def check_for_event(season, day):
 def get_player_progress(unlocked_input, hearts_input, progress_input, day_info):
 
     cursor.execute("""
-        SELECT npc_names
+        SELECT npc_name
         FROM npcs
     """)
 
@@ -213,7 +213,7 @@ def get_player_progress(unlocked_input, hearts_input, progress_input, day_info):
             npc_schedules.priority,
             npc_schedules.hearts_affects,
             npc_schedules.heart_condition,
-            npc_schedules.need_comunity_center,
+            npc_schedules.need_community_center,
             npc_schedules.need_bus_service,
             npc_schedules.need_beach_bridge,
             npc_schedules.weather,
@@ -296,7 +296,7 @@ def get_player_progress(unlocked_input, hearts_input, progress_input, day_info):
                         break
 
             if_progress_flags = True
-            if schedule["need_comunity_center"] == 1 and progress_input.get("community_center", 0) == 0:
+            if schedule["need_community_center"] == 1 and progress_input.get("community_center", 0) == 0:
                 if_progress_flags = False
             if schedule["need_bus_service"] == 1 and progress_input.get("bus_service", 0) == 0:
                 if_progress_flags = False
@@ -327,14 +327,65 @@ def get_player_progress(unlocked_input, hearts_input, progress_input, day_info):
                 selected_schedule[npc_name].append(schedule)
 
     return selected_schedule
-     
 
+def schedule_routing(selected_schedule):
 
+    npc_schedules_for_day = []
 
-"""
+    for npc_name, schedules in selected_schedule.items():
+        for schedule in schedules:
+            loc_id = schedule["location_id"]
+            npc_schedules_for_day.append({
+                "NPC Name": npc_name,
+                "Location ID": loc_id,
+                "Location Name": locations[loc_id]["Location Name"],
+                "Location Column": locations[loc_id]["Location Column"],
+                "Location Row": locations[loc_id]["Location Row"],
+                "Time": schedule["time"],
+                "Time As Minutes": time_to_minutes(schedule["time"])
+            })
+    return npc_schedules_for_day
 
-RETURNS LIST OF ALL NPCS IN ORDER OF ROUTE OPTIMIZATION STARTING AT 7:00 THROUGH 0:00 IN 24 HOUR FORMAT
-EACH LINE SHOWS NPC NAME, LAST TIME LOCATION_DESCRIPTION AND NEXT LOCATION_DESCRIPTION
-CHECK IF LANDS ON AN EVENT DAY THAT REMOVES CHARACTER SCHEDULE
+def get_available_npcs(unvisited_npcs, current_time):
+    return [npc for npc in unvisited_npcs if npc["Time As Minutes"] >= current_time]
 
-"""
+def generate_route(npc_schedules_for_day, start_location_id=START_LOCATION_ID, start_hour=START_HOUR):
+    
+    current_col = locations[start_location_id]["Location Column"]
+    current_row = locations[start_location_id]["Location Row"]
+    current_time = time_to_minutes(f"{start_hour}:00")
+    route = []
+    unvisited_npcs = npc_schedules_for_day.copy()
+    visited_npcs = []
+
+    while unvisited_npcs:
+        available_npcs = get_available_npcs(unvisited_npcs, current_time)
+        if not available_npcs:
+            break
+
+        for npc in available_npcs:
+            npc["Distance From Current"] = abs(current_col - npc["Location Column"]) + abs(current_row - npc["Location Row"])
+
+        next_npc = min(available_npcs, key=lambda x: x["Distance From Current"])
+        travel_time = math.ceil(next_npc["Distance From Current"] / MOVEMENT_SPEED) * TIME_INCREMENTS
+        arrival_time = current_time + travel_time
+
+        if arrival_time > next_npc["Time As Minutes"]:
+            unvisited_npcs.remove(next_npc)
+            continue
+
+        route.append({
+            "NPC Name": next_npc["NPC Name"],
+            "Location Name": next_npc["Location Name"],
+            "Arrival Time": minutes_to_time(arrival_time),
+            "Distance From Previous": next_npc["Distance From Current"]
+        })
+
+        current_time = arrival_time
+        current_col = next_npc["Location Column"]
+        current_row = next_npc["Location Row"]
+
+        unvisited_npcs.remove(next_npc)
+        visited_npcs.append(next_npc)
+    
+    return route

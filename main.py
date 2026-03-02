@@ -1,7 +1,7 @@
 from item_query import search_by_item, items_directory
 from display import item_search_gui, item_directory_gui
 from npc_query import search_by_npc, all_npcs, preferences_by_npc, heart_calc
-from route_optimizer import check_for_event
+from route_optimizer import check_for_event, get_player_progress, schedule_routing, generate_route
 import re
 
 print("""
@@ -283,6 +283,7 @@ elif choice == "3":
     progress_values = []
 
     for answer in split_progress_input:
+        answer = answer.strip().upper()
         if answer == "Y":
             progress_values.append(1)
         elif answer == "N":
@@ -296,6 +297,12 @@ elif choice == "3":
         "Community Center Completed": progress_values[2]
     }
 
+    selected_schedule = get_player_progress(unlocked_npcs, hearts_dict, game_progress, day_info)
+    npc_schedules_for_day = schedule_routing(selected_schedule)
+    route = generate_route(npc_schedules_for_day)
+
+    for step in route:
+        print(f"{step['Arrival Time']}: Go to {step['NPC Name']} at {step['Location Name']}")
     
 else:
     print("Directory not recognized.")
