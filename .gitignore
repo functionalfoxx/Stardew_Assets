@@ -6,7 +6,7 @@ my_ssh_key
 my_ssh_key.pub
 
 # Ignore temporary test file
-test_item_gui.py
+TESTING_CODE.py
 
 # Ignore project notes
 outline.txt
