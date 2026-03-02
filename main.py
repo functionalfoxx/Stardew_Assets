@@ -239,7 +239,7 @@ elif choice == "3":
     unlocked_npcs = {
         "Wizard": unlocked_values[0],
         "Kent": unlocked_values[1],
-        "Mines Dwarf": unlocked_values[2],
+        "Dwarf": unlocked_values[2],
         "Sandy": unlocked_values[3],
         "Krobus": unlocked_values[4],
         "Leo": unlocked_values[5]

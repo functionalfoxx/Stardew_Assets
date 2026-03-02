@@ -8,9 +8,9 @@ conn.row_factory = sqlite3.Row
 cursor = conn.cursor()
 
 START_HOUR = 9
-START_LOCATION_ID = 18
-MOVEMENT_SPEED = 28                 # 28 TILES PER 10 MINUTES
-TIME_INCREMENTS = 10                # IN MINUTES
+START_LOCATION_ID = 25              # LOCATION ID 25 = Map connection between player farm and Cindersap Forest
+MOVEMENT_SPEED = 20                 # TILES PER TIME_INCREMENTS / Actual speed is about 36 tiles per 10 in game minutes if player runs perfectly without any error
+TIME_INCREMENTS = 10                # IN GAME MINUTES
 
 
 cursor.execute("""
@@ -366,7 +366,7 @@ def schedule_routing(selected_schedule, start_location_id=START_LOCATION_ID, sta
 
     while unvisited:
 
-        available = [npc for npc in unvisited if npc["Time As Minutes"] >= current_time]
+        available = unvisited.copy()
 
         if not available:
             break
