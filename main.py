@@ -305,15 +305,3 @@ elif choice == "3":
     
 else:
     print("Directory not recognized.")
-
-
-
-
-"""
-
- ||| ADD DIRECTORY OPTIONS |||
-
-    TYPE B : GO BACK TO THE PREVIOUS SCREEN
-    TYPE M : RETURN TO THE MAIN SCREEN
-
-"""

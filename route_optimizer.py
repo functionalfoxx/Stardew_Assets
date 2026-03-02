@@ -7,9 +7,9 @@ conn = sqlite3.connect(DB_PATH)
 conn.row_factory = sqlite3.Row
 cursor = conn.cursor()
 
-START_HOUR = 9
+START_HOUR = 8
 START_LOCATION_ID = 25              # LOCATION ID 25 = Map connection between player farm and Cindersap Forest
-MOVEMENT_SPEED = 15                 # TILES PER TIME_INCREMENTS / Actual speed is about 36 tiles per 10 in game minutes if player runs perfectly without any error
+MOVEMENT_SPEED = 15                 # TILES PER TIME_INCREMENTS / Actual speed is about 36 tiles per 10 in game minutes if player runs perfectly without any error in a straight line
 TIME_INCREMENTS = 10                # IN GAME MINUTES
 
 
@@ -86,8 +86,7 @@ for row in cursor.fetchall():
     })
 
 for schedule in npc_schedules:
-    loc_id = schedule["Location ID"]
-    
+    loc_id = schedule["Location ID"]    
     schedule["Location Name"] = locations[loc_id]["Location Name"]
     schedule["Is Building?"] = locations[loc_id]["Is Building?"]
     schedule["Is Map Connection?"] = locations[loc_id]["Is Map Connection?"]
@@ -120,14 +119,6 @@ def distance(current_col, current_row, target_col, target_row):
     return abs(current_col - target_col) + abs(current_row - target_row)
 
 available_npcs = get_available_npcs(unvisited_npcs, current_time)
-
-for npc in available_npcs:
-    npc["Distance From Current"] = distance(
-        current_col = current_column,
-        current_row = current_row,
-        target_col = npc["Location Column"],
-        target_row = npc["Location Row"]
-    )
 
 while unvisited_npcs:
 
@@ -229,7 +220,7 @@ def get_player_progress(unlocked_input, hearts_input, progress_input, day_info):
         LEFT JOIN npcs ON npc_schedules.npc_id = npcs.npc_id
     """)
 
-    schedule_rows = cursor.fetchall()
+    schedule_rows = cursor.fetchall() 
 
     npc_schedules_by_npc = {}
 
