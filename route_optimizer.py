@@ -7,9 +7,9 @@ conn = sqlite3.connect(DB_PATH)
 conn.row_factory = sqlite3.Row
 cursor = conn.cursor()
 
-START_HOUR = 8
+START_HOUR = 9
 START_LOCATION_ID = 18
-MOVEMENT_SPEED = 35                 # 35 TILES PER 10 MINUTES
+MOVEMENT_SPEED = 28                 # 28 TILES PER 10 MINUTES
 TIME_INCREMENTS = 10                # IN MINUTES
 
 
@@ -350,7 +350,8 @@ def schedule_routing(selected_schedule, start_location_id=START_LOCATION_ID, sta
             "Location Column": locations[loc_id]["Location Column"],
             "Location Row": locations[loc_id]["Location Row"],
             "Time": schedule["time"],
-            "Time As Minutes": time_to_minutes(schedule["time"])
+            "Time As Minutes": time_to_minutes(schedule["time"]),
+            "Schedule Description": schedule["schedule_description"]
         })
 
     if not npc_schedules_for_day:
@@ -384,7 +385,8 @@ def schedule_routing(selected_schedule, start_location_id=START_LOCATION_ID, sta
             "NPC Name": next_npc["NPC Name"],
             "Location Name": next_npc["Location Name"],
             "Arrival Time": minutes_to_time(arrival_time),
-            "Distance From Previous": distance_tiles
+            "Distance From Previous": distance_tiles,
+            "Schedule Description": next_npc["Schedule Description"]
         })
 
         current_time = arrival_time
