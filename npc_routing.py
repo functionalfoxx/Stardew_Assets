@@ -163,39 +163,136 @@ while unvisited_npcs:
     unvisited_npcs.remove(next_npc)
     visited_npcs.append(next_npc)
 
-def check_for_event(season, day):
-    day = int(day)
+def process_day(day_input):
+
+    day_values = []
+
+    split_day_input = day_input.split(",")
+
+    for day in split_day_input:
+        day_info = day.strip().capitalize()
+        day_values.append(day_info)
+    
+    day_values[1] = int(day_values[1])
+    day_number = day_values[1]
+
+    weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    weekday_index = (day_number - 1) % 7
+    weekday_name = weekdays[weekday_index]
+
+    date_info = day_values + [weekday_name]
+
+    return date_info
+
+def check_for_event(day_input):
+
+    processed_day = process_day(day_input)
+
+    season = processed_day[0]
+    day = processed_day [1]
 
     cursor.execute("""
-        SELECT event_name, schedule_available
-        FROM events
-        WHERE UPPER(season) = ? AND day = ?
-    """, (season.upper(), day))
+        SELECT 
+            event_name,
+            season,
+            day,
+            schedule_available
+        FROM 
+            events
+        WHERE
+            season = ? 
+            AND day = ?
+            AND schedule_available = 0
+    """, (season, day))
 
-    row = cursor.fetchone()
+    event_row = cursor.fetchone()
 
-    if row and row["schedule_available"] == 0:
-        return row["event_name"]
+    if event_row:
+        print(f"""
+            Schedule unavailable. {event_row["event_name"]} is taking place and affects NPC schedules.
+        """)
+        exit()
 
-    return None
+def unlocked_npcs (npc_input):
 
-def get_player_progress(unlocked_input, hearts_input, progress_input, day_info):
+    npc_names = ["Wizard", "Kent", "Dwarf", "Sandy", "Krobus", "Leo"]
+
+    unlocked_npcs = []
+    
+    split_npc_input = npc_input.split(",")
+
+    for npc in range(len(split_npc_input)):
+        answer = split_npc_input[npc].strip().upper()
+        
+        if answer == "Y":
+            unlocked_npcs.append(npc_names[npc])
 
     cursor.execute("""
         SELECT npc_name
         FROM npcs
+        WHERE is_unlocked_by_default == 1
     """)
 
     rows = cursor.fetchall()
 
-    all_npcs = [row["npc_name"] for row in rows]
+    default_npcs = [row["npc_name"] for row in rows]
 
-    unlocked_npcs = all_npcs.copy()
+    all_unlocked_npcs = default_npcs + unlocked_npcs
+
+    return all_unlocked_npcs
+
+
+def friendship_hearts(hearts_input):
+
+    hearts_values = []
+
+    split_hearts_input = hearts_input.split(",")
+
+    for hearts in split_hearts_input:
+        hearts = hearts.strip()
+        hearts_values.append(int(hearts))
+
+    hearts_by_npc = {
+        "Abigail": hearts_values[0],
+        "Sebastian": hearts_values[1],
+        "Haley": hearts_values[2],
+        "Alex": hearts_values[3],
+        "Elliott": hearts_values[4],
+        "Leah": hearts_values[5],
+        "Leo": hearts_values[6],
+        "Penny": hearts_values[7],
+        "Sam": hearts_values[8]
+    }
+
+    return hearts_by_npc
+
+def game_progress(progress_input):
+
+    progress_values = []
     
-    for npc, status in unlocked_input.items():
-        if status.upper() == "N":
-            if npc in unlocked_npcs:
-                unlocked_npcs.remove(npc)
+    split_progress_input = progress_input.split(",")
+
+    for answer in split_progress_input:
+        answer = answer.strip().upper()
+        if answer == "Y":
+            progress_values.append(1)
+        elif answer == "N":
+            progress_values.append(0)
+
+    user_progress = {
+        "Bus Service Restored": progress_values[0],
+        "Beach Bridge Repaired": progress_values[1],
+        "Community Center Completed": progress_values[2]
+    }
+
+    return user_progress
+
+
+
+
+
+
+def get_player_progress(npc_input, hearts_input, progress_input, day_info):
 
     cursor.execute("""
         SELECT 

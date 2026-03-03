@@ -1,69 +1,70 @@
 from item_query import search_by_item, items_directory
 from display import item_search_gui, item_directory_gui
 from npc_query import search_by_npc, all_npcs, preferences_by_npc, heart_calc
-from route_optimizer import check_for_event, get_player_progress, schedule_routing
+from npc_routing import check_for_event, unlocked_npcs, friendship_hearts, game_progress
 import re
 
-print("""
-        
-        This tool requires your terminal window to be large enough to display all content properly.
-        In the next step, you will resize the window to ensure the box is fully visible.
-      
-        Press enter to continue.
-      
-      """)
 
-input()
-
-print("""
-      
-    ╔═ UPPER LEFT  ══════════════════════════════════════════════════════════════════════════════════════════════  UPPER RIGHT ═╗
-    ║                                                                                                                           ║
-    ║                                                                                                                           ║
-    ║                                                                                                                           ║
-    ║                                                                                                                           ║
-    ║                                                                                                                           ║
-    ║                                                                                                                           ║
-    ║                                                                                                                           ║
-    ║                                                                                                                           ║
-    ║                                                                                                                           ║
-    ║                                                                                                                           ║
-    ║                                                                                                                           ║
-    ║                                                                                                                           ║
-    ║                                                                                                                           ║
-    ║                                                                                                                           ║
-    ║                                                                                                                           ║
-    ║                                                                                                                           ║
-    ║                                                           CENTER                                                          ║
-    ║                                                                                                                           ║
-    ║                                                                                                                           ║
-    ║                                                                                                                           ║
-    ║                                                                                                                           ║
-    ║                                                                                                                           ║
-    ║                                                                                                                           ║
-    ║                                                                                                                           ║
-    ║                                                                                                                           ║
-    ║                                                                                                                           ║
-    ║                                                                                                                           ║
-    ║                                                                                                                           ║
-    ║                                                                                                                           ║
-    ║                                                                                                                           ║
-    ║                                                                                                                           ║
-    ║                                                                                                                           ║
-    ║                                                                                                                           ║
-    ╚═ LOWER LEFT  ══════════════════════════════════════════════════════════════════════════════════════════════  LOWER RIGHT ═╝
-
-
-        Press enter to continue""")
-
-input()
+#print("""
+#        
+#        This tool requires your terminal window to be large enough to display all content properly.
+#        In the next step, you will resize the window to ensure the box is fully visible.
+#      
+#        Press enter to continue.
+#      
+#      """)
+#
+#input()
+#
+#print("""
+#      
+#    ╔═ UPPER LEFT  ══════════════════════════════════════════════════════════════════════════════════════════════  UPPER RIGHT ═╗
+#    ║                                                                                                                           ║
+#    ║                                                                                                                           ║
+#    ║                                                                                                                           ║
+#    ║                                                                                                                           ║
+#    ║                                                                                                                           ║
+#    ║                                                                                                                           ║
+#    ║                                                                                                                           ║
+#    ║                                                                                                                           ║
+#    ║                                                                                                                           ║
+#    ║                                                                                                                           ║
+#    ║                                                                                                                           ║
+#    ║                                                                                                                           ║
+#    ║                                                                                                                           ║
+#    ║                                                                                                                           ║
+#    ║                                                                                                                           ║
+#    ║                                                                                                                           ║
+#    ║                                                           CENTER                                                          ║
+#    ║                                                                                                                           ║
+#    ║                                                                                                                           ║
+#    ║                                                                                                                           ║
+#    ║                                                                                                                           ║
+#    ║                                                                                                                           ║
+#    ║                                                                                                                           ║
+#    ║                                                                                                                           ║
+#    ║                                                                                                                           ║
+#    ║                                                                                                                           ║
+#    ║                                                                                                                           ║
+#    ║                                                                                                                           ║
+#    ║                                                                                                                           ║
+#    ║                                                                                                                           ║
+#    ║                                                                                                                           ║
+#    ║                                                                                                                           ║
+#    ║                                                                                                                           ║
+#    ╚═ LOWER LEFT  ══════════════════════════════════════════════════════════════════════════════════════════════  LOWER RIGHT ═╝
 
 
-print("""
-This Stardew tool provides information about NPCs who 
-can receive gifts, items that can be gifted, and how to
-route the two together efficiently.
-""")
+#        Press enter to continue""")
+
+# input()
+
+
+#print("""
+#This Stardew tool provides information about NPCs who 
+#can receive gifts, items that can be gifted, and how to
+#route the two together efficiently.
+#""")
 
 print("""
 Type 1: NPC Information
@@ -75,9 +76,9 @@ choice = input("Select option: ").strip()
 
 
 
- # # # # # # # # # # # # # # 
-#       NPC QUERY TOOLS      #
- # # # # # # # # # # # # # #
+             # # # # # # # # # # # # # # 
+            #       NPC QUERY TOOLS      #
+             # # # # # # # # # # # # # #
 
 
 if choice == "1": 
@@ -130,9 +131,9 @@ if choice == "1":
 
        
 
- # # # # # # # # # # # # # # #
-#       ITEM-QUERY TOOLS      #
- # # # # # # # # # # # # # # #      
+             # # # # # # # # # # # # # # #
+            #       ITEM-QUERY TOOLS      #
+             # # # # # # # # # # # # # # #      
 
 
 elif choice == "2":
@@ -175,9 +176,9 @@ elif choice == "2":
 
 
 
- # # # # # # # # # # # # # # #
-#       ROUTE-OPTIMIZER       #
- # # # # # # # # # # # # # # #   
+             # # # # # # # # # # # # # # #
+            #       ROUTE-OPTIMIZER       #
+             # # # # # # # # # # # # # # #   
 
 
 elif choice == "3":
@@ -191,59 +192,21 @@ elif choice == "3":
         QUESTION 1: What day is it? Provide the weekday, season, day number, and weather. Your answer must remain in this order.
         For weather, use R for RAIN, G for GREEN RAIN, or N for NO RAIN.
         Your answer must be separated by a comma
-        Example: Wednesday, Summer, 22, N
+        Example: Summer, 22, N
 
         Enter day info: """)
-        
-    split_day_input = day_input.split(",")
-    day_values = []
+    
+    day_result = check_for_event(day_input)
 
-    for answer in split_day_input:
-        answer = answer.strip().upper()
-        day_values.append(answer)
-
-    day_info = {
-        "Weekday": day_values[0],
-        "Season": day_values[1],
-        "Date": day_values[2],
-        "Weather": day_values[3]
-    }
-
-    season = day_info["Season"]
-    day = day_info["Date"]
-
-    event_name = check_for_event(day_info["Season"], day_info["Date"])
-
-    if event_name:
-        print(f"""
-            Schedule unavailable. {event_name} is taking place and affects NPC schedules.
-              """)
-        exit()
-
-    unlocked_input = input("""
+    npc_input = input("""
         QUESTION 2: Do you have these characters unlocked? 
         Wizard, Kent, Mines Dwarf, Sandy, Krobus, Leo. Your answer must remain in this order.
         Your answer must be in the form of Y for YES, N for NO, and separated with a comma. 
         Example: Y, Y, Y, N, Y, N
-        
                            
         Enter character progress: """)
-
-    split_unlocked_input = unlocked_input.split(",")
-    unlocked_values = []
-
-    for answer in split_unlocked_input:
-        answer = answer.strip().upper()
-        unlocked_values.append(answer)
     
-    unlocked_npcs = {
-        "Wizard": unlocked_values[0],
-        "Kent": unlocked_values[1],
-        "Dwarf": unlocked_values[2],
-        "Sandy": unlocked_values[3],
-        "Krobus": unlocked_values[4],
-        "Leo": unlocked_values[5]
-    }
+    npc_result = unlocked_npcs(npc_input)
 
     hearts_input = input("""
         QUESTION 3: How many full friendship hearts do you have with each of these characters?
@@ -252,25 +215,9 @@ elif choice == "3":
         Example: 5, 9, 3, 5, 10, 7, 0, 3, 5
 
         Enter hearts: """)
+    
+    friendship_result = friendship_hearts(hearts_input)
         
-    split_hearts_input = hearts_input.split(",")
-    hearts_values = []
-
-    for answer in split_hearts_input:
-        answer = answer.strip()
-        hearts_values.append(int(answer))
-
-    hearts_dict = {
-        "Abigail": hearts_values[0],
-        "Sebastian": hearts_values[1],
-        "Haley": hearts_values[2],
-        "Alex": hearts_values[3],
-        "Elliott": hearts_values[4],
-        "Leah": hearts_values[5],
-        "Leo": hearts_values[6],
-        "Penny": hearts_values[7],
-        "Sam": hearts_values[8]
-    }
     progress_input = input("""
         QUESTION 4: Have you completed these game progress points?
         Bus Service, Beach Bridge Repair, Community Center. Your answer must remain in this order.
@@ -279,29 +226,13 @@ elif choice == "3":
 
         Enter progress: """)
         
-    split_progress_input = progress_input.split(",")
-    progress_values = []
+    progress_result = game_progress(progress_input)
 
-    for answer in split_progress_input:
-        answer = answer.strip().upper()
-        if answer == "Y":
-            progress_values.append(1)
-        elif answer == "N":
-            progress_values.append(0)
-        else:
-            raise ValueError("Answers must be Y or N.")
+#    selected_schedule = get_player_progress(unlocked_npcs, hearts_dict, game_progress, day_info)
+#    route = schedule_routing(selected_schedule)
+#
+#    for i, step in enumerate(route, start=1):
+#        print(f"#{i} - {step['Arrival Time']}: Go to {step['NPC Name']}. Wiki schedule description: {step['Schedule Description']}")
 
-    game_progress = {
-        "Bus Service Restored": progress_values[0],
-        "Beach Bridge Repaired": progress_values[1],
-        "Community Center Completed": progress_values[2]
-    }
-
-    selected_schedule = get_player_progress(unlocked_npcs, hearts_dict, game_progress, day_info)
-    route = schedule_routing(selected_schedule)
-
-    for i, step in enumerate(route, start=1):
-        print(f"#{i} - {step['Arrival Time']}: Go to {step['NPC Name']}. Wiki schedule description: {step['Schedule Description']}")
-    
 else:
     print("Directory not recognized.")
