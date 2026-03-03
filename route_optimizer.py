@@ -9,7 +9,7 @@ cursor = conn.cursor()
 
 START_HOUR = 8
 START_LOCATION_ID = 25              # LOCATION ID 25 = Map connection between player farm and Cindersap Forest
-MOVEMENT_SPEED = 15                 # TILES PER TIME_INCREMENTS / Actual speed is about 36 tiles per 10 in game minutes if player runs perfectly without any error in a straight line
+MOVEMENT_SPEED = 23                 # TILES PER TIME_INCREMENTS / Actual speed is about 36 tiles per 10 in game minutes if player runs perfectly without any error in a straight line
 TIME_INCREMENTS = 10                # IN GAME MINUTES
 
 
@@ -18,8 +18,8 @@ cursor.execute("""
         location_id,
         location_name,
         building,
-        map_connection,
-        teleport,
+        open,
+        close,
         location_column,
         location_row
     FROM locations
@@ -32,8 +32,8 @@ for row in cursor.fetchall():
     locations[location_id] = {
         "Location Name": row["location_name"],
         "Is Building?": row["building"],
-        "Is Map Connection?": row["map_connection"],
-        "Is Teleport?": row["teleport"],
+        "Building Open Time": row["open"],
+        "Building Closed Time": row["close"],
         "Location Column": row["location_column"],
         "Location Row": row["location_row"]
     }
@@ -89,8 +89,8 @@ for schedule in npc_schedules:
     loc_id = schedule["Location ID"]    
     schedule["Location Name"] = locations[loc_id]["Location Name"]
     schedule["Is Building?"] = locations[loc_id]["Is Building?"]
-    schedule["Is Map Connection?"] = locations[loc_id]["Is Map Connection?"]
-    schedule["Is Teleport?"] = locations[loc_id]["Is Teleport?"]
+    schedule["Building Open Time"] = locations[loc_id]["Building Open Time"]
+    schedule["Building Closed Time"] = locations[loc_id]["Building Closed Time"]
     schedule["Location Column"] = locations[loc_id]["Location Column"]
     schedule["Location Row"] = locations[loc_id]["Location Row"]
 
