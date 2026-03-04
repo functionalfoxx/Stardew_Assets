@@ -1,7 +1,7 @@
 from item_query import search_by_item, items_directory
 from display import item_search_gui, item_directory_gui
 from npc_query import search_by_npc, all_npcs, preferences_by_npc, heart_calc
-from npc_routing import check_for_event, unlocked_npcs, friendship_hearts, game_progress
+from npc_routing import check_for_event, route_user
 import re
 
 
@@ -206,8 +206,6 @@ elif choice == "3":
         Example: Y, Y, Y, N, Y, N
                            
         Enter character progress: """)
-    
-    npc_result = unlocked_npcs(npc_input)
 
     hearts_input = input("""
         QUESTION 3: How many full friendship hearts do you have with each of these characters?
@@ -216,8 +214,6 @@ elif choice == "3":
         Example: 5, 9, 3, 5, 10, 7, 0, 3, 5
 
         Enter hearts: """)
-    
-    friendship_result = friendship_hearts(hearts_input)
         
     progress_input = input("""
         QUESTION 4: Have you completed these game progress points?
@@ -226,8 +222,11 @@ elif choice == "3":
         Example: Y, Y, N
 
         Enter progress: """)
-        
-    progress_result = game_progress(progress_input)
+
+    npc_route = route_user(day_input, npc_input, hearts_input, progress_input)
+
+    for stop in npc_route:
+        print(f"{stop['Arrival Time']} - {stop['NPC Name']}: {stop['Schedule Description']}")
 
 #    selected_schedule = get_player_progress(unlocked_npcs, hearts_dict, game_progress, day_info)
 #    route = schedule_routing(selected_schedule)

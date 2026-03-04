@@ -314,6 +314,11 @@ def route_user (day_input, npc_input, hearts_input, progress_input, start_locati
     unvisited = all_schedules_today.copy()
     locations = load_locations()
 
+    for loc in locations.values():
+        if loc["Is Building?"]:
+            loc["Open Minutes"] = time_to_minutes(loc["Building Open Time"])
+            loc["Close Minutes"] = time_to_minutes(loc["Building Closed Time"])
+
     current_col = locations[start_location_id]["Location Column"]
     current_row = locations[start_location_id]["Location Row"]
     current_time = time_to_minutes(f"{start_hour}:00")
@@ -322,10 +327,57 @@ def route_user (day_input, npc_input, hearts_input, progress_input, start_locati
 
     while unvisited:
 
-        available = unvisited.copy()
+        available = []
+
+        for npc in unvisited:
+            distance_tiles = abs(current_col - npc["Location Column"]) + abs(current_row - npc["Location Row"])
+            travel_time = math.ceil(distance_tiles / MOVEMENT_SPEED) * TIME_INCREMENTS
+            projected_arrival = current_time + travel_time
+
+            if npc["Is Building?"]:
+                open_time = locations[npc["Location ID"]]["Open Minutes"]
+                close_time = locations[npc["Location ID"]]["Close Minutes"]
+                if projected_arrival < open_time or projected_arrival > close_time:
+                    continue
+
+                npcs_in_building = [
+                    building_npc for building_npc in unvisited 
+                    if building_npc["Location ID"] == npc["Location ID"] 
+                    and building_npc["Time As Minutes"] >= current_time
+                ]
+
+                building_buffer = 0
+                if len(npcs_in_building) <= 2:
+                    building_buffer = 10
+                elif len(npcs_in_building) >= 3:
+                    building_buffer = 20
+
+                projected_arrival += building_buffer
+
+            if npc["Location ID"] == 99 and 21*60 <= projected_arrival <= 23*60:
+
+                saloon_group = [
+                    saloon_npc for saloon_npc in unvisited
+                    if saloon_npc["Location ID"] == 99 and 21*60 <= saloon_npc["Time As Minutes"] <= 23*60
+                ]
+
+                for grouped_npc in saloon_group:
+                    grouped_npc["Distance"] = abs(current_col - grouped_npc["Location Column"]) + abs(current_row - grouped_npc["Location Row"])
+                    available.append(grouped_npc)
+
+                continue
+
+            npc["Distance"] = distance_tiles
+            available.append(npc)
 
         if not available:
-            break
+            soonest_open = min(
+                [locations[npc["Location ID"]]["Open Minutes"] for npc in unvisited if npc["Is Building?"]],
+                default=current_time
+            )
+
+            current_time = soonest_open
+            continue
 
         for npc in available:
             npc["Distance"] = abs(current_col - npc["Location Column"]) + abs(current_row - npc["Location Row"])
@@ -335,6 +387,19 @@ def route_user (day_input, npc_input, hearts_input, progress_input, start_locati
         distance_tiles = next_npc["Distance"]
         travel_time = math.ceil(distance_tiles / MOVEMENT_SPEED) * TIME_INCREMENTS
         arrival_time = current_time + travel_time
+
+        if next_npc["Is Building?"]:
+            npcs_in_building = [
+                x for x in unvisited 
+                if x["Location ID"] == next_npc["Location ID"] 
+                and x["Time As Minutes"] >= current_time
+            ]
+            building_buffer = 0
+            if len(npcs_in_building) == 2:
+                building_buffer = 10
+            elif len(npcs_in_building) >= 3:
+                building_buffer = 20
+            arrival_time += building_buffer
 
         route.append({
             "NPC Name": next_npc["NPC Name"],
@@ -351,8 +416,6 @@ def route_user (day_input, npc_input, hearts_input, progress_input, start_locati
 
     return route
 
-    # TO ADD ##########################
-    # decide the best order to go in based on closest to current location AND if building, its within open hours
+    # if not working for 100%
     # try to hit non-buildings before 8ish 9ish am, try to hit all buildings before 4ish 5ish pm unless npc directly on the way
             # or until 10 am then hit pam and sandy if going to oasis real quick
-    # stardrop saloon better as last or one of last stops even though it's a building
