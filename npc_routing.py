@@ -198,7 +198,7 @@ def format_npc_schedules():
             "Second Schedule Possibility If Rain?": row["alternative_rain_possibility"],
             "Weekday": row["weekday"],
             "Season": row["season"],
-            "Day": int(row["day"]),
+            "Day": row["day"],
             "Time": row["time"],
             "Location ID": row["location_id"],
             "Schedule Description": row["schedule_description"]
@@ -311,8 +311,23 @@ def load_locations ():
 def route_user (day_input, npc_input, hearts_input, progress_input, start_location_id=START_LOCATION_ID, start_hour=START_HOUR):
 
     all_schedules_today = find_best_route (day_input, npc_input, hearts_input, progress_input)
-    unvisited = all_schedules_today.copy()
     locations = load_locations()
+
+    unvisited = []
+    for npc_schedules in all_schedules_today.values():
+        for schedule in npc_schedules:
+            location_id = schedule["Location ID"]
+            schedule = schedule.copy()
+            schedule.update({
+                "Location Column": locations[location_id]["Location Column"],
+                "Location Row": locations[location_id]["Location Row"],
+                "Is Building?": locations[location_id]["Is Building?"],
+                "Time As Minutes": time_to_minutes(schedule["Time"])
+            })
+            unvisited.append(schedule)
+
+
+
 
     for loc in locations.values():
         if loc["Is Building?"]:
