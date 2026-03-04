@@ -12,32 +12,6 @@ START_LOCATION_ID = 25              # LOCATION ID 25 = Map connection between pl
 MOVEMENT_SPEED = 23                 # TILES PER TIME_INCREMENTS / Actual speed is about 36 tiles per 10 in game minutes if player runs perfectly without any error in a straight line
 TIME_INCREMENTS = 10                # IN GAME MINUTES
 
-
-cursor.execute("""
-    SELECT 
-        location_id,
-        location_name,
-        building,
-        open,
-        close,
-        location_column,
-        location_row
-    FROM locations
-""")
-
-locations = {}
-
-for row in cursor.fetchall():
-    location_id = row["location_id"]
-    locations[location_id] = {
-        "Location Name": row["location_name"],
-        "Is Building?": row["building"],
-        "Building Open Time": row["open"],
-        "Building Closed Time": row["close"],
-        "Location Column": row["location_column"],
-        "Location Row": row["location_row"]
-    }
-
 def time_to_minutes(HH_mm):
     hour_str, minute_str = HH_mm.split(":")
     hour = int(hour_str)
@@ -54,114 +28,6 @@ def minutes_to_time(minutes):
     hour = START_HOUR + (minutes // 60)
     minute = minutes % 60
     return f"{hour:02d}:{minute:02d}"
-
-cursor.execute("""
-    SELECT
-        schedule_id,
-        npc_id,
-        location_id,
-        time,
-        schedule_description
-    FROM npc_schedules
-""")
-
-npc_schedules = []
-
-for row in cursor.fetchall():
-    schedule_id = row["schedule_id"]
-    npc_id = row["npc_id"]
-    location_id = row["location_id"]
-    HH_mm = row["time"]
-    schedule_description = row["schedule_description"]
-    
-    time_as_minutes = time_to_minutes(HH_mm)
-    
-    npc_schedules.append({
-        "Schedule ID": schedule_id,
-        "NPC ID": npc_id,
-        "Location ID": location_id,
-        "Time": HH_mm,
-        "Time As Minutes": time_as_minutes,
-        "Schedule Description": schedule_description
-    })
-
-for schedule in npc_schedules:
-    loc_id = schedule["Location ID"]    
-    schedule["Location Name"] = locations[loc_id]["Location Name"]
-    schedule["Is Building?"] = locations[loc_id]["Is Building?"]
-    schedule["Building Open Time"] = locations[loc_id]["Building Open Time"]
-    schedule["Building Closed Time"] = locations[loc_id]["Building Closed Time"]
-    schedule["Location Column"] = locations[loc_id]["Location Column"]
-    schedule["Location Row"] = locations[loc_id]["Location Row"]
-
-current_column = locations[START_LOCATION_ID]["Location Column"]
-current_row = locations[START_LOCATION_ID]["Location Row"]
-
-current_time = time_to_minutes(f"{START_HOUR}:00")                               
-
-route = []
-
-unvisited_npcs = npc_schedules.copy()
-visited_npcs = []
-
-def get_available_npcs(unvisited_npcs, current_time):
-    
-    available_npcs = []
-    
-    for npc in unvisited_npcs:
-
-        if npc["Time As Minutes"] >= current_time:
-            available_npcs.append(npc)
-    
-    return available_npcs
-
-def distance(current_col, current_row, target_col, target_row):
-    return abs(current_col - target_col) + abs(current_row - target_row)
-
-available_npcs = get_available_npcs(unvisited_npcs, current_time)
-
-while unvisited_npcs:
-
-    available_npcs = get_available_npcs(unvisited_npcs, current_time)
-
-    if not available_npcs:
-        break
-
-    for npc in available_npcs:
-        npc["Distance From Current"] = distance(
-            current_col = current_column,
-            current_row = current_row,
-            target_col = npc["Location Column"],
-            target_row = npc["Location Row"]
-        )
-
-    next_npc = available_npcs[0]
-
-    for npc in available_npcs:
-        if npc["Distance From Current"] < next_npc["Distance From Current"]:
-            next_npc = npc
-
-    distance_tiles = next_npc["Distance From Current"]
-    travel_time = math.ceil(distance_tiles / MOVEMENT_SPEED) * TIME_INCREMENTS
-    arrival_time = current_time + travel_time
-
-    if arrival_time > next_npc["Time As Minutes"]:
-        unvisited_npcs.remove(next_npc)
-        continue
-
-    route.append({
-        "NPC ID": next_npc["NPC ID"],
-        "Location Name": next_npc["Location Name"],
-        "Arrival Time": minutes_to_time(arrival_time),
-        "Distance From Previous": next_npc["Distance From Current"]
-    })
-
-    current_time = arrival_time
-    current_column = next_npc["Location Column"]
-    current_row = next_npc["Location Row"]
-
-    unvisited_npcs.remove(next_npc)
-    visited_npcs.append(next_npc)
 
 def process_day(day_input):
 
@@ -414,38 +280,45 @@ def find_best_route(day_input, npc_input, hearts_input, progress_input):
 
     return best_schedules_by_npc
 
-def schedule_routing(selected_schedule, start_location_id=START_LOCATION_ID, start_hour=START_HOUR):
+def load_locations ():
 
-    npc_schedules_for_day = []
+    cursor.execute("""
+        SELECT 
+            location_id,
+            building,
+            open,
+            close,
+            location_column,
+            location_row
+        FROM
+            locations
+    """)
 
-    for npc_name, schedules in selected_schedule.items():
-        if not schedules:
-            continue
+    locations = {}
 
-        schedule = schedules[0]  
+    for row in cursor.fetchall():
+        location_id = row["location_id"]
+        locations[location_id] = {
+            "Is Building?": row["building"],
+            "Building Open Time": row["open"],
+            "Building Closed Time": row["close"],
+            "Location Column": row["location_column"],
+            "Location Row": row["location_row"]
+        }
 
-        loc_id = schedule["location_id"]
+    return locations
 
-        npc_schedules_for_day.append({
-            "NPC Name": npc_name,
-            "Location ID": loc_id,
-            "Location Name": locations[loc_id]["Location Name"],
-            "Location Column": locations[loc_id]["Location Column"],
-            "Location Row": locations[loc_id]["Location Row"],
-            "Time": schedule["time"],
-            "Time As Minutes": time_to_minutes(schedule["time"]),
-            "Schedule Description": schedule["schedule_description"]
-        })
+def route_user (day_input, npc_input, hearts_input, progress_input, start_location_id=START_LOCATION_ID, start_hour=START_HOUR):
 
-    if not npc_schedules_for_day:
-        return []
+    all_schedules_today = find_best_route (day_input, npc_input, hearts_input, progress_input)
+    unvisited = all_schedules_today.copy()
+    locations = load_locations()
 
     current_col = locations[start_location_id]["Location Column"]
     current_row = locations[start_location_id]["Location Row"]
     current_time = time_to_minutes(f"{start_hour}:00")
 
     route = []
-    unvisited = npc_schedules_for_day.copy()
 
     while unvisited:
 
@@ -455,8 +328,7 @@ def schedule_routing(selected_schedule, start_location_id=START_LOCATION_ID, sta
             break
 
         for npc in available:
-            npc["Distance"] = abs(current_col - npc["Location Column"]) + \
-                              abs(current_row - npc["Location Row"])
+            npc["Distance"] = abs(current_col - npc["Location Column"]) + abs(current_row - npc["Location Row"])
 
         next_npc = min(available, key=lambda x: x["Distance"])
 
@@ -466,7 +338,6 @@ def schedule_routing(selected_schedule, start_location_id=START_LOCATION_ID, sta
 
         route.append({
             "NPC Name": next_npc["NPC Name"],
-            "Location Name": next_npc["Location Name"],
             "Arrival Time": minutes_to_time(arrival_time),
             "Distance From Previous": distance_tiles,
             "Schedule Description": next_npc["Schedule Description"]
@@ -479,3 +350,9 @@ def schedule_routing(selected_schedule, start_location_id=START_LOCATION_ID, sta
         unvisited.remove(next_npc)
 
     return route
+
+    # TO ADD ##########################
+    # decide the best order to go in based on closest to current location AND if building, its within open hours
+    # try to hit non-buildings before 8ish 9ish am, try to hit all buildings before 4ish 5ish pm unless npc directly on the way
+            # or until 10 am then hit pam and sandy if going to oasis real quick
+    # stardrop saloon better as last or one of last stops even though it's a building

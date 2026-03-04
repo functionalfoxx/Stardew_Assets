@@ -186,6 +186,7 @@ elif choice == "3":
     print("""
         NPC schedules change based on several factors. Answer 4 questions to optimize your gift route correctly.
         If you are just testing this simulation, you can copy and paste the text in the provided example for each question.
+        Please note that it is assumed you have at least 2 hearts with all NPCs that have bedrooms so that they are accessible.
     """)
 
     day_input = input("""
