@@ -308,29 +308,15 @@ def load_locations ():
 
     return locations
 
-def route_user (day_input, npc_input, hearts_input, progress_input, start_location_id=START_LOCATION_ID, start_hour=START_HOUR):
+def route_user(day_input, npc_input, hearts_input, progress_input, start_location_id=START_LOCATION_ID, start_hour=START_HOUR):
+    all_schedules_today = find_best_route(day_input, npc_input, hearts_input, progress_input)
 
-    all_schedules_today = find_best_route (day_input, npc_input, hearts_input, progress_input)
+    # Flatten the dict-of-lists from find_best_route into a single list of NPC schedule dicts
+    unvisited = [schedule for npc_schedules in all_schedules_today.values() for schedule in npc_schedules]
+
     locations = load_locations()
-
-    unvisited = []
-    for npc_schedules in all_schedules_today.values():
-        for schedule in npc_schedules:
-            location_id = schedule["Location ID"]
-            schedule = schedule.copy()
-            schedule.update({
-                "Location Column": locations[location_id]["Location Column"],
-                "Location Row": locations[location_id]["Location Row"],
-                "Is Building?": locations[location_id]["Is Building?"],
-                "Time As Minutes": time_to_minutes(schedule["Time"])
-            })
-            unvisited.append(schedule)
-
-
-
-
     for loc in locations.values():
-        if loc["Is Building?"]:
+        if loc["Is Building?"] and loc["Building Open Time"] and loc["Building Closed Time"]:
             loc["Open Minutes"] = time_to_minutes(loc["Building Open Time"])
             loc["Close Minutes"] = time_to_minutes(loc["Building Closed Time"])
 
@@ -341,45 +327,49 @@ def route_user (day_input, npc_input, hearts_input, progress_input, start_locati
     route = []
 
     while unvisited:
-
         available = []
 
         for npc in unvisited:
-            distance_tiles = abs(current_col - npc["Location Column"]) + abs(current_row - npc["Location Row"])
+            npc_col = locations.get(npc["Location ID"], {}).get("Location Column")
+            npc_row = locations.get(npc["Location ID"], {}).get("Location Row")
+
+            if npc_col is None or npc_row is None:
+                continue
+
+            distance_tiles = abs(current_col - npc_col) + abs(current_row - npc_row)
             travel_time = math.ceil(distance_tiles / MOVEMENT_SPEED) * TIME_INCREMENTS
             projected_arrival = current_time + travel_time
 
-            if npc["Is Building?"]:
-                open_time = locations[npc["Location ID"]]["Open Minutes"]
-                close_time = locations[npc["Location ID"]]["Close Minutes"]
-                if projected_arrival < open_time or projected_arrival > close_time:
+            if npc.get("Is Building?") and npc["Location ID"] in locations:
+                open_time = locations[npc["Location ID"]].get("Open Minutes", 0)
+                close_time = locations[npc["Location ID"]].get("Close Minutes", 24*60)
+                if projected_arrival < open_time:
+                    projected_arrival = open_time
+                if projected_arrival > close_time:
                     continue
 
-                npcs_in_building = [
-                    building_npc for building_npc in unvisited 
-                    if building_npc["Location ID"] == npc["Location ID"] 
-                    and building_npc["Time As Minutes"] >= current_time
+                building_npcs = [
+                    other_npc for other_npc in unvisited
+                    if other_npc["Location ID"] == npc["Location ID"]
                 ]
 
                 building_buffer = 0
-                if len(npcs_in_building) <= 2:
+                if len(building_npcs) == 2:
                     building_buffer = 10
-                elif len(npcs_in_building) >= 3:
+                elif len(building_npcs) >= 3:
                     building_buffer = 20
-
                 projected_arrival += building_buffer
 
             if npc["Location ID"] == 99 and 21*60 <= projected_arrival <= 23*60:
-
                 saloon_group = [
-                    saloon_npc for saloon_npc in unvisited
-                    if saloon_npc["Location ID"] == 99 and 21*60 <= saloon_npc["Time As Minutes"] <= 23*60
+                    other_npc for other_npc in unvisited
+                    if other_npc["Location ID"] == 99 and 21*60 <= projected_arrival <= 23*60
                 ]
-
                 for grouped_npc in saloon_group:
-                    grouped_npc["Distance"] = abs(current_col - grouped_npc["Location Column"]) + abs(current_row - grouped_npc["Location Row"])
+                    grouped_npc_col = locations.get(grouped_npc["Location ID"], {}).get("Location Column", current_col)
+                    grouped_npc_row = locations.get(grouped_npc["Location ID"], {}).get("Location Row", current_row)
+                    grouped_npc["Distance"] = abs(current_col - grouped_npc_col) + abs(current_row - grouped_npc_row)
                     available.append(grouped_npc)
-
                 continue
 
             npc["Distance"] = distance_tiles
@@ -387,32 +377,29 @@ def route_user (day_input, npc_input, hearts_input, progress_input, start_locati
 
         if not available:
             soonest_open = min(
-                [locations[npc["Location ID"]]["Open Minutes"] for npc in unvisited if npc["Is Building?"]],
+                [locations[npc["Location ID"]].get("Open Minutes", current_time) for npc in unvisited if npc.get("Is Building?")],
                 default=current_time
             )
-
             current_time = soonest_open
             continue
 
-        for npc in available:
-            npc["Distance"] = abs(current_col - npc["Location Column"]) + abs(current_row - npc["Location Row"])
-
         next_npc = min(available, key=lambda x: x["Distance"])
 
-        distance_tiles = next_npc["Distance"]
+        npc_col = locations.get(next_npc["Location ID"], {}).get("Location Column", current_col)
+        npc_row = locations.get(next_npc["Location ID"], {}).get("Location Row", current_row)
+        distance_tiles = abs(current_col - npc_col) + abs(current_row - npc_row)
         travel_time = math.ceil(distance_tiles / MOVEMENT_SPEED) * TIME_INCREMENTS
         arrival_time = current_time + travel_time
 
-        if next_npc["Is Building?"]:
-            npcs_in_building = [
-                x for x in unvisited 
-                if x["Location ID"] == next_npc["Location ID"] 
-                and x["Time As Minutes"] >= current_time
+        if next_npc.get("Is Building?"):
+            building_npcs = [
+                other_npc for other_npc in unvisited
+                if other_npc["Location ID"] == next_npc["Location ID"]
             ]
             building_buffer = 0
-            if len(npcs_in_building) == 2:
+            if len(building_npcs) == 2:
                 building_buffer = 10
-            elif len(npcs_in_building) >= 3:
+            elif len(building_npcs) >= 3:
                 building_buffer = 20
             arrival_time += building_buffer
 
@@ -424,8 +411,8 @@ def route_user (day_input, npc_input, hearts_input, progress_input, start_locati
         })
 
         current_time = arrival_time
-        current_col = next_npc["Location Column"]
-        current_row = next_npc["Location Row"]
+        current_col = npc_col
+        current_row = npc_row
 
         unvisited.remove(next_npc)
 
