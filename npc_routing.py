@@ -182,7 +182,7 @@ def process_day(day_input):
 
     date_info = day_values + [weekday_name]
 
-    return date_info
+    return date_info 
 
 def check_for_event(day_input):
 
@@ -287,12 +287,9 @@ def game_progress(progress_input):
 
     return user_progress
 
+def format_npc_schedules():
 
-
-
-
-
-def get_player_progress(npc_input, hearts_input, progress_input, day_info):
+    formatted_schedule = []
 
     cursor.execute("""
         SELECT 
@@ -315,108 +312,107 @@ def get_player_progress(npc_input, hearts_input, progress_input, day_info):
             npcs.npc_name
         FROM npc_schedules
         LEFT JOIN npcs ON npc_schedules.npc_id = npcs.npc_id
+        ORDER BY npc_schedules.schedule_id
     """)
 
-    schedule_rows = cursor.fetchall() 
-
-    npc_schedules_by_npc = {}
-
-    for npc_name in unlocked_npcs:
-        npc_schedules_by_npc[npc_name] = []
+    schedule_rows = cursor.fetchall()
 
     for row in schedule_rows:
-        npc_name = row["npc_name"]
-        if npc_name in npc_schedules_by_npc:
-            npc_schedules_by_npc[npc_name].append(row)
+        formatted_schedule.append({
+            "Schedule ID": row["schedule_id"],
+            "NPC ID": row["npc_id"],
+            "NPC Name": row["npc_name"],
+            "Priority": row["priority"],
+            "Friendship Condition Applies?": row["hearts_affects"],
+            "Friendship Condition Terms": row["heart_condition"],
+            "Need Community Center?": row["need_community_center"],
+            "Need Bus Service?": row["need_bus_service"],
+            "Need Beach Bridge?": row["need_beach_bridge"],
+            "Weather": row["weather"],
+            "Second Schedule Possibility If Rain?": row["alternative_rain_possibility"],
+            "Weekday": row["weekday"],
+            "Season": row["season"],
+            "Day": int(row["day"]),
+            "Time": row["time"],
+            "Location ID": row["location_id"],
+            "Schedule Description": row["schedule_description"]
+        })
 
-    for npc_name in npc_schedules_by_npc:
-        schedules = npc_schedules_by_npc[npc_name]
+    return formatted_schedule
 
-        sorted_schedules = []
+def find_best_route(day_input, npc_input, hearts_input, progress_input):
 
-        while len(schedules) > 0:
+    user_npcs_unlocked = unlocked_npcs(npc_input)               
+    user_day_info = process_day(day_input)        
+    user_friendship_hearts = friendship_hearts(hearts_input)
+    user_progress_points = game_progress(progress_input)
+    all_schedules = format_npc_schedules()
 
-            highest = schedules[0]
-            for row in schedules:
-                if row["priority"] > highest["priority"]:
-                    highest = row
+    all_schedules.sort(key=lambda schedule: schedule["Priority"], reverse=True)
 
-            sorted_schedules.append(highest)
+    best_schedules_by_npc = {}
+
+    for npc_name in user_npcs_unlocked:
+
+        npc_schedules_for_npc = [
+            schedule for schedule in all_schedules 
+            if schedule["NPC Name"] == npc_name
+        ]
+
+        filtered_schedules = []
+
+        for schedule_row in npc_schedules_for_npc:
+
+            if schedule_row["Season"] not in (user_day_info[0], None):
+                continue
+            if schedule_row["Day"] not in (user_day_info[1], None):
+                continue
+            if schedule_row["Weather"] not in (user_day_info[2], None):
+                continue
+            if schedule_row["Weekday"] not in (user_day_info[3], None):
+                continue
             
-            schedules.remove(highest)
-        
-        npc_schedules_by_npc[npc_name] = sorted_schedules
+            if schedule_row["Friendship Condition Applies?"] == 1:
+                heart_condition_terms = schedule_row["Friendship Condition Terms"]
+                conditions = [terms.strip() for terms in heart_condition_terms.split(" and ")]
+                failed_condition = False
 
-    selected_schedule = {}
+                for condition in conditions:
+                    operator = condition[:2]
+                    space_index = condition.index(" ")
+                    required_value = int(condition[2:space_index])
+                    npc_in_condition = condition[space_index+1:]
 
-    for npc_name in npc_schedules_by_npc:
-        schedules = npc_schedules_by_npc[npc_name]
+                    player_value = user_friendship_hearts.get(npc_in_condition, 0)
 
-        selected_schedule[npc_name] = []
-
-        for schedule in schedules:
-            if_hearts = True
-
-            if schedule["hearts_affects"] == 1 and schedule["heart_condition"]:
-                condition = schedule["heart_condition"]
-
-                npc_conditions = []
-                if "and" in condition:
-                    for cond in condition.split("and"):
-                        npc_conditions.append(cond.strip())
-                else:
-                    npc_conditions = [condition.strip()]
-
-                for npc_cond in npc_conditions:
-                    operator = npc_cond[:2]
-                    number_and_npc = npc_cond[2:].strip()
-                    number_str, target_npc_name = number_and_npc.split(" ", 1)
-                    number = int(number_str)
-                    target_npc_name = target_npc_name.strip()
-
-                    npc_hearts = hearts_input.get(target_npc_name, 0)
-
-                    if operator == ">=" and npc_hearts < number:
-                        if_hearts = False
+                    if operator == "<=" and player_value > required_value:
+                        failed_condition = True
                         break
-                    elif operator == "<=" and npc_hearts > number:
-                        if_hearts = False
+                    elif operator == ">=" and player_value < required_value:
+                        failed_condition = True
                         break
 
-            if_progress_flags = True
-            if schedule["need_community_center"] == 1 and progress_input.get("Community Center Completed", 0) == 0:
-                if_progress_flags = False
-            if schedule["need_bus_service"] == 1 and progress_input.get("Bus Service Restored", 0) == 0:
-                if_progress_flags = False
-            if schedule["need_beach_bridge"] == 1 and progress_input.get("Beach Bridge Repaired", 0) == 0:
-                if_progress_flags = False
+                if failed_condition:
+                    continue
 
-            day_matches = True
-            if schedule["weekday"] is not None:
-                if schedule["weekday"].capitalize() != day_info["Weekday"].strip().capitalize():
-                    day_matches = False
+            if schedule_row["Need Bus Service?"] == 1 and user_progress_points["Bus Service Restored"] == 0:
+                continue
+            if schedule_row["Need Beach Bridge?"] == 1 and user_progress_points["Beach Bridge Repaired"] == 0:
+                continue
+            if schedule_row["Need Community Center?"] == 1 and user_progress_points["Community Center Completed"] == 0:
+                continue
 
-            if schedule["season"] is not None:
-                if schedule["season"].capitalize() != day_info["Season"].strip().capitalize():
-                    day_matches = False
+            filtered_schedules.append(schedule_row)
 
-            if schedule["day"] is not None:
-                if str(schedule["day"]) != day_info["Date"]:
-                    day_matches = False
+        if filtered_schedules:
+            highest_priority = filtered_schedules[0]["Priority"]
+            best_schedules_for_npc = [
+                schedule_row for schedule_row in filtered_schedules
+                if schedule_row["Priority"] == highest_priority
+            ]
+            best_schedules_by_npc[npc_name] = best_schedules_for_npc
 
-            weather_ok = False
-            day_weather = day_info["Weather"].strip().capitalize()
-            schedule_weather = str(schedule["weather"]).strip().capitalize()
-
-            if schedule_weather == day_weather:
-                weather_ok = True
-            elif schedule_weather == "R" and day_weather == "R" and schedule.get("alternative_rain_possibility", 0) == 1:
-                weather_ok = True
-
-            if if_hearts and if_progress_flags and day_matches and weather_ok:
-                selected_schedule[npc_name].append(schedule)
-
-    return selected_schedule
+    return best_schedules_by_npc
 
 def schedule_routing(selected_schedule, start_location_id=START_LOCATION_ID, start_hour=START_HOUR):
 
