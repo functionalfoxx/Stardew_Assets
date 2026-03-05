@@ -8,7 +8,7 @@ conn.row_factory = sqlite3.Row
 cursor = conn.cursor()
 
 DAY_START = 6
-START_LOCATION_ID = 18              # LOCATION ID 25 = Map connection between player farm and Cindersap Forest
+START_LOCATION_ID = 25              # LOCATION ID 25 = Map connection between farm and forest
 MOVEMENT_SPEED = 28                 # TILES PER TIME_INCREMENTS / Actual speed is about 36 tiles per 10 in game minutes if player runs perfectly without any error in a straight line
 TIME_INCREMENTS = 10                # IN GAME MINUTES
 DAY_END = 1860
@@ -370,6 +370,5 @@ def route_user(day_input, npc_input, hearts_input, progress_input):
 
     if unvisited:
         print("Some NPCs could not be reached today:", list(unvisited.keys()))
-        print("Current time:", current_time)
 
     return route
