@@ -1,0 +1,398 @@
+https://patorjk.com/software/taag/
+
+ASCII Art Font = Roman
+
+
+-------------------------------------------------------
+                       
+
+
+                                                                                    
+           .o8        o8o                        o8o  oooo                          
+          "888        `"'                        `"'  `888                          
+ .oooo.    888oooo.  oooo   .oooooooo  .oooo.   oooo   888                          
+`P  )88b   d88' `88b `888  888' `88b  `P  )88b  `888   888                          
+ .oP"888   888   888  888  888   888   .oP"888   888   888                          
+d8(  888   888   888  888  `88bod8P'  d8(  888   888   888                          
+`Y888""8o  `Y8bod8P' o888o `8oooooo.  `Y888""8o o888o o888o                         
+                           d"     YD                                                
+                           "Y88888P'                                                
+                                                                                    
+
+
+
+          oooo                        
+          `888                        
+ .oooo.    888   .ooooo.  oooo    ooo 
+`P  )88b   888  d88' `88b  `88b..8P'  
+ .oP"888   888  888ooo888    Y888'    
+d8(  888   888  888    .o  .o8"'88b   
+`Y888""8o o888o `Y8bod8P' o88'   888o 
+                                      
+                                      
+                                      
+
+                                       oooo   o8o                        
+                                       `888   `"'                        
+ .ooooo.   .oooo.   oooo d8b  .ooooo.   888  oooo  ooo. .oo.    .ooooo.  
+d88' `"Y8 `P  )88b  `888""8P d88' `88b  888  `888  `888P"Y88b  d88' `88b 
+888        .oP"888   888     888   888  888   888   888   888  888ooo888 
+888   .o8 d8(  888   888     888   888  888   888   888   888  888    .o 
+`Y8bod8P' `Y888""8o d888b    `Y8bod8P' o888o o888o o888o o888o `Y8bod8P' 
+                                                                         
+                                                                         
+                                                                         
+
+          oooo   o8o                  .   
+          `888   `"'                .o8   
+ .ooooo.   888  oooo  ooo. .oo.   .o888oo 
+d88' `"Y8  888  `888  `888P"Y88b    888   
+888        888   888   888   888    888   
+888   .o8  888   888   888   888    888 . 
+`Y8bod8P' o888o o888o o888o o888o   "888"                                           
+                                          
+
+
+
+      .o8                                            .             o8o                       
+     "888                                          .o8             `"'                       
+ .oooo888   .ooooo.  ooo. .oo.  .oo.    .ooooo.  .o888oo oooo d8b oooo  oooo  oooo   .oooo.o 
+d88' `888  d88' `88b `888P"Y88bP"Y88b  d88' `88b   888   `888""8P `888  `888  `888  d88(  "8 
+888   888  888ooo888  888   888   888  888ooo888   888    888      888   888   888  `"Y88b.  
+888   888  888    .o  888   888   888  888    .o   888 .  888      888   888   888  o.  )88b 
+`Y8bod88P" `Y8bod8P' o888o o888o o888o `Y8bod8P'   "888" d888b    o888o  `V88V"V8P' 8""888P' 
+                                                                                             
+                                                                                             
+                                                                                             
+
+      .o8                                       .o88o. 
+     "888                                       888 `" 
+ .oooo888  oooo oooo    ooo  .oooo.   oooo d8b o888oo  
+d88' `888   `88. `88.  .8'  `P  )88b  `888""8P  888    
+888   888    `88..]88..8'    .oP"888   888      888    
+888   888     `888'`888'    d8(  888   888      888    
+`Y8bod88P"     `8'  `8'     `Y888""8o d888b    o888o   
+                                                       
+                                                       
+                                                       
+
+          oooo  oooo   o8o                .       .   
+          `888  `888   `"'              .o8     .o8   
+ .ooooo.   888   888  oooo   .ooooo.  .o888oo .o888oo 
+d88' `88b  888   888  `888  d88' `88b   888     888   
+888ooo888  888   888   888  888   888   888     888   
+888    .o  888   888   888  888   888   888 .   888 . 
+`Y8bod8P' o888o o888o o888o `Y8bod8P'   "888"   "888" 
+  
+
+
+
+                             o8o  oooo              
+                             `"'  `888              
+ .ooooo.  ooo. .oo.  .oo.   oooo   888  oooo    ooo 
+d88' `88b `888P"Y88bP"Y88b  `888   888   `88.  .8'  
+888ooo888  888   888   888   888   888    `88..8'   
+888    .o  888   888   888   888   888     `888'    
+`Y8bod8P' o888o o888o o888o o888o o888o     .8'     
+                                        .o..P'      
+                                        `Y8P'                                                           
+
+
+
+
+                                oooo                          
+                                `888                          
+ .ooooo.  oooo    ooo  .ooooo.   888  oooo    ooo ooo. .oo.   
+d88' `88b  `88.  .8'  d88' `88b  888   `88.  .8'  `888P"Y88b  
+888ooo888   `88..8'   888ooo888  888    `88..8'    888   888  
+888    .o    `888'    888    .o  888     `888'     888   888  
+`Y8bod8P'     `8'     `Y8bod8P' o888o     .8'     o888o o888o 
+                                      .o..P'                  
+                                      `Y8P'                   
+                                                              
+
+                                                             
+                                                             
+ .oooooooo  .ooooo.   .ooooo.  oooo d8b  .oooooooo  .ooooo.  
+888' `88b  d88' `88b d88' `88b `888""8P 888' `88b  d88' `88b 
+888   888  888ooo888 888   888  888     888   888  888ooo888 
+`88bod8P'  888    .o 888   888  888     `88bod8P'  888    .o 
+`8oooooo.  `Y8bod8P' `Y8bod8P' d888b    `8oooooo.  `Y8bod8P' 
+d"     YD                               d"     YD            
+"Y88888P'                               "Y88888P'                                                                   
+
+
+                                
+                                
+ .oooooooo oooo  oooo   .oooo.o 
+888' `88b  `888  `888  d88(  "8 
+888   888   888   888  `"Y88b.  
+`88bod8P'   888   888  o.  )88b 
+`8oooooo.   `V88V"V8P' 8""888P' 
+d"     YD                       
+"Y88888P'                       
+
+
+
+
+oooo                  oooo                        
+`888                  `888                        
+ 888 .oo.    .oooo.    888   .ooooo.  oooo    ooo 
+ 888P"Y88b  `P  )88b   888  d88' `88b  `88.  .8'  
+ 888   888   .oP"888   888  888ooo888   `88..8'   
+ 888   888  d8(  888   888  888    .o    `888'    
+o888o o888o `Y888""8o o888o `Y8bod8P'     .8'     
+                                      .o..P'      
+                                      `Y8P'       
+                                                  
+
+
+
+oooo                                                             
+`888                                                             
+ 888 .oo.    .oooo.   oooo d8b oooo    ooo  .ooooo.  oooo    ooo 
+ 888P"Y88b  `P  )88b  `888""8P  `88.  .8'  d88' `88b  `88.  .8'  
+ 888   888   .oP"888   888       `88..8'   888ooo888   `88..8'   
+ 888   888  d8(  888   888        `888'    888    .o    `888'    
+o888o o888o `Y888""8o d888b        `8'     `Y8bod8P'     .8'     
+                                                     .o..P'      
+                                                     `Y8P'       
+
+
+
+
+    o8o                    
+    `"'                    
+   oooo  .oooo.    .oooo.o 
+   `888 `P  )88b  d88(  "8 
+    888  .oP"888  `"Y88b.  
+    888 d8(  888  o.  )88b 
+    888 `Y888""8o 8""888P' 
+    888                    
+.o. 88P                    
+`Y888P                     
+
+
+
+
+    o8o                 .o8   o8o  
+    `"'                "888   `"'  
+   oooo  .ooooo.   .oooo888  oooo  
+   `888 d88' `88b d88' `888  `888  
+    888 888   888 888   888   888  
+    888 888   888 888   888   888  
+    888 `Y8bod8P' `Y8bod88P" o888o 
+    888                            
+.o. 88P                            
+`Y888P                             
+
+
+
+
+oooo                                  .   
+`888                                .o8   
+ 888  oooo   .ooooo.  ooo. .oo.   .o888oo 
+ 888 .8P'   d88' `88b `888P"Y88b    888   
+ 888888.    888ooo888  888   888    888   
+ 888 `88b.  888    .o  888   888    888 . 
+o888o o888o `Y8bod8P' o888o o888o   "888" 
+
+
+                                          
+                                          
+oooo                            .o8                            
+`888                           "888                            
+ 888  oooo  oooo d8b  .ooooo.   888oooo.  oooo  oooo   .oooo.o 
+ 888 .8P'   `888""8P d88' `88b  d88' `88b `888  `888  d88(  "8 
+ 888888.     888     888   888  888   888  888   888  `"Y88b.  
+ 888 `88b.   888     888   888  888   888  888   888  o.  )88b 
+o888o o888o d888b    `Y8bod8P'  `Y8bod8P'  `V88V"V8P' 8""888P' 
+                                                               
+                                                               
+                                                                                                         
+
+oooo                      oooo        
+`888                      `888        
+ 888   .ooooo.   .oooo.    888 .oo.   
+ 888  d88' `88b `P  )88b   888P"Y88b  
+ 888  888ooo888  .oP"888   888   888  
+ 888  888    .o d8(  888   888   888  
+o888o `Y8bod8P' `Y888""8o o888o o888o 
+                                      
+                                      
+
+
+oooo                      
+`888                      
+ 888   .ooooo.   .ooooo.  
+ 888  d88' `88b d88' `88b 
+ 888  888ooo888 888   888 
+ 888  888    .o 888   888 
+o888o `Y8bod8P' `Y8bod8P' 
+                          
+                          
+
+
+oooo                              o8o           
+`888                              `"'           
+ 888   .ooooo.  oooo oooo    ooo oooo   .oooo.o 
+ 888  d88' `88b  `88. `88.  .8'  `888  d88(  "8 
+ 888  888ooo888   `88..]88..8'    888  `"Y88b.  
+ 888  888    .o    `888'`888'     888  o.  )88b 
+o888o `Y8bod8P'     `8'  `8'     o888o 8""888P' 
+                                                
+                                                
+
+
+oooo   o8o                                   
+`888   `"'                                   
+ 888  oooo  ooo. .oo.   oooo  oooo   .oooo.o 
+ 888  `888  `888P"Y88b  `888  `888  d88(  "8 
+ 888   888   888   888   888   888  `"Y88b.  
+ 888   888   888   888   888   888  o.  )88b 
+o888o o888o o888o o888o  `V88V"V8P' 8""888P' 
+                                             
+                                             
+
+
+                                                  o8o            
+                                                  `"'            
+ooo. .oo.  .oo.    .oooo.   oooo d8b ooo. .oo.   oooo   .ooooo.  
+`888P"Y88bP"Y88b  `P  )88b  `888""8P `888P"Y88b  `888  d88' `88b 
+ 888   888   888   .oP"888   888      888   888   888  888ooo888 
+ 888   888   888  d8(  888   888      888   888   888  888    .o 
+o888o o888o o888o `Y888""8o d888b    o888o o888o o888o `Y8bod8P' 
+                                                                 
+                                                                 
+                                                                                   
+                                                 
+ooo. .oo.  .oo.    .oooo.   oooo d8b oooo  oooo  
+`888P"Y88bP"Y88b  `P  )88b  `888""8P `888  `888  
+ 888   888   888   .oP"888   888      888   888  
+ 888   888   888  d8(  888   888      888   888  
+o888o o888o o888o `Y888""8o d888b     `V88V"V8P' 
+                                                 
+                                                 
+                                     
+                                       
+oo.ooooo.   .oooo.   ooo. .oo.  .oo.   
+ 888' `88b `P  )88b  `888P"Y88bP"Y88b  
+ 888   888  .oP"888   888   888   888  
+ 888   888 d8(  888   888   888   888  
+ 888bod8P' `Y888""8o o888o o888o o888o 
+ 888                                   
+o888o                                  
+
+
+                                                         
+                                                         
+oo.ooooo.   .ooooo.  ooo. .oo.   ooo. .oo.   oooo    ooo 
+ 888' `88b d88' `88b `888P"Y88b  `888P"Y88b   `88.  .8'  
+ 888   888 888ooo888  888   888   888   888    `88..8'   
+ 888   888 888    .o  888   888   888   888     `888'    
+ 888bod8P' `Y8bod8P' o888o o888o o888o o888o     .8'     
+ 888                                         .o..P'      
+o888o                                        `Y8P'       
+                                                         
+
+
+
+            o8o                                        
+            `"'                                        
+oo.ooooo.  oooo   .ooooo.  oooo d8b oooo d8b  .ooooo.  
+ 888' `88b `888  d88' `88b `888""8P `888""8P d88' `88b 
+ 888   888  888  888ooo888  888      888     888ooo888 
+ 888   888  888  888    .o  888      888     888    .o 
+ 888bod8P' o888o `Y8bod8P' d888b    d888b    `Y8bod8P' 
+ 888                                                   
+o888o                                                  
+                                                       
+
+
+
+                    .o8        o8o              
+                   "888        `"'              
+oooo d8b  .ooooo.   888oooo.  oooo  ooo. .oo.   
+`888""8P d88' `88b  d88' `88b `888  `888P"Y88b  
+ 888     888   888  888   888  888   888   888  
+ 888     888   888  888   888  888   888   888  
+d888b    `Y8bod8P'  `Y8bod8P' o888o o888o o888o 
+                                                
+                                                
+                                                               
+                                     
+ .oooo.o  .oooo.   ooo. .oo.  .oo.   
+d88(  "8 `P  )88b  `888P"Y88bP"Y88b  
+`"Y88b.   .oP"888   888   888   888  
+o.  )88b d8(  888   888   888   888  
+8""888P' `Y888""8o o888o o888o o888o 
+                                     
+
+
+
+                                     .o8              
+                                    "888              
+ .oooo.o  .oooo.   ooo. .oo.    .oooo888  oooo    ooo 
+d88(  "8 `P  )88b  `888P"Y88b  d88' `888   `88.  .8'  
+`"Y88b.   .oP"888   888   888  888   888    `88..8'   
+o.  )88b d8(  888   888   888  888   888     `888'    
+8""888P' `Y888""8o o888o o888o `Y8bod88P"     .8'     
+                                          .o..P'      
+                                          `Y8P'       
+                                                                                                                 
+
+
+
+                    .o8                              .    o8o                        
+                   "888                            .o8    `"'                        
+ .oooo.o  .ooooo.   888oooo.   .oooo.    .oooo.o .o888oo oooo   .oooo.   ooo. .oo.   
+d88(  "8 d88' `88b  d88' `88b `P  )88b  d88(  "8   888   `888  `P  )88b  `888P"Y88b  
+`"Y88b.  888ooo888  888   888  .oP"888  `"Y88b.    888    888   .oP"888   888   888  
+o.  )88b 888    .o  888   888 d8(  888  o.  )88b   888 .  888  d8(  888   888   888  
+8""888P' `Y8bod8P'  `Y8bod8P' `Y888""8o 8""888P'   "888" o888o `Y888""8o o888o o888o 
+                                                                                     
+                                                                                     
+
+
+         oooo                                        
+         `888                                        
+ .oooo.o  888 .oo.    .oooo.   ooo. .oo.    .ooooo.  
+d88(  "8  888P"Y88b  `P  )88b  `888P"Y88b  d88' `88b 
+`"Y88b.   888   888   .oP"888   888   888  888ooo888 
+o.  )88b  888   888  d8(  888   888   888  888    .o 
+8""888P' o888o o888o `Y888""8o o888o o888o `Y8bod8P' 
+                                                     
+                                                     
+                                                                                                                                          
+
+             o8o                                                  .   
+             `"'                                                .o8   
+oooo    ooo oooo  ooo. .oo.    .ooooo.   .ooooo.  ooo. .oo.   .o888oo 
+ `88.  .8'  `888  `888P"Y88b  d88' `"Y8 d88' `88b `888P"Y88b    888   
+  `88..8'    888   888   888  888       888ooo888  888   888    888   
+   `888'     888   888   888  888   .o8 888    .o  888   888    888 . 
+    `8'     o888o o888o o888o `Y8bod8P' `Y8bod8P' o888o o888o   "888" 
+
+
+
+
+                  o8o  oooo  oooo              
+                  `"'  `888  `888              
+oooo oooo    ooo oooo   888   888  oooo    ooo 
+ `88. `88.  .8'  `888   888   888   `88.  .8'  
+  `88..]88..8'    888   888   888    `88..8'   
+   `888'`888'     888   888   888     `888'    
+    `8'  `8'     o888o o888o o888o     .8'     
+                                   .o..P'      
+                                   `Y8P'       
+                                                                                                                     
+
+
+
+                  o8o                                      .o8  
+                  `"'                                     "888  
+oooo oooo    ooo oooo    oooooooo  .oooo.   oooo d8b  .oooo888  
+ `88. `88.  .8'  `888   d'""7d8P  `P  )88b  `888""8P d88' `888  
+  `88..]88..8'    888     .d8P'    .oP"888   888     888   888  
+   `888'`888'     888   .d8P'  .P d8(  888   888     888   888  
+    `8'  `8'     o888o d8888888P  `Y888""8o d888b    `Y8bod88P" 
