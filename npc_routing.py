@@ -8,10 +8,10 @@ conn.row_factory = sqlite3.Row
 cursor = conn.cursor()
 
 DAY_START = 6
-ROUTE_START_HOUR = 8
 START_LOCATION_ID = 25              # LOCATION ID 25 = Map connection between player farm and Cindersap Forest
-MOVEMENT_SPEED = 23                 # TILES PER TIME_INCREMENTS / Actual speed is about 36 tiles per 10 in game minutes if player runs perfectly without any error in a straight line
+MOVEMENT_SPEED = 28                 # TILES PER TIME_INCREMENTS / Actual speed is about 36 tiles per 10 in game minutes if player runs perfectly without any error in a straight line
 TIME_INCREMENTS = 10                # IN GAME MINUTES
+DAY_END = 24 * 60
 
 def time_to_minutes(HH_mm):
     hour, minute = map(int, HH_mm.split(":"))
@@ -296,16 +296,13 @@ def load_locations ():
         location_id = row["location_id"]
         locations[location_id] = {
             "Is Building?": row["building"],
-            "Building Open Time": row["open"],
-            "Building Closed Time": row["close"],
+            "Building Open Time": time_to_minutes(row["open"]) if row["open"] else None,
+            "Building Close Time": time_to_minutes(row["close"]) if row["close"] else None,
             "Location Column": row["location_column"],
             "Location Row": row["location_row"]
         }
 
     return locations
-
-def building_available ():
-    # pull in location if is building = 1 then show open/close times
 
 def route_user(day_input, npc_input, hearts_input, progress_input):
 
@@ -319,7 +316,7 @@ def route_user(day_input, npc_input, hearts_input, progress_input):
     unvisited = all_schedules_today.copy()
     route = []
 
-    while unvisited:
+    while unvisited and current_time < DAY_END:
 
         candidates = [] 
 
@@ -328,6 +325,7 @@ def route_user(day_input, npc_input, hearts_input, progress_input):
             last_schedule = max([schedule for schedule in schedules if schedule["Time"] <= current_time], 
                             key=lambda x: x["Time"], 
                             default = None)
+            
             if not last_schedule:
                 continue
             
@@ -335,6 +333,13 @@ def route_user(day_input, npc_input, hearts_input, progress_input):
             travel_distance = abs(current_col - loc["Location Column"]) + abs(current_row - loc["Location Row"])
             travel_time = math.ceil(travel_distance / MOVEMENT_SPEED) * TIME_INCREMENTS
             arrival_time = current_time + travel_time
+
+            if loc["Is Building?"]:
+                open_minutes = loc["Building Open Time"]
+                close_minutes = loc["Building Close Time"]
+
+                if not (open_minutes <= arrival_time <= close_minutes):
+                    continue
 
             next_schedule = min([schedule["Time"] for schedule in schedules if schedule["Time"] > last_schedule["Time"]], default=24*60)
 
@@ -361,6 +366,10 @@ def route_user(day_input, npc_input, hearts_input, progress_input):
 
         visited.append(npc_name)
         del unvisited[npc_name]
+
+    if unvisited:
+        print("Some NPCs could not be reached today:", list(unvisited.keys()))
+        print("Current time:", current_time)
 
     return route
 
