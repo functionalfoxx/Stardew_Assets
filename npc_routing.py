@@ -8,10 +8,10 @@ conn.row_factory = sqlite3.Row
 cursor = conn.cursor()
 
 DAY_START = 6
-START_LOCATION_ID = 25              # LOCATION ID 25 = Map connection between player farm and Cindersap Forest
+START_LOCATION_ID = 18              # LOCATION ID 25 = Map connection between player farm and Cindersap Forest
 MOVEMENT_SPEED = 28                 # TILES PER TIME_INCREMENTS / Actual speed is about 36 tiles per 10 in game minutes if player runs perfectly without any error in a straight line
 TIME_INCREMENTS = 10                # IN GAME MINUTES
-DAY_END = 24 * 60
+DAY_END = 1860
 
 def time_to_minutes(HH_mm):
     hour, minute = map(int, HH_mm.split(":"))
@@ -322,14 +322,15 @@ def route_user(day_input, npc_input, hearts_input, progress_input):
 
         for npc_name, schedules in unvisited.items():
 
-            last_schedule = max([schedule for schedule in schedules if schedule["Time"] <= current_time], 
-                            key=lambda x: x["Time"], 
-                            default = None)
-            
-            if not last_schedule:
+            schedule_row = min(
+                (s for s in schedules if s["Time"] >= current_time),
+                key=lambda s: s["Time"],
+                default=None
+            )
+            if not schedule_row:
                 continue
             
-            loc = locations[last_schedule["Location ID"]]
+            loc = locations[schedule_row["Location ID"]]
             travel_distance = abs(current_col - loc["Location Column"]) + abs(current_row - loc["Location Row"])
             travel_time = math.ceil(travel_distance / MOVEMENT_SPEED) * TIME_INCREMENTS
             arrival_time = current_time + travel_time
@@ -337,24 +338,24 @@ def route_user(day_input, npc_input, hearts_input, progress_input):
             if loc["Is Building?"]:
                 open_minutes = loc["Building Open Time"]
                 close_minutes = loc["Building Close Time"]
-
+                arrival_time += TIME_INCREMENTS
                 if not (open_minutes <= arrival_time <= close_minutes):
                     continue
 
-            next_schedule = min([schedule["Time"] for schedule in schedules if schedule["Time"] > last_schedule["Time"]], default=24*60)
+            following_time = min((s["Time"] for s in schedules if s["Time"] > schedule_row["Time"]), default=24 * 60)
+            if arrival_time >= following_time:
+                continue
 
-            if arrival_time < next_schedule:
-                candidates.append((npc_name, last_schedule, travel_time, arrival_time, loc))        
+            candidates.append((npc_name, schedule_row, travel_time, arrival_time, loc))      
 
         if not candidates:
             current_time += TIME_INCREMENTS
             continue
 
-        chosen = min(candidates, key=lambda x: x[2]) # by travel_time, not sure if arrival_time better
+        chosen = min(candidates, key=lambda x: x[2])    # [2] is by travel_time
         npc_name, schedule, travel_time, arrival_time, loc = chosen
 
         arrival_time_adjust = minutes_to_time(arrival_time)
-        
         route.append({
                     "Arrival Time": arrival_time_adjust,
                     "NPC Name": npc_name,

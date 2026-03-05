@@ -228,11 +228,5 @@ elif choice == "3":
     for stop in npc_route:
         print(f"{stop['Arrival Time']} - {stop['NPC Name']}: {stop['Schedule Description']}")
 
-#    selected_schedule = get_player_progress(unlocked_npcs, hearts_dict, game_progress, day_info)
-#    route = schedule_routing(selected_schedule)
-#
-#    for i, step in enumerate(route, start=1):
-#        print(f"#{i} - {step['Arrival Time']}: Go to {step['NPC Name']}. Wiki schedule description: {step['Schedule Description']}")
-
 else:
     print("Directory not recognized.")
