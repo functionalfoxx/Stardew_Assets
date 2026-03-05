@@ -304,6 +304,9 @@ def load_locations ():
 
     return locations
 
+def building_available ():
+    # pull in location if is building = 1 then show open/close times
+
 def route_user(day_input, npc_input, hearts_input, progress_input):
 
     all_schedules_today = find_best_route (day_input, npc_input, hearts_input, progress_input)
