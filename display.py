@@ -7,7 +7,6 @@ def item_search_gui(results):
     cols = 4
     col_width = (inner_width - left_padding) // cols
 
-    # Helper for alternating borders
     def alternating_line(left_border, content=""):
         right_border = "╞" if left_border == "╡" else "╡"
         print(f"        {left_border}{content}{right_border}")
@@ -234,4 +233,27 @@ def heart_calc_gui(friendship, marriage):
     line("╞")
 
     print("        ✦ ╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥ ✦")
+    print("\n\n")
+
+
+def route_user_gui(npc_route):
+    frame_width = 125
+    inner_width = frame_width - 6
+    left_padding = 3
+
+    print("        ✦ " + "╨╥" * int((frame_width / 2) - 4) + " ✦")
+
+    print(f"        ╞{' ' * left_padding:<{inner_width}}╡")
+
+    for idx, stop in enumerate(npc_route):
+        line = f"{stop['Arrival Time']} - {stop['NPC Name']}: {stop['Schedule Description']}"
+        padded_line = f"{' ' * left_padding}{line}"
+        if idx % 2 == 0:
+            print(f"        ╞{padded_line:<{inner_width}}╡")
+        else:
+            print(f"        ╡{padded_line:<{inner_width}}╞")
+
+    print(f"        ╞{' ' * left_padding:<{inner_width}}╡")
+
+    print("        ✦ " + "╨╥" * int((frame_width / 2) - 4) + " ✦")
     print("\n\n")

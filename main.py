@@ -1,5 +1,5 @@
 from item_query import search_by_item, items_directory
-from display import item_search_gui, item_directory_gui, npc_directory_gui, npc_preferences_gui, heart_calc_gui
+from display import item_search_gui, item_directory_gui, npc_directory_gui, npc_preferences_gui, heart_calc_gui, route_user_gui
 from npc_query import search_by_npc, all_npcs, preferences_by_npc, heart_calc
 from npc_routing import check_for_event, route_user
 import re
@@ -337,10 +337,7 @@ elif choice == "3":
 
     print ("\n")
 
-    npc_route = route_user(day_input, npc_input, hearts_input, progress_input)
-
-    for stop in npc_route:
-        print(f"{stop['Arrival Time']} - {stop['NPC Name']}: {stop['Schedule Description']}")
+    route_user_gui(route_user(day_input, npc_input, hearts_input, progress_input))
 
 else:
     print("Directory not recognized.")
