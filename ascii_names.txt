@@ -2,21 +2,23 @@ https://patorjk.com/software/taag/
 
 ASCII Art Font = Roman
 
+Names are all between 7-9 lines tall
+Demetrius is longest name
 
 -------------------------------------------------------
                        
 
 
                                                                                     
-           .o8        o8o                        o8o  oooo                          
-          "888        `"'                        `"'  `888                          
- .oooo.    888oooo.  oooo   .oooooooo  .oooo.   oooo   888                          
-`P  )88b   d88' `88b `888  888' `88b  `P  )88b  `888   888                          
- .oP"888   888   888  888  888   888   .oP"888   888   888                          
-d8(  888   888   888  888  `88bod8P'  d8(  888   888   888                          
-`Y888""8o  `Y8bod8P' o888o `8oooooo.  `Y888""8o o888o o888o                         
-                           d"     YD                                                
-                           "Y88888P'                                                
+           .o8        o8o                        o8o  oooo
+          "888        `"'                        `"'  `888
+ .oooo.    888oooo.  oooo   .oooooooo  .oooo.   oooo   888
+`P  )88b   d88' `88b `888  888' `88b  `P  )88b  `888   888
+ .oP"888   888   888  888  888   888   .oP"888   888   888
+d8(  888   888   888  888  `88bod8P'  d8(  888   888   888
+`Y888""8o  `Y8bod8P' o888o `8oooooo.  `Y888""8o o888o o888o
+                           d"     o8
+                           "Y88888P'
                                                                                     
 
 
@@ -118,7 +120,7 @@ d88' `88b  `88.  .8'  d88' `88b  888   `88.  .8'  `888P"Y88b
 888   888  888ooo888 888   888  888     888   888  888ooo888 
 `88bod8P'  888    .o 888   888  888     `88bod8P'  888    .o 
 `8oooooo.  `Y8bod8P' `Y8bod8P' d888b    `8oooooo.  `Y8bod8P' 
-d"     YD                               d"     YD            
+d"     o8                               d"     o8            
 "Y88888P'                               "Y88888P'                                                                   
 
 
@@ -129,7 +131,7 @@ d"     YD                               d"     YD
 888   888   888   888  `"Y88b.  
 `88bod8P'   888   888  o.  )88b 
 `8oooooo.   `V88V"V8P' 8""888P' 
-d"     YD                       
+d"     o8                       
 "Y88888P'                       
 
 
@@ -162,13 +164,12 @@ o888o o888o `Y888""8o d888b        `8'     `Y8bod8P'     .8'
 
 
     o8o                    
-    `"'                    
+
    oooo  .oooo.    .oooo.o 
    `888 `P  )88b  d88(  "8 
     888  .oP"888  `"Y88b.  
     888 d8(  888  o.  )88b 
-    888 `Y888""8o 8""888P' 
-    888                    
+    888 `Y888""8o 8""888P'                     
 .o. 88P                    
 `Y888P                     
 
@@ -181,8 +182,7 @@ o888o o888o `Y888""8o d888b        `8'     `Y8bod8P'     .8'
    `888 d88' `88b d88' `888  `888  
     888 888   888 888   888   888  
     888 888   888 888   888   888  
-    888 `Y8bod8P' `Y8bod88P" o888o 
-    888                            
+    888 `Y8bod8P' `Y8bod88P" o888o                             
 .o. 88P                            
 `Y888P                             
 

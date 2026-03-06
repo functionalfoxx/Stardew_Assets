@@ -5,57 +5,71 @@ from npc_routing import check_for_event, route_user
 import re
 
 
-#print("""
-#        
-#        This tool requires your terminal window to be large enough to display all content properly.
-#        In the next step, you will resize the window to ensure the box is fully visible.
-#      
-#        Press enter to continue.
-#      
-#      """)
-#
-#input()
-#
-#print("""
-#      
-#    ╔═ UPPER LEFT  ══════════════════════════════════════════════════════════════════════════════════════════════  UPPER RIGHT ═╗
-#    ║                                                                                                                           ║
-#    ║                                                                                                                           ║
-#    ║                                                                                                                           ║
-#    ║                                                                                                                           ║
-#    ║                                                                                                                           ║
-#    ║                                                                                                                           ║
-#    ║                                                                                                                           ║
-#    ║                                                                                                                           ║
-#    ║                                                                                                                           ║
-#    ║                                                                                                                           ║
-#    ║                                                                                                                           ║
-#    ║                                                                                                                           ║
-#    ║                                                                                                                           ║
-#    ║                                                                                                                           ║
-#    ║                                                                                                                           ║
-#    ║                                                                                                                           ║
-#    ║                                                           CENTER                                                          ║
-#    ║                                                                                                                           ║
-#    ║                                                                                                                           ║
-#    ║                                                                                                                           ║
-#    ║                                                                                                                           ║
-#    ║                                                                                                                           ║
-#    ║                                                                                                                           ║
-#    ║                                                                                                                           ║
-#    ║                                                                                                                           ║
-#    ║                                                                                                                           ║
-#    ║                                                                                                                           ║
-#    ║                                                                                                                           ║
-#    ║                                                                                                                           ║
-#    ║                                                                                                                           ║
-#    ║                                                                                                                           ║
-#    ║                                                                                                                           ║
-#    ║                                                                                                                           ║
-#    ╚═ LOWER LEFT  ══════════════════════════════════════════════════════════════════════════════════════════════  LOWER RIGHT ═╝
+print("""
+        
+        This tool requires your terminal window to be large enough to display all content properly.
+        In the next step, you will resize the window to ensure the box is fully visible.
+      
+        Press enter to continue.
+           
+      """)
+
+input()
+
+print("""
+      
+    ╔═ UPPER LEFT  ═════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════  UPPER RIGHT ═╗
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                      CENTER                                                                                      ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ║                                                                                                                                                                                  ║
+    ╚═ LOWER LEFT  ═════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════  LOWER RIGHT ═╝
 
 
-#        Press enter to continue""")
+        Press enter to continue""")
 
 # input()
 

@@ -1,7 +1,8 @@
 https://www.asciiart.eu/image-to-ascii
 
 
------------------------------------------------ REMOVE 20 FROM EACH SIDE (60 ACROSS TOTAL)
+----------------------------------------------- 
+
 
 
 
