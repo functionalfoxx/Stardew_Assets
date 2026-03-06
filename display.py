@@ -83,3 +83,31 @@ def item_directory_gui(results, letter):
         print(indent + "No results, try again.")
 
     print("\n\n")
+
+def npc_directory_gui(results):
+    cols = 2
+    col_width = 18
+    indent = "        "
+
+    frame_width = cols * col_width
+    top_line = "╨╥" * (frame_width // 2)
+
+    header_text = "ALL GIFTABLE NPCS"
+    name_line = f"{indent}✦ {header_text.center(frame_width - 5)} ✦"
+
+    print(indent + top_line)
+    print()
+    print(name_line)
+    print()
+    print(indent + top_line)
+    print()
+
+    if results:
+        for i in range(0, len(results), cols):
+            row = results[i:i+cols]
+            row_text = "".join(name.ljust(col_width) for name in row)
+            print(indent + row_text)
+    else:
+        print(indent + "No results.")
+
+    print("\n\n")
