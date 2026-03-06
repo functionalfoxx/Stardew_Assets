@@ -2,23 +2,34 @@ def item_search_gui(results):
     item_name, item_info = list(results.items())[0]
 
     frame_width = 74
-    inner_width = frame_width - 4
+    inner_width = frame_width - 2
     left_padding = 8
+    cols = 4
+    col_width = (inner_width - left_padding) // cols
+
+    # Helper for alternating borders
+    def alternating_line(left_border, content=""):
+        right_border = "╞" if left_border == "╡" else "╡"
+        print(f"        {left_border}{content}{right_border}")
+        return right_border
 
     print("        ✦ " + "╨╥" * int((frame_width / 2) - 2) + " ✦")
-    print(f"        ╞╡{'':^{inner_width}} ╞╡")
-    print(f"        ╞╡{'┳┏┳┓┏┓┳┳┓  ┏┓┏┓┏┓┳┓┏┓┓┏':^{inner_width}} ╞╡")
-    print(f"        ╞╡{'┃ ┃ ┣ ┃┃┃  ┗┓┣ ┣┫┣┫┃ ┣┫':^{inner_width}} ╞╡")
-    print(f"        ╞╡{'┻ ┻ ┗┛┛ ┗  ┗┛┗┛┛┗┛┗┗┛┛┗':^{inner_width}} ╞╡")
-    print(f"        ╞╡{'':<{inner_width}} ╞╡")
-    print("        ✧ " + "─" * (frame_width - 2) + "✧")
 
-    print(f"        ╞╡{'':^{inner_width}} ╞╡")
-    print(f"        ╞╡{item_name.upper():^{inner_width}} ╞╡")
-    print(f"        ╞╡{'':^{inner_width}} ╞╡")
-    print(f"        ╞╡{item_info['Wiki URL']:^{inner_width}} ╞╡")
-    print(f"        ╞╡{'':^{inner_width}} ╞╡")
-    print("        ✧ " + "─" * (frame_width - 2) + "✧")
+    left = "╡"
+    left = alternating_line(left, f"{'':^{inner_width}}")
+    left = alternating_line(left, f"{'┳┏┳┓┏┓┳┳┓  ┏┓┏┓┏┓┳┓┏┓┓┏':^{inner_width}}")
+    left = alternating_line(left, f"{'┃ ┃ ┣ ┃┃┃  ┗┓┣ ┣┫┣┫┃ ┣┫':^{inner_width}}")
+    left = alternating_line(left, f"{'┻ ┻ ┗┛┛ ┗  ┗┛┗┛┛┗┛┗┗┛┛┗':^{inner_width}}")
+    left = alternating_line(left, f"{'':<{inner_width}}")
+    print("        ✧ " + "─" * (frame_width - 3) + "✧")
+
+    left = "╡"
+    left = alternating_line(left, f"{'':^{inner_width}}")
+    left = alternating_line(left, f"{item_name.upper():^{inner_width}}")
+    left = alternating_line(left, f"{'':^{inner_width}}")
+    left = alternating_line(left, f"{item_info['Wiki URL']:^{inner_width}}")
+    left = alternating_line(left, f"{'':^{inner_width}}")
+    print("        ✧ " + "─" * (frame_width - 3) + "✧")
 
     sections = [
         ("NPCs Who Love Item", "LOVED BY", "♥"),
@@ -28,29 +39,26 @@ def item_search_gui(results):
         ("NPCs Who Hate Item", "HATED BY", "✕"),
     ]
 
-    cols = 4
-    col_width = (inner_width - left_padding) // cols
-
     for index, (key, header_text, symbol) in enumerate(sections):
+        left = "╡"
         header = f"{symbol}  {header_text}  {symbol}"
-        print(f"        ╞╡{header:^{inner_width}} ╞╡")
-
-        print(f"        ╞╡{'':<{inner_width}} ╞╡")
+        left = alternating_line(left, f"{header:^{inner_width}}")
+        left = alternating_line(left, f"{'':<{inner_width}}")
 
         npc_list = item_info[key]
         if npc_list:
             for i in range(0, len(npc_list), cols):
                 row = npc_list[i:i + cols]
                 formatted_row = " " * left_padding + "".join(name.ljust(col_width) for name in row)
-                print(f"        ╞╡{formatted_row:<{inner_width}} ╞╡")
+                left = alternating_line(left, f"{formatted_row:<{inner_width}}")
         else:
             formatted_row = " " * left_padding + "None"
-            print(f"        ╞╡{formatted_row:<{inner_width}} ╞╡")
+            left = alternating_line(left, f"{formatted_row:<{inner_width}}")
 
-        print(f"        ╞╡{'':<{inner_width}} ╞╡")
+        left = alternating_line(left, f"{'':<{inner_width}}")
 
         if index < len(sections) - 1:
-            print("        ✧ " + "─" * (frame_width - 2) + "✧")
+            print("        ✧ " + "─" * (frame_width - 3) + "✧")
         else:
             print("        ✦ " + "╨╥" * int((frame_width / 2) - 2) + " ✦")
 
@@ -60,30 +68,47 @@ def item_directory_gui(results, letter):
     cols = 3
     col_width = 35
     indent = "        "
+    left_pad = 4
 
     frame_width = cols * col_width
     top_line = "╨╥" * (frame_width // 2)
-
     header_text = f"RESULTS FOR {letter.upper()}"
-    name_line = f"{indent}✦ {header_text.center(frame_width - 5)} ✦"
 
-    print(indent + top_line)
-    print()
-    print(name_line)
-    print()
-    print(indent + top_line)
-    print()
+    def alternating_line(left_border, content=""):
+        right_border = "╞" if left_border == "╡" else "╡"
+        print(f"{indent}{left_border}{content}{right_border}")
+        return right_border
+
+    print(f"{indent}✦ {top_line} ✦")
+
+    left = "╡"
+    left = alternating_line(left, header_text.center(frame_width))
+    left = alternating_line(left, "─" * frame_width)
+    left = alternating_line(left, " " * frame_width)
 
     if results:
         for i in range(0, len(results), cols):
-            row = results[i:i+cols]
-            row_text = "".join(name.ljust(col_width) for name in row)
-            print(indent + row_text)
+            row = results[i:i + cols]
+            row_text = " " * left_pad
+
+            total_cols = len(row)
+            widths = [col_width] * total_cols
+            widths[0] -= left_pad
+
+            for w, name in zip(widths, row):
+                row_text += name.ljust(w)
+
+            missing_cols = cols - len(row)
+            row_text += " " * (missing_cols * col_width)
+
+            left = alternating_line(left, row_text)
+
+        left = alternating_line(left, " " * frame_width)
     else:
-        print(indent + "No results, try again.")
+        left = alternating_line(left, " " * left_pad + "No results, try again.".center(frame_width - left_pad))
+        left = alternating_line(left, " " * frame_width)
 
-    print("\n\n")
-
+    print(f"{indent}✦ {top_line} ✦\n\n")
 def npc_directory_gui(results):
     cols = 2
     col_width = 18
@@ -91,42 +116,54 @@ def npc_directory_gui(results):
 
     frame_width = cols * col_width
     top_line = "╨╥" * (frame_width // 2)
-
     header_text = "ALL GIFTABLE NPCS"
-    name_line = f"{indent}✦ {header_text.center(frame_width - 5)} ✦"
 
-    print(indent + top_line)
-    print()
-    print(name_line)
-    print()
-    print(indent + top_line)
-    print()
+    def alternating_line(left_border, content=""):
+        right_border = "╞" if left_border == "╡" else "╡"
+        print(f"{indent}{left_border}{content}{right_border}")
+        return right_border
+
+    print(f"{indent}✦ {top_line} ✦")
+
+    left = "╡"
+    left = alternating_line(left, header_text.center(frame_width))
+
+    left = alternating_line(left, "─" * frame_width)
+
+    left = alternating_line(left, " " * frame_width)
 
     if results:
         for i in range(0, len(results), cols):
-            row = results[i:i+cols]
-            row_text = "".join(name.ljust(col_width) for name in row)
-            print(indent + row_text)
-    else:
-        print(indent + "No results.")
+            row = results[i:i + cols]
+            row_text = "".join(name.center(col_width) for name in row)
+            left = alternating_line(left, row_text)
 
-    print("\n\n")
+        left = alternating_line(left, " " * frame_width)
+    else:
+        left = alternating_line(left, "No results.".center(frame_width))
+        left = alternating_line(left, " " * frame_width)
+
+    print(f"{indent}✦ {top_line} ✦\n\n")
 
 def npc_preferences_gui(npc_name, preference_info):
     frame_width = 120
     inner_width = frame_width - 4
     left_padding = 2
 
-    print("        ✦ " + "╨╥" * int((frame_width / 2) - 2) + " ✦")
-    print(f"        ╞╡{'':^{inner_width}} ╞╡")
-    print(f"        ╞╡{'NPC GIFT PREFERENCES':^{inner_width}} ╞╡")
-    print(f"        ╞╡{'':<{inner_width}} ╞╡")
-    print("        ✧ " + "─" * (frame_width - 2) + "✧")
+    def line(left, content=""):
+        right = "╞" if left == "╡" else "╡"
+        print(f"        {left} {content:<{inner_width}} {right}")
 
-    print(f"        ╞╡{'':^{inner_width}} ╞╡")
-    print(f"        ╞╡{npc_name.upper():^{inner_width}} ╞╡")
-    print(f"        ╞╡{'':^{inner_width}} ╞╡")
-    print("        ✧ " + "─" * (frame_width - 2) + "✧")
+    print("        ✦ " + "╨╥" * int((frame_width / 2) - 2) + " ✦")
+    line("╡")
+    line("╞", "NPC GIFT PREFERENCES".center(inner_width))
+    line("╡")
+    print("        ✧ " + "─" * (frame_width - 3) + "✧")
+
+    line("╞")
+    line("╡", npc_name.upper().center(inner_width))
+    line("╞")
+    print("        ✧ " + "─" * (frame_width - 3) + "✧")
 
     sections = [
         ("Loved", "LOVED ITEMS", "♥"),
@@ -141,8 +178,8 @@ def npc_preferences_gui(npc_name, preference_info):
 
     for index, (key, header_text, symbol) in enumerate(sections):
         header = f"{symbol}  {header_text}  {symbol}"
-        print(f"        ╞╡{header:^{inner_width}} ╞╡")
-        print(f"        ╞╡{'':<{inner_width}} ╞╡")
+        line("╡", header.center(inner_width))
+        line("╞")
 
         item_list = preference_info[key]
 
@@ -150,15 +187,15 @@ def npc_preferences_gui(npc_name, preference_info):
             for i in range(0, len(item_list), cols):
                 row = item_list[i:i + cols]
                 formatted_row = " " * left_padding + "".join(item.ljust(col_width) for item in row)
-                print(f"        ╞╡{formatted_row:<{inner_width}} ╞╡")
+                line("╡", formatted_row)
         else:
             formatted_row = " " * left_padding + "None"
-            print(f"        ╞╡{formatted_row:<{inner_width}} ╞╡")
+            line("╡", formatted_row)
 
-        print(f"        ╞╡{'':<{inner_width}} ╞╡")
+        line("╞")
 
         if index < len(sections) - 1:
-            print("        ✧ " + "─" * (frame_width - 2) + "✧")
+            print("        ✧ " + "─" * (frame_width - 3) + "✧")
         else:
             print("        ✦ " + "╨╥" * int((frame_width / 2) - 2) + " ✦")
 
