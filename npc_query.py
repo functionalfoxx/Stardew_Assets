@@ -1,5 +1,6 @@
 import sqlite3
 import math
+import re
 
 DB_PATH = r"C:\Portfolio_Projects\stardew_assets\sqlite\stardew.db"
 
@@ -8,6 +9,9 @@ conn.row_factory = sqlite3.Row
 cursor = conn.cursor()
 
 def search_by_npc (name):
+
+    name = re.sub(r"[^A-Za-z]", "", name)
+    name = name.capitalize()
 
     cursor.execute("""
         SELECT
@@ -68,6 +72,9 @@ def search_by_npc (name):
 
 def heart_calc(hearts, max_hearts):
 
+    hearts = re.sub(r"[^0-9]", "", hearts)
+    hearts = int(hearts)
+
     full_heart_points = 250
     loved = 80
     liked = 45
@@ -105,6 +112,10 @@ def all_npcs():
 
 
 def preferences_by_npc(name):
+
+    name = re.sub(r"[^A-Za-z]", "", name)
+    name = name.capitalize()
+    
     cursor.execute("""
             SELECT
                 npcs.npc_name,

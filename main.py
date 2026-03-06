@@ -1,5 +1,5 @@
 from item_query import search_by_item, items_directory
-from display import item_search_gui, item_directory_gui, npc_directory_gui
+from display import item_search_gui, item_directory_gui, npc_directory_gui, npc_preferences_gui
 from npc_query import search_by_npc, all_npcs, preferences_by_npc, heart_calc
 from npc_routing import check_for_event, route_user
 import re
@@ -137,27 +137,26 @@ if choice == "1":
 
     if item_choice == "1":                                                                              # Still needs GUI-like formatting
         name = input("        ✦   Enter the NPC name you want to search: ").strip()
-        name = re.sub(r"[^A-Za-z]", "", name)
-        name = name.capitalize() 
+        print("\n\n") 
         results = search_by_npc(name)
         print(results)
 
-    elif item_choice == "2":                                                                            # Still needs GUI-like formatting
-
+    elif item_choice == "2":
+        print("\n\n")
         results = all_npcs()
         npc_directory_gui(results)
 
-    elif item_choice == "3":                                                                            # Still needs GUI-like formatting
+    elif item_choice == "3":
         name = input("        ✦   Enter the NPC name you want to search: ").strip()
-        name = re.sub(r"[^A-Za-z]", "", name)
-        name = name.capitalize() 
+        print("\n\n")
         results = preferences_by_npc(name)
-        print(results)
+        npc_preferences_gui(name, results)
     
     elif item_choice == "4":                                                                            # Still needs GUI-like formatting
         hearts = input("        ✦   Enter how many full hearts you have with the NPC being searched: ").strip()
-        hearts = re.sub(r"[^0-9]", "", hearts)
-        hearts = int(hearts)
+
+
+        print("\n\n")
         results_friendship = heart_calc(hearts, 10)
         results_marriage = heart_calc(hearts, 14)
         print(results_friendship)
@@ -190,7 +189,7 @@ elif choice == "2":
         ╞       ITEM INFORMATION                                                                                 ╡
         ╡                                                                                                        ╞
         ╞       Type 1: Search by item name                                                                      ╡
-        ╡       Type 2: Brown item catalogue by letter                                                           ╞
+        ╡       Type 2: Browse item catalogue by letter                                                          ╞
         ╞                                                                                                        ╡
         ╡                                                                                                        ╞
         ✦ ╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨ ✦
