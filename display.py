@@ -1,5 +1,3 @@
-import textwrap
-
 def item_search_gui(results):
     item_name, item_info = list(results.items())[0]
 
@@ -260,80 +258,87 @@ def route_user_gui(npc_route):
     print("        ✦ " + "╨╥" * int((frame_width / 2) - 4) + " ✦")
     print("\n\n")
 
-SPRITE_WIDTH = 60      
-NAME_HEIGHT = 9        
-PADDING = 4            
 
-def print_npc_profile(profile, npc_sprite, ascii_name_lines, max_width=120):
-    """
-    profile: dict from search_by_npc
-    npc_sprite: list of strings (sprite lines)
-    ascii_name_lines: list of strings (ASCII name)
-    max_width: optional total width of profile box
-    """
+import textwrap    
 
-    def top_bottom_border():
-        repeat = "╨╥" * ((max_width - 4)//2)
-        return f"✦ {repeat} ✦"
+SPRITE_WIDTH = 60
+NAME_HEIGHT = 9
+PADDING = 4
+MAX_WIDTH = 160
 
-    def side_line(content=""):
-        content_len = len(content)
-        padding = max_width - 2 - content_len
-        return f"╞{content}{' ' * padding}╡"
-
-    def format_name_section(name_lines):
-        section = []
-        for i in range(NAME_HEIGHT):
-            line = name_lines[i] if i < len(name_lines) else ""
-            section.append(line)
-        return section
-
-    def divider_line():
-        content = "_" * (max_width - 4)
-        return f"╡  {content}  ╡"
-
-    def format_loved_trivia(loved_items, trivia_lines):
-        lines = []
-        left_width = (max_width - SPRITE_WIDTH - PADDING) // 2 - 1
-        right_width = max_width - SPRITE_WIDTH - PADDING - left_width - 1
-        max_rows = max((len(loved_items) + 1)//2, len(trivia_lines))
+def print_npc_profile(profile, npc_sprite, ascii_name_lines):
     
-        wrapped_trivia = []
-        for line in trivia_lines:
-            wrapped_trivia.extend(textwrap.wrap(line, width=right_width))
-        for i in range(max_rows):
-            li1 = loved_items[i*2] if i*2 < len(loved_items) else ""
-            li2 = loved_items[i*2+1] if i*2+1 < len(loved_items) else ""
-            left_content = f"{li1:<15}{li2:<15}"
-            tri_line = wrapped_trivia[i] if i < len(wrapped_trivia) else ""
-            tri_line = f"{tri_line:<{right_width}}"
-            lines.append(f"╞  {left_content}│{tri_line}╡")
-        return lines
-
+    def top_bottom_border():
+        repeat = "╨╥" * ((MAX_WIDTH - 4)//2)
+        return f"✦ {repeat} ✦"
+    
     print(top_bottom_border())
-
-    name_section = format_name_section(ascii_name_lines)
-    sprite_height = len(npc_sprite)
-    right_section_height = sprite_height
-    for i in range(right_section_height):
-        sprite_line = npc_sprite[i] if i < len(npc_sprite) else " " * SPRITE_WIDTH
-        name_line = name_section[i] if i < len(name_section) else ""
-        right_padding = max_width - SPRITE_WIDTH - PADDING - len(name_line) - 2
-        print(f"╡  {sprite_line}{' ' * PADDING}{name_line}{' ' * right_padding}╡")
-
-    print(divider_line())
-
-    marry_symbol = "♥" if profile['can_marry'] else "⊘"
-    marry_line = f"{'Can Marry' if profile['can_marry'] else 'Cannot Marry'} {marry_symbol}"
-    marry_line += f" | Birthday: {profile['birthday_season']} {profile['birthday_day']}"
-    print(side_line(marry_line))
-
-    print(divider_line())
-
+    
+    name_section = ascii_name_lines + [""]*(NAME_HEIGHT - len(ascii_name_lines))
+    
+    right_width = MAX_WIDTH - 2 - SPRITE_WIDTH - PADDING
+    
+    trivia = profile.get('trivia_fact', '')
+    trivia_lines = textwrap.wrap(f"Trivia: {trivia}", width=right_width)
+    
     loved_items = profile.get('loved_items', [])
-    trivia_lines = [profile.get('trivia_fact', '')]
-    lt_lines = format_loved_trivia(loved_items, trivia_lines)
-    for line in lt_lines:
-        print(line)
-
+    column_width = (right_width - 6) // 4
+    loved_rows = [loved_items[i:i+4] for i in range(0, len(loved_items), 4)]
+    
+    last_trivia_line_index = NAME_HEIGHT + 13 + len(trivia_lines) - 1
+    loved_items_label_index = last_trivia_line_index + 3
+    loved_items_start_index = loved_items_label_index + 2
+    
+    total_lines = max(len(npc_sprite), NAME_HEIGHT)
+    
+    for i in range(total_lines):
+        if i < len(npc_sprite):
+            raw_sprite = npc_sprite[i]
+            sprite_line = (raw_sprite[:SPRITE_WIDTH] if len(raw_sprite) > SPRITE_WIDTH else raw_sprite.ljust(SPRITE_WIDTH))
+        else:
+            sprite_line = " " * SPRITE_WIDTH
+        
+        if i < NAME_HEIGHT:
+            right_text = name_section[i]
+        elif i == NAME_HEIGHT:
+            right_text = "_" * right_width
+        elif i == NAME_HEIGHT + 2:
+            right_text = profile.get('npc_name', '')
+        elif i == NAME_HEIGHT + 4:
+            right_text = profile.get('npc_wiki_url', '')
+        elif i == NAME_HEIGHT + 6:
+            address = profile.get('address', '')
+            right_text = f"Lives at {address}" if address else ""
+        elif i == NAME_HEIGHT + 8:
+            can_marry = profile.get('can_marry', False)
+            right_text = "Can marry!" if can_marry else "Cannot marry"
+        elif i == NAME_HEIGHT + 10:
+            season = profile.get('birthday_season', '')
+            day = profile.get('birthday_day', '')
+            right_text = f"Birthday is on {season} {day}" if season and day else ""
+        elif NAME_HEIGHT + 12 <= i <= NAME_HEIGHT + 11 + len(trivia_lines):
+            trivia_index = i - (NAME_HEIGHT + 12)
+            right_text = trivia_lines[trivia_index]
+        elif i == loved_items_label_index - 2:
+            right_text = "Loved Items:"
+        elif i >= loved_items_start_index - 2:
+            row_index = i - (loved_items_start_index - 2)
+            if row_index < len(loved_rows):
+                row = loved_rows[row_index]
+                row_line = ""
+                for col_index in range(4):
+                    if col_index < len(row):
+                        item = row[col_index]
+                        row_line += item.ljust(column_width)
+                        if col_index < 3:
+                            row_line += "  "
+                right_text = row_line
+            else:
+                right_text = ""
+        else:
+            right_text = ""
+        
+        right_text_padded = right_text.ljust(right_width)
+        print(f"╡{sprite_line}{' ' * PADDING}{right_text_padded}╡")
+    
     print(top_bottom_border())

@@ -146,10 +146,6 @@ if choice == "1":
         print("\n\n")
         results = search_by_npc(name)
 
-        print("Available names:", list(name_blocks.keys()))
-        print("Available sprites:", list(sprite_blocks.keys()))
-        print("Looking for:", name.upper())
-
         ascii_name_lines = get_name_block_by_name(name, name_blocks)
         npc_sprite = get_sprite_by_name(name, sprite_blocks)
 
