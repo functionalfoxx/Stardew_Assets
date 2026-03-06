@@ -6,15 +6,22 @@ import re
 
 
 print("""
-        
-        This tool requires your terminal window to be large enough to display all content properly.
-        In the next step, you will resize the window to ensure the box is fully visible.
+     
       
-        Press enter to continue.
-           
+        ✦ ╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨ ✦
+        ╡                                                                                                        ╞
+        ╞       This tool requires your terminal window to be large enough to display all content properly       ╡
+        ╡            In the next step, you will resize the window to ensure the box is fully visible             ╞
+        ╞                                                                                                        ╡
+        ╡                                        Press ENTER to continue                                         ╞
+        ╞                                                                                                        ╡
+        ✦ ╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨ ✦
+      
+
       """)
 
 input()
+
 
 print("""
       
@@ -69,26 +76,37 @@ print("""
     ╚═ LOWER LEFT  ═════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════  LOWER RIGHT ═╝
 
 
-        Press enter to continue""")
+        Press ENTER to continue
+      
+      
+      
+      """)
 
-# input()
+input()
 
-
-#print("""
-#This Stardew tool provides information about NPCs who 
-#can receive gifts, items that can be gifted, and how to
-#route the two together efficiently.
-#""")
 
 print("""
-Type 1: NPC Information
-Type 2: Item Information
-Type 3: Gift Route Optimization\n
+      
+
+        ✦ ╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨ ✦
+        ╡                                                                                                        ╞
+        ╞       Hello farmer!                                                                                    ╡
+        ╡                                                                                                        ╞
+        ╞         Forget that lengthy wiki and get ready to get quick and customized information for your        ╡
+        ╡         Stardew needs. Search by NPC, item, or get your daily gift route optimized!                    ╞
+        ╞                                                                                                        ╡
+        ╡       Type 1: NPC Information                                                                          ╞
+        ╞       Type 2: Item Information                                                                         ╡
+        ╡       Type 3: Gift Route Optimization                                                                  ╞
+        ╞                                                                                                        ╡
+        ╡                                                                                                        ╞
+        ✦ ╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨ ✦
+
+      
 """)
 
-choice = input("Select option: ").strip()
 
-
+choice = input("        ✦   Select option: ").strip()
 
              # # # # # # # # # # # # # # 
             #       NPC QUERY TOOLS      #
@@ -97,18 +115,28 @@ choice = input("Select option: ").strip()
 
 if choice == "1": 
     print("""
-    NPC Information
-          
-    Type 1: View NPC profile by name
-    Type 2: View all giftable NPCs
-    Type 3: View all gift preferences by NPC
-    Type 4: Calculate gifts needed to gain max NPC hearts\n
+
+                    
+        ✦ ╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨ ✦
+        ╡                                                                                                        ╞
+        ╞       NPC INFORMATION                                                                                  ╡
+        ╡                                                                                                        ╞
+        ╞       Type 1: View NPC profile by name                                                                 ╡
+        ╡       Type 2: View all giftable NPCs                                                                   ╞
+        ╞       Type 3: View all gift preferences by NPC                                                         ╡
+        ╡       Type 4: Calculate gifts needed to gain max NPC hearts                                            ╞
+        ╞                                                                                                        ╡
+        ╡                                                                                                        ╞
+        ✦ ╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨ ✦
+
+
     """)
 
-    item_choice = input("Select option: ").strip()    
-    
+    item_choice = input("        ✦   Select option: ").strip()
+    print("\n\n")    
+
     if item_choice == "1":                                                                              # Still needs GUI-like formatting
-        name = input("Enter the NPC name you want to search: ").strip()                                 # Add a comment to best view profile, expand your terminal window.
+        name = input("        ✦   Enter the NPC name you want to search: ").strip()                                 # Add a comment to best view profile, expand your terminal window.
         name = re.sub(r"[^A-Za-z]", "", name)
         name = name.capitalize() 
         results = search_by_npc(name)
@@ -118,14 +146,14 @@ if choice == "1":
         print(all_npcs())
 
     elif item_choice == "3":                                                                            # Still needs GUI-like formatting
-        name = input("Enter the NPC name you want to search: ").strip()
+        name = input("        ✦   Enter the NPC name you want to search: ").strip()
         name = re.sub(r"[^A-Za-z]", "", name)
         name = name.capitalize() 
         results = preferences_by_npc(name)
         print(results)
     
     elif item_choice == "4":                                                                            # Still needs GUI-like formatting
-        hearts = input("Enter how many full hearts you have with the NPC being searched: ").strip()
+        hearts = input("        ✦   Enter how many full hearts you have with the NPC being searched: ").strip()
         hearts = re.sub(r"[^0-9]", "", hearts)
         hearts = int(hearts)
         results_friendship = heart_calc(hearts, 10)
@@ -151,18 +179,30 @@ if choice == "1":
 
 
 elif choice == "2":
+
     print("""
-    Item Information
-          
-    Type 1: Search by item name
-    Type 2: Browse item directory by letter\n
+
+                    
+        ✦ ╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨ ✦
+        ╡                                                                                                        ╞
+        ╞       ITEM INFORMATION                                                                                 ╡
+        ╡                                                                                                        ╞
+        ╞       Type 1: Search by item name                                                                      ╡
+        ╡       Type 2: Brown item catalogue by letter                                                           ╞
+        ╞                                                                                                        ╡
+        ╡                                                                                                        ╞
+        ✦ ╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨ ✦
+
+
     """)
 
-    item_choice = input("Select option: ").strip()
+
+    item_choice = input("        ✦   Select option: ").strip()
 
     if item_choice == "1":
-        item = input("Enter the item to search: ").strip().lower()
+        item = input("        ✦   Enter the item to search: ").strip().lower()
         item = re.sub(r"[^a-z0-9 ]", "", item)
+        print("\n\n")
         results = search_by_item(item)
 
         if results is None:
@@ -171,8 +211,9 @@ elif choice == "2":
         else:
             item_search_gui(results)
 
-    elif item_choice == "2":                                                                            # UPDATE TO NEW FORMAT
-        letter = input("Enter a letter to display matching items or enter 'all' to display all giftable items: ").strip()
+    elif item_choice == "2":
+        letter = input("        ✦   Enter a letter to display matching items or enter 'all' to display all giftable items: ").strip()
+        print("\n\n")
 
         if letter.lower() == "all":
             results = items_directory(None)
@@ -198,44 +239,80 @@ elif choice == "2":
 elif choice == "3":
 
     print("""
-        NPC schedules change based on several factors. Answer 4 questions to optimize your gift route correctly.
-        If you are just testing this simulation, you can copy and paste the text in the provided example for each question.
-        Please note that it is assumed you have at least 2 hearts with all NPCs that have bedrooms so that they are accessible.
+
+                    
+        ✦ ╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨ ✦
+        ╡                                                                                                        ╞
+        ╞       GIFT ROUTE OPTIMIZATION                                                                          ╡
+        ╡                                                                                                        ╞
+        ╞         NPC schedules change based on several in-game factors. Answer 4 questions to optimize          ╡
+        ╡         your gift route correctly.                                                                     ╞
+        ╞                                                                                                        ╡
+        ╡         It is assumed you have at least 2 friendship hearts with all NPCs that have bedrooms           ╞
+        ╞         so that they are accessible.                                                                   ╡
+        ╡                                                                                                        ╞
+        ╞         If you are just testing this simulation, you may copy and paste the text in the                ╡
+        ╡         provided example for each question.                                                            ╞
+        ╞                                                                                                        ╡
+        ╡                                                                                                        ╞
+        ✦ ╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨ ✦
+  
     """)
 
-    day_input = input("""
-        QUESTION 1: What day is it? Provide the weekday, season, day number, and weather. Your answer must remain in this order.
-        For weather, use R for RAIN, G for GREEN RAIN, or N for NO RAIN.
-        Your answer must be separated by a comma
-        Example: Summer, 22, N
 
-        Enter day info: """)
+    day_input = input("""        ✦   QUESTION 1
+        ╞              
+        ╡     What day is it? Provide the weekday, season, day number, and weather 
+        ╞     Your answer must remain in this order
+        ╡     For weather, use R for RAIN, G for GREEN RAIN, or N for NO RAIN
+        ╞     Your answer must be separated by a comma
+        ╡
+        ╞     Example: Summer, 22, N
+        ╡
+        ✦   Enter day info: """)
+
+    print ("""        ╞\n        ╡\n        ╞""")
     
     day_result = check_for_event(day_input)
 
-    npc_input = input("""
-        QUESTION 2: Do you have these characters unlocked? 
-        Wizard, Kent, Mines Dwarf, Sandy, Krobus, Leo. Your answer must remain in this order.
-        Your answer must be in the form of Y for YES, N for NO, and separated with a comma. 
-        Example: Y, Y, Y, N, Y, N
-                           
-        Enter character progress: """)
+    npc_input = input("""        ✦   QUESTION 2
+        ╡
+        ╞     Do you have these characters unlocked? 
+        ╡     Wizard, Kent, Mines Dwarf, Sandy, Krobus, Leo
+        ╞     Your answer must remain in this order
+        ╡     Your answer must be in the form of Y for YES, N for NO, and separated with a comma 
+        ╞              
+        ╡     Example: Y, Y, Y, N, Y, N
+        ╞                  
+        ✦   Enter character progress: """)
 
-    hearts_input = input("""
-        QUESTION 3: How many full friendship hearts do you have with each of these characters?
-        Abigail, Sebastian, Haley, Alex, Elliott, Leah, Leo, Penny, Sam. Your answer must remain in this order.
-        Your answer must be in whole numbers and separated with a comma. 
-        Example: 5, 9, 3, 5, 10, 7, 0, 3, 5
+    print ("""        ╡\n        ╞\n        ╡""")
 
-        Enter hearts: """)
-        
-    progress_input = input("""
-        QUESTION 4: Have you completed these game progress points?
-        Bus Service, Beach Bridge Repair, Community Center. Your answer must remain in this order.
-        Your answer must be in the form of Y for YES, N for NO, and separated with a comma.
-        Example: Y, Y, N
+    hearts_input = input("""        ✦   QUESTION 3
+        ╞
+        ╡     How many full friendship hearts do you have with each of these characters?
+        ╞     Abigail, Sebastian, Haley, Alex, Elliott, Leah, Leo, Penny, Sam
+        ╡     Your answer must remain in this order
+        ╞     Your answer must be in whole numbers and separated with a comma 
+        ╡                 
+        ╞     Example: 5, 9, 3, 5, 10, 7, 0, 3, 5
+        ╡     
+        ✦   Enter friendship hearts: """)
 
-        Enter progress: """)
+    print ("""        ╞\n        ╡\n        ╞""")
+
+    progress_input = input("""        ✦   QUESTION 4
+        ╡
+        ╞     Have you completed these game progress points?
+        ╡     Bus Service, Beach Bridge Repair, Community Center 
+        ╞     Your answer must remain in this order
+        ╡     Your answer must be in the form of Y for YES, N for NO, and separated with a comma
+        ╞                   
+        ╡    Example: Y, Y, N
+        ╞
+        ✦   Enter game progress: """)
+
+    print ("\n")
 
     npc_route = route_user(day_input, npc_input, hearts_input, progress_input)
 
