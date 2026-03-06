@@ -163,3 +163,38 @@ def npc_preferences_gui(npc_name, preference_info):
             print("        ✦ " + "╨╥" * int((frame_width / 2) - 2) + " ✦")
 
     print("\n\n")
+
+def heart_calc_gui(friendship, marriage):
+    total_width = 100
+
+    def line(left, content=""):
+        right = "╞" if left == "╡" else "╡"
+        padding = total_width - len(content)
+        if padding < 0:
+            padding = 0
+        print(f"        {left} {content}{' ' * padding} {right}")
+
+    print("        ✦ ╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥ ✦")
+
+    line("╡")
+    line("╞", "     .o    .oooo.         _   _")
+    line("╡", f"   o888   d8P'`Y8b     ,d88b.d88b,      {friendship['points_needed']} Friendship Points Needed")
+    line("╞", f"    888  888    888    88888888888      {friendship['loved_qty']} more loved items ({friendship['loved_weeks']} weeks of consistent gifting)")
+    line("╡", f"    888  888    888    `Y8888888Y'      {friendship['liked_qty']} more liked items ({friendship['liked_weeks']} weeks of consistent gifting)")
+    line("╞", f"    888  888    888      `Y888Y'        {friendship['neutral_qty']} more neutral items ({friendship['neutral_weeks']} weeks of consistent gifting)")
+    line("╡", "    888  `88b  d88'        `Y'")
+    line("╞", "   o888o  `Y8bd8P'")
+    line("╡")
+    line("╞")
+
+    line("╡", "      .o        .o        _   _")
+    line("╞", f"    o888      .d88     ,d88b.d88b,      {marriage['points_needed']} Friendship Points Needed")
+    line("╡", f"     888    .d'888     88888888888      {marriage['loved_qty']} more loved items ({marriage['loved_weeks']} weeks of consistent gifting)")
+    line("╞", f"     888  .d'  888     `Y8888888Y'      {marriage['liked_qty']} more liked items ({marriage['liked_weeks']} weeks of consistent gifting)")
+    line("╡", f"     888  88ooo888oo     `Y888Y'        {marriage['neutral_qty']} more neutral items ({marriage['neutral_weeks']} weeks of consistent gifting)")
+    line("╞", "     888       888         `Y'")
+    line("╡", "    o888o     o888o")
+    line("╞")
+
+    print("        ✦ ╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥ ✦")
+    print("\n\n")

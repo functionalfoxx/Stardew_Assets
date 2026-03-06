@@ -1,5 +1,5 @@
 from item_query import search_by_item, items_directory
-from display import item_search_gui, item_directory_gui, npc_directory_gui, npc_preferences_gui
+from display import item_search_gui, item_directory_gui, npc_directory_gui, npc_preferences_gui, heart_calc_gui
 from npc_query import search_by_npc, all_npcs, preferences_by_npc, heart_calc
 from npc_routing import check_for_event, route_user
 import re
@@ -152,26 +152,48 @@ if choice == "1":
         results = preferences_by_npc(name)
         npc_preferences_gui(name, results)
     
-    elif item_choice == "4":                                                                            # Still needs GUI-like formatting
-        hearts = input("        ✦   Enter how many full hearts you have with the NPC being searched: ").strip()
+    elif item_choice == "4":
+        
+        print("""
 
+                        
+        ✦ ╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨ ✦
+        ╡                                                                                                        ╞
+        ╞       INFORMATION REGARDING HEART GIFTING                                                              ╡
+        ╡                                                                                                        ╞
+        ╞                Gifting a 'Stardrop Tea' will progress you by 1 full friendship heart                   ╡
+        ╡                A 'Bouquet' needs to be given at 8 hearts to progress further                           ╞
+        ╞                A 'Mermaid Pendant' needs to be given at 10 hearts to progress further                  ╡
+        ╡                                                                                                        ╞
+        ╞                This calculator only includes normal daily gifts, so it does not consider:              ╡
+        ╡                - Gifts given at events                                                                 ╞
+        ╞                - Gifts given on birthdays                                                              ╡
+        ╡                - Quests completed                                                                      ╞
+        ╞                - Going to the movie theater                                                            ╡
+        ╡                - Talking to the NPC                                                                    ╞
+        ╞                - Friendship points boosters                                                            ╡
+        ╡                                                                                                        ╞
+        ╞                It also doesn't consider whether NPC friendship has declined from:                      ╡
+        ╡                - Disliked or hated gifts                                                               ╞
+        ╞                - Friendship decay for not talking to NPC                                               ╡
+        ╡                - Any other actions that decrease friendship level                                      ╞
+        ╞                                                                                                        ╡
+        ╡                Calculations are based only on full missing hearts                                      ╞
+        ╞                If you have any partial progress towards the next friendship heart, less                ╡
+        ╡                items will be needed.                                                                   ╞
+        ╞                                                                                                        ╡
+        ✦ ╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨╥╨ ✦
+
+
+        """)
+
+        hearts = input("        ✦   Enter how many full hearts you have with the NPC being searched: ").strip()
 
         print("\n\n")
         results_friendship = heart_calc(hearts, 10)
         results_marriage = heart_calc(hearts, 14)
-        print(results_friendship)
-        print(results_marriage)
 
-            # notes to add
-            # stardrop_tea_qty is going to be same as missing hearts
-            # ### mention that a bouquet will need to be given at 8 hearts and is not calculated in item qty needed
-            # ### mention that a mermaid pendant will need to be given at 10 hearts and is not calculated in item qty needed
-            # to get 14 max hearts -> only show this additional calc if the npc we're under is can_marry
-            # calculator includes normal daily gifts only
-            # it does not include gifts given for events, quests, movie theater, talking to them, or any other actions that increase friendship level
-            # it does not include disliked or hated gifts, friendship decay, or any other actions that decrease friendship level
-            # calculations based only on full missing hearts. if player has made any progress between hearts, less items will be needed
-
+        heart_calc_gui(results_friendship, results_marriage)        
        
 
              # # # # # # # # # # # # # # #
