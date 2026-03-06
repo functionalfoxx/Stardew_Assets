@@ -1,3 +1,5 @@
+import textwrap
+
 def item_search_gui(results):
     item_name, item_info = list(results.items())[0]
 
@@ -257,3 +259,81 @@ def route_user_gui(npc_route):
 
     print("        ✦ " + "╨╥" * int((frame_width / 2) - 4) + " ✦")
     print("\n\n")
+
+SPRITE_WIDTH = 60      
+NAME_HEIGHT = 9        
+PADDING = 4            
+
+def print_npc_profile(profile, npc_sprite, ascii_name_lines, max_width=120):
+    """
+    profile: dict from search_by_npc
+    npc_sprite: list of strings (sprite lines)
+    ascii_name_lines: list of strings (ASCII name)
+    max_width: optional total width of profile box
+    """
+
+    def top_bottom_border():
+        repeat = "╨╥" * ((max_width - 4)//2)
+        return f"✦ {repeat} ✦"
+
+    def side_line(content=""):
+        content_len = len(content)
+        padding = max_width - 2 - content_len
+        return f"╞{content}{' ' * padding}╡"
+
+    def format_name_section(name_lines):
+        section = []
+        for i in range(NAME_HEIGHT):
+            line = name_lines[i] if i < len(name_lines) else ""
+            section.append(line)
+        return section
+
+    def divider_line():
+        content = "_" * (max_width - 4)
+        return f"╡  {content}  ╡"
+
+    def format_loved_trivia(loved_items, trivia_lines):
+        lines = []
+        left_width = (max_width - SPRITE_WIDTH - PADDING) // 2 - 1
+        right_width = max_width - SPRITE_WIDTH - PADDING - left_width - 1
+        max_rows = max((len(loved_items) + 1)//2, len(trivia_lines))
+    
+        wrapped_trivia = []
+        for line in trivia_lines:
+            wrapped_trivia.extend(textwrap.wrap(line, width=right_width))
+        for i in range(max_rows):
+            li1 = loved_items[i*2] if i*2 < len(loved_items) else ""
+            li2 = loved_items[i*2+1] if i*2+1 < len(loved_items) else ""
+            left_content = f"{li1:<15}{li2:<15}"
+            tri_line = wrapped_trivia[i] if i < len(wrapped_trivia) else ""
+            tri_line = f"{tri_line:<{right_width}}"
+            lines.append(f"╞  {left_content}│{tri_line}╡")
+        return lines
+
+    print(top_bottom_border())
+
+    name_section = format_name_section(ascii_name_lines)
+    sprite_height = len(npc_sprite)
+    right_section_height = sprite_height
+    for i in range(right_section_height):
+        sprite_line = npc_sprite[i] if i < len(npc_sprite) else " " * SPRITE_WIDTH
+        name_line = name_section[i] if i < len(name_section) else ""
+        right_padding = max_width - SPRITE_WIDTH - PADDING - len(name_line) - 2
+        print(f"╡  {sprite_line}{' ' * PADDING}{name_line}{' ' * right_padding}╡")
+
+    print(divider_line())
+
+    marry_symbol = "♥" if profile['can_marry'] else "⊘"
+    marry_line = f"{'Can Marry' if profile['can_marry'] else 'Cannot Marry'} {marry_symbol}"
+    marry_line += f" | Birthday: {profile['birthday_season']} {profile['birthday_day']}"
+    print(side_line(marry_line))
+
+    print(divider_line())
+
+    loved_items = profile.get('loved_items', [])
+    trivia_lines = [profile.get('trivia_fact', '')]
+    lt_lines = format_loved_trivia(loved_items, trivia_lines)
+    for line in lt_lines:
+        print(line)
+
+    print(top_bottom_border())

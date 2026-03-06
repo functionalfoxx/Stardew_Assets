@@ -1,8 +1,12 @@
 from item_query import search_by_item, items_directory
-from display import item_search_gui, item_directory_gui, npc_directory_gui, npc_preferences_gui, heart_calc_gui, route_user_gui
+from display import item_search_gui, item_directory_gui, npc_directory_gui, npc_preferences_gui, heart_calc_gui, route_user_gui, print_npc_profile
 from npc_query import search_by_npc, all_npcs, preferences_by_npc, heart_calc
 from npc_routing import check_for_event, route_user
+from ascii_loader import load_name_blocks, load_sprite_blocks, get_name_block_by_name, get_sprite_by_name
 import re
+
+name_blocks = load_name_blocks("ascii_names.txt")
+sprite_blocks = load_sprite_blocks("ascii_sprites.txt")
 
 
 print("""
@@ -135,11 +139,21 @@ if choice == "1":
     item_choice = input("        ✦   Select option: ").strip()
     print("\n\n")    
 
-    if item_choice == "1":                                                                              # Still needs GUI-like formatting
+    if item_choice == "1":
         name = input("        ✦   Enter the NPC name you want to search: ").strip()
-        print("\n\n") 
+        name_blocks = load_name_blocks()
+        sprite_blocks = load_sprite_blocks()
+        print("\n\n")
         results = search_by_npc(name)
-        print(results)
+
+        print("Available names:", list(name_blocks.keys()))
+        print("Available sprites:", list(sprite_blocks.keys()))
+        print("Looking for:", name.upper())
+
+        ascii_name_lines = get_name_block_by_name(name, name_blocks)
+        npc_sprite = get_sprite_by_name(name, sprite_blocks)
+
+        print_npc_profile(results, npc_sprite, ascii_name_lines)
 
     elif item_choice == "2":
         print("\n\n")
