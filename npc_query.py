@@ -175,17 +175,3 @@ def preferences_by_npc(name):
                 preference_info['Neutral'].append(item_name)
 
     return preference_info
-
-
-#           ||| NPC QUERY SCREEN |||
-#
-#            FROM NPC PROFILE
-#                TYPE 1: SEE NPC SCHEDULE FOR THE DAY
-#
-
-#                TYPE 3 : SEE ALL OF [NPC NAME]'S GIFT PREFERENCES
-#                    TYPE 1 : SEE LOVED GIFTS 
-#                    TYPE 2 : SEE LIKED GIFTS 
-#                    TYPE 3 : SEE NEUTRAL GIFTS 
-#                    TYPE 4 : SEE DISLIKED GIFTS
-#                    TYPE 5 : SEE HATED GIFTS
